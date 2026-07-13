@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>文脉 · 老师点评端口</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/teacher.css" />
+</head>
+<body class="teacher-page">
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="teacher-top">
+    <div class="teacher-top-inner">
+      <div>
+        <p class="eyebrow">Teacher Review Port · 8081</p>
+        <h1>文脉 · 老师点评端口</h1>
+        <p class="lead">查看学生提交 → 对照 AI 初评 → 撰写复审意见并确认分数</p>
+      </div>
+      <div class="teacher-top-actions">
+        <a class="btn btn-ghost" id="open-student" href="http://localhost:8080/" target="_blank" rel="noopener">打开学生端 :8080</a>
+        <button class="btn btn-ghost" id="refresh-btn" type="button">刷新</button>
+        <button class="btn btn-secondary" id="export-btn" type="button">导出 JSON</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="teacher-main" id="desk">
+    <aside class="queue">
+      <div class="queue-head">
+        <h2>提交队列</h2>
+        <div class="filter-row">
+          <button class="filter active" data-filter="all" type="button">全部</button>
+          <button class="filter" data-filter="pending_teacher" type="button">待复审</button>
+          <button class="filter" data-filter="reviewed" type="button">已复审</button>
+        </div>
+      </div>
+      <ul id="queue-list"></ul>
+      <p class="hint" id="queue-empty" hidden>暂无提交。请让学生在学生端第五层提交作文。</p>
+    </aside>
+
+    <section class="review-pane" id="review-pane">
+      <p class="hint empty-hint">从左侧选择一份作业开始点评。</p>
+    </section>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/ai-grader.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/teacher.js"></script>
+</body>
+</html>

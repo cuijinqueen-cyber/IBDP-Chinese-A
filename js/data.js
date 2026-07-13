@@ -1,8 +1,7 @@
 /* 文脉平台 · 文本与五层练习数据 */
 window.APP = {
   brand: "文脉",
-  course: "IBDP 中文 A · 语言与文学",
-  teacherPin: "ibdp2026"
+  course: "IBDP 中文 A · 语言与文学"
 };
 
 window.TEXT_DATA = {

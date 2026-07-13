@@ -701,7 +701,7 @@
     $("#char-count").textContent = n + " 字";
   }
 
-  function runAi(submit) {
+  async function runAi(submit) {
     const body = ($("#essay-body").value || "").trim();
     if (body.length < 80) {
       alert("请先写出更完整的评论（建议不少于 80 字）再预评/提交。");
@@ -731,22 +731,15 @@
     const prompt = window.IB_OUTLINE.prompts.find(function (p) {
       return p.id === $("#essay-prompt").value;
     });
-    const submission = {
-      id: uid(),
+
+    const submission = await window.WenmaiAPI.create({
       student: studentName(),
       promptId: $("#essay-prompt").value,
       promptTitle: prompt ? prompt.title : "",
       promptQuestion: prompt ? prompt.question : "",
       body: body,
-      ai: result,
-      status: "pending_teacher",
-      createdAt: new Date().toISOString(),
-      teacher: null
-    };
-
-    const list = loadJSON(STORAGE.submissions, []);
-    list.unshift(submission);
-    saveJSON(STORAGE.submissions, list);
+      ai: result
+    });
 
     markDone(5);
     $("#essay-status").textContent = "已提交，待教师复审";
@@ -761,144 +754,19 @@
       result.total +
       "/40（" +
       result.level +
-      "）。教师可在「教师复审入口」中二次审核。";
+      "）。请打开「老师点评端口」进行二次审核。<br/>" +
+      '<a href="/teacher.html" target="_blank" rel="noopener">进入老师点评</a>　' +
+      '<a href="http://localhost:8081/teacher.html" target="_blank" rel="noopener">本机 :8081</a>';
   }
 
-  /* ---------- Teacher desk ---------- */
+  /* ---------- Teacher link (独立点评页，无需密码) ---------- */
   function initTeacher() {
-    $("#open-teacher").onclick = function () {
-      $("#teacher-modal").hidden = false;
-    };
-    $all("[data-close-modal]").forEach(function (el) {
-      el.addEventListener("click", function () {
-        $("#teacher-modal").hidden = true;
-      });
-    });
-
-    $("#teacher-login-btn").onclick = function () {
-      const pin = $("#teacher-pin").value;
-      if (pin === window.APP.teacherPin) {
-        state.teacherAuthed = true;
-        $("#teacher-login").hidden = true;
-        $("#teacher-desk").hidden = false;
-        $("#teacher-login-feedback").textContent = "";
-        renderSubList();
-      } else {
-        $("#teacher-login-feedback").textContent = "通行码不正确。";
-      }
-    };
-
-    $("#refresh-subs").onclick = renderSubList;
-    $("#logout-teacher").onclick = function () {
-      state.teacherAuthed = false;
-      $("#teacher-desk").hidden = true;
-      $("#teacher-login").hidden = false;
-      $("#teacher-pin").value = "";
-    };
-    $("#export-subs").onclick = function () {
-      const data = loadJSON(STORAGE.submissions, []);
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "wenmai-submissions.json";
-      a.click();
-    };
+    // 主入口：/teacher.html 与 :8081，无密码
   }
 
-  function renderSubList() {
-    const list = loadJSON(STORAGE.submissions, []);
-    const ul = $("#sub-list");
-    if (!list.length) {
-      ul.innerHTML = "<li style='padding:1rem;color:#666'>暂无提交。</li>";
-      $("#sub-detail").innerHTML = "<p class='hint'>选择左侧一份作业开始复审。</p>";
-      return;
-    }
-    ul.innerHTML = list
-      .map(function (s) {
-        const tag =
-          s.status === "reviewed"
-            ? "<span class='status-tag reviewed'>已复审</span>"
-            : "<span class='status-tag'>待复审</span>";
-        return (
-          "<li><button type='button' data-id='" +
-          escapeHtml(s.id) +
-          "'><strong>" +
-          escapeHtml(s.student) +
-          "</strong> · " +
-          escapeHtml(s.promptTitle) +
-          " " +
-          tag +
-          "<span class='meta'>" +
-          new Date(s.createdAt).toLocaleString() +
-          " · AI " +
-          (s.ai ? s.ai.total + "/40" : "-") +
-          "</span></button></li>"
-        );
-      })
-      .join("");
+  function renderSubList() {}
+  function showSubDetail() {}
 
-    $all("#sub-list button").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        $all("#sub-list button").forEach(function (b) {
-          b.classList.remove("active");
-        });
-        btn.classList.add("active");
-        showSubDetail(btn.dataset.id);
-      });
-    });
-  }
-
-  function showSubDetail(id) {
-    const list = loadJSON(STORAGE.submissions, []);
-    const s = list.find(function (x) {
-      return x.id === id;
-    });
-    if (!s) return;
-    state.currentSubId = id;
-    const detail = $("#sub-detail");
-    detail.innerHTML =
-      "<h3>" +
-      escapeHtml(s.student) +
-      " · " +
-      escapeHtml(s.promptTitle) +
-      "</h3><p>" +
-      escapeHtml(s.promptQuestion) +
-      "</p><pre>" +
-      escapeHtml(s.body) +
-      "</pre><div class='ai-report'>" +
-      window.AIGrader.renderReport(s.ai) +
-      "</div><div class='teacher-form'>" +
-      "<label class='field-label'>教师复审评语</label>" +
-      "<textarea id='teacher-comment' placeholder='针对 AI 初评进行补充、纠正或认可……'>" +
-      escapeHtml((s.teacher && s.teacher.comment) || "") +
-      "</textarea>" +
-      "<label class='field-label'>教师调整总分（/40）</label>" +
-      "<input id='teacher-score' type='number' min='0' max='40' value='" +
-      (s.teacher && s.teacher.score != null ? s.teacher.score : s.ai ? s.ai.total : 0) +
-      "' />" +
-      "<button class='btn btn-primary' id='save-teacher-review' type='button'>保存复审</button>" +
-      "<p class='feedback' id='teacher-save-feedback'></p></div>";
-
-    $("#save-teacher-review").onclick = function () {
-      const comment = $("#teacher-comment").value.trim();
-      const score = Number($("#teacher-score").value);
-      const all = loadJSON(STORAGE.submissions, []);
-      const idx = all.findIndex(function (x) {
-        return x.id === id;
-      });
-      if (idx < 0) return;
-      all[idx].status = "reviewed";
-      all[idx].teacher = {
-        comment: comment,
-        score: score,
-        reviewedAt: new Date().toISOString()
-      };
-      saveJSON(STORAGE.submissions, all);
-      $("#teacher-save-feedback").textContent = "复审已保存。";
-      renderSubList();
-      showSubDetail(id);
-    };
-  }
 
   /* ---------- Boot ---------- */
   function bindNav() {
