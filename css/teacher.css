@@ -1,0 +1,265 @@
+.teacher-page {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.teacher-top {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem 1.5rem 0.5rem;
+}
+
+.teacher-top-inner {
+  width: min(1200px, calc(100% - 1rem));
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.teacher-top h1 {
+  margin: 0.2rem 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+.teacher-top .lead {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.teacher-top-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.teacher-login-wrap {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+  padding: 1rem;
+}
+
+.teacher-login-card {
+  width: min(420px, 100%);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.teacher-login-card h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.teacher-login-card input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+  font-family: var(--font-body);
+  background: #fff;
+}
+
+.teacher-main {
+  position: relative;
+  z-index: 1;
+  width: min(1200px, calc(100% - 2rem));
+  margin: 1rem auto 2.5rem;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1rem;
+  min-height: 70vh;
+}
+
+.queue,
+.review-pane {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.queue {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.queue-head {
+  padding: 1rem 1rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.queue-head h2 {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+}
+
+.filter-row {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.filter {
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+
+.filter.active {
+  background: var(--ink);
+  color: #f4f8f5;
+  border-color: var(--ink);
+}
+
+#queue-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  flex: 1;
+}
+
+.queue-item {
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+
+.queue-item:hover,
+.queue-item.active {
+  background: rgba(42, 143, 116, 0.1);
+}
+
+.qi-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.qi-title {
+  margin-top: 0.25rem;
+  font-size: 0.92rem;
+}
+
+.qi-meta {
+  margin-top: 0.2rem;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+#queue-empty {
+  padding: 1rem;
+}
+
+.review-pane {
+  padding: 1.2rem 1.3rem;
+  overflow: auto;
+}
+
+.review-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.review-head h2 {
+  margin: 0.2rem 0 0.4rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.55rem;
+}
+
+.essay-view pre {
+  white-space: pre-wrap;
+  background: var(--mist);
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 0 0 1rem;
+  font-family: var(--font-body);
+  line-height: 1.85;
+  max-height: 360px;
+  overflow: auto;
+}
+
+.ai-box,
+.teacher-form-card {
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}
+
+.ai-box h3,
+.teacher-form-card h3 {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.teacher-form-card textarea,
+.teacher-form-card input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+  font-family: var(--font-body);
+  background: #fff;
+  margin-bottom: 0.65rem;
+}
+
+.teacher-form-card textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.review-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.empty-hint {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .teacher-main {
+    grid-template-columns: 1fr;
+  }
+  .queue {
+    max-height: 320px;
+  }
+}
