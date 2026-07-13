@@ -156,6 +156,22 @@ export function WritingStudio({ text }: Props) {
             ))}
           </ul>
 
+          {text.sampleResponses ? (
+            <details className="sample-fold">
+              <summary>对照范文（先自己写，再展开）</summary>
+              <div className="sample-fold__grid">
+                <div>
+                  <h3>发展中</h3>
+                  <p>{text.sampleResponses.developing}</p>
+                </div>
+                <div>
+                  <h3>较优秀</h3>
+                  <p>{text.sampleResponses.strong}</p>
+                </div>
+              </div>
+            </details>
+          ) : null}
+
           <div className="workspace__actions">
             <button
               type="button"

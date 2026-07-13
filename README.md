@@ -1,8 +1,8 @@
 # IBDP Chinese A · 文径
 
-IBDP 中文语言与文学交互学习站点：**文本精读 → 手法识别 → 分析写作**，首页为学习进度 Tracker。
+IBDP 中文语言与文学交互学习网站：**文本精读 → 手法识别 → 分析写作**，首页为学习进度 Tracker。
 
-## 快速开始
+## 本地运行
 
 ```bash
 cd web
@@ -10,13 +10,17 @@ npm install
 npm run dev
 ```
 
-打开 [http://localhost:3000](http://localhost:3000)。
+浏览器打开 [http://localhost:3000](http://localhost:3000)。
 
-## Tracker 做什么
+## 页面
 
-- 首页展示三环路径与完成度（localStorage 持久化）
-- 精读：分段阅读 + 批注，完成后解锁手法
-- 手法：多选题 + 效果反馈，完成后解锁写作
-- 写作：证据库、句式支架、自评清单，回写 Tracker
+| 路径 | 功能 |
+| --- | --- |
+| `/` | 文径首页 + 三环进度 Tracker |
+| `/texts/[id]/read` | 分段精读与批注 |
+| `/texts/[id]/techniques` | 手法识别练习（含效果反馈） |
+| `/texts/[id]/write` | 分析写作（证据库 / 句式 / 自评） |
+| `/glossary` | 手法词表 |
+| `/rubric` | 评估速查 |
 
 示例文本：`web/src/content/sample-autumn-balcony.json`（可替换扩展）。

@@ -37,7 +37,7 @@ export function HomeTracker() {
           <p className="brand-mark">文径</p>
           <h1 className="brand-line">把每一次细读，走成可追踪的路径</h1>
           <p className="brand-sub">
-            IBDP 中文语言与文学 · 精读、手法、写作三环进度 Tracker
+            IBDP 中文语言与文学交互练习：精读批注、手法识别、分析写作，进度自动记录。
           </p>
           <div className="home__cta">
             <Link className="btn btn-primary" href={nextHref}>
