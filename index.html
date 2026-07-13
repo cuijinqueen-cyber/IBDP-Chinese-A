@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>文脉 · IBDP 中文A 精读工坊</title>
+  <meta name="description" content="基于谢宗玉《英语老师》的分层交互练习：精读、文学手法识别、分析写作。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <!-- Landing -->
+  <header class="hero" id="top">
+    <nav class="nav">
+      <a class="brand" href="#top">文脉</a>
+      <div class="nav-links">
+        <a href="#text">原文</a>
+        <a href="#layer1">精读</a>
+        <a href="#layer2">辨法</a>
+        <a href="#layer3">析写</a>
+      </div>
+    </nav>
+
+    <div class="hero-inner">
+      <p class="hero-brand">文脉 · IBDP 中文 A</p>
+      <h1 class="hero-title">在文本里练就<br />看见与言说</h1>
+      <p class="hero-lead">以谢宗玉《英语老师》为范本，分层训练精读、手法识别与分析写作——对应语言与文学 Paper 1 的核心能力。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#text">开始阅读</a>
+        <a class="btn btn-ghost" href="#layers">查看练习路径</a>
+      </div>
+    </div>
+    <div class="hero-wash" aria-hidden="true"></div>
+  </header>
+
+  <!-- Path overview -->
+  <section class="section path" id="layers">
+    <div class="container">
+      <p class="eyebrow">练习路径</p>
+      <h2 class="section-title">三层递进，由读到写</h2>
+      <div class="path-grid">
+        <a class="path-item" href="#layer1" style="--delay:0">
+          <span class="path-num">01</span>
+          <h3>精读</h3>
+          <p>抓住冲突、情感轨迹与关键信息，建立对文本的准确理解。</p>
+        </a>
+        <a class="path-item" href="#layer2" style="--delay:1">
+          <span class="path-num">02</span>
+          <h3>辨法</h3>
+          <p>识别比喻、拟人、对比、插叙等手法，说明其如何制造意义。</p>
+        </a>
+        <a class="path-item" href="#layer3" style="--delay:2">
+          <span class="path-num">03</span>
+          <h3>析写</h3>
+          <p>按 IB 评论逻辑组织论证：观点、引文、手法、效果与主题。</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Full text -->
+  <section class="section text-section" id="text">
+    <div class="container text-layout">
+      <aside class="text-meta">
+        <p class="eyebrow">选文</p>
+        <h2 class="section-title" id="work-title"></h2>
+        <p class="meta-line" id="work-author"></p>
+        <p class="meta-note" id="work-source"></p>
+        <p class="meta-exam" id="work-exam"></p>
+        <div class="progress-box">
+          <p class="progress-label">练习进度</p>
+          <div class="progress-bar"><span id="global-progress"></span></div>
+          <p class="progress-text" id="global-progress-text">0 / 3 层完成</p>
+        </div>
+        <ul class="ib-tips" id="ib-tips"></ul>
+      </aside>
+      <article class="text-body" id="text-body"></article>
+    </div>
+  </section>
+
+  <!-- Layer 1 -->
+  <section class="section layer" id="layer1">
+    <div class="container">
+      <div class="layer-head">
+        <span class="layer-badge">第一层</span>
+        <h2 class="section-title">精读能力</h2>
+        <p class="section-lead">先把故事读准：谁做了什么、感受如何变化、哪些细节支撑判断。</p>
+      </div>
+      <div class="quiz" id="close-reading-quiz"></div>
+      <div class="layer-result" id="layer1-result" hidden></div>
+    </div>
+  </section>
+
+  <!-- Layer 2 -->
+  <section class="section layer layer-alt" id="layer2">
+    <div class="container">
+      <div class="layer-head">
+        <span class="layer-badge">第二层</span>
+        <h2 class="section-title">文学手法识别</h2>
+        <p class="section-lead">手法不是标签游戏——选出名称后，阅读解析，理解它如何作用于读者。</p>
+      </div>
+
+      <div class="tech-quiz" id="tech-quiz"></div>
+
+      <div class="match-panel">
+        <h3 class="subhead">快速配对</h3>
+        <p class="section-lead tight">将手法拖到（或点击选择后点击）对应例句。</p>
+        <div class="match-board" id="match-board">
+          <div class="match-col" id="match-techniques"></div>
+          <div class="match-col" id="match-examples"></div>
+        </div>
+        <button class="btn btn-secondary" id="check-match" type="button">检查配对</button>
+        <p class="match-feedback" id="match-feedback" role="status"></p>
+      </div>
+
+      <div class="layer-result" id="layer2-result" hidden></div>
+    </div>
+  </section>
+
+  <!-- Layer 3 -->
+  <section class="section layer" id="layer3">
+    <div class="container">
+      <div class="layer-head">
+        <span class="layer-badge">第三层</span>
+        <h2 class="section-title">分析写作</h2>
+        <p class="section-lead">围绕 IB 式评论题，用脚手架起草段落，再对照评分要点自评。</p>
+      </div>
+
+      <div class="prompt-tabs" id="prompt-tabs" role="tablist"></div>
+      <div class="writing-studio" id="writing-studio">
+        <div class="scaffold" id="scaffold"></div>
+        <div class="editor-pane">
+          <label class="editor-label" for="essay-input">你的分析段落</label>
+          <textarea id="essay-input" rows="12" placeholder="先写论点，再嵌入引文，解释手法与效果，最后回扣主题……"></textarea>
+          <div class="editor-actions">
+            <button class="btn btn-ghost" id="show-sample" type="button">查看开头示例</button>
+            <button class="btn btn-primary" id="save-draft" type="button">保存草稿</button>
+          </div>
+          <div class="sample-box" id="sample-box" hidden></div>
+          <div class="criteria" id="criteria"></div>
+        </div>
+      </div>
+      <div class="layer-result" id="layer3-result" hidden></div>
+    </div>
+  </section>
+
+  <!-- Summary -->
+  <section class="section summary" id="summary">
+    <div class="container summary-inner">
+      <p class="eyebrow">收束</p>
+      <h2 class="section-title">从《英语老师》带走的阅读方法</h2>
+      <ol class="takeaways" id="takeaways">
+        <li>追踪情感轨迹：羞耻 → 仇恨 → 两难 → 淡化 → 怜悯。</li>
+        <li>把意象连成链：快刀、水草、芽、刀斫之痕——个人伤痛被普遍化。</li>
+        <li>写评论时始终回答：作者如何用语言与结构让读者看见成长中的不对称伤害。</li>
+      </ol>
+      <a class="btn btn-primary" href="#layer1">再练一轮</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>文脉 · IBDP 中文 A 语言与文学</span>
+      <span>文本：谢宗玉《英语老师》</span>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
