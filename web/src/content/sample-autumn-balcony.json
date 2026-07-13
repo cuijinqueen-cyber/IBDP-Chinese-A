@@ -1,0 +1,82 @@
+{
+  "id": "sample-autumn-balcony",
+  "title": "秋夜（教学示例）",
+  "author": "教学原创",
+  "genre": "prose",
+  "guidingQuestion": "作者如何通过意象与句式节奏，写出人物在秋夜中的孤独与自我安顿？",
+  "paragraphs": [
+    "夜色像一层薄薄的墨，从瓦檐上渗下来。我站在阳台，手里的茶杯早已凉了，杯壁上还留着一圈淡淡的齿痕。",
+    "风走过巷口的梧桐，把叶子翻成一片细碎的铜片声。远处有人关门，那一声并不响，却像把整条街的灯都轻轻按暗了一寸。",
+    "我想起白天说过的那些不必再说的话，它们在舌尖上发苦，又在喉咙里化开。于是我把杯子放下，让秋气从袖口进来，也让自己被这清凉重新写一遍。"
+  ],
+  "techniques": [
+    {
+      "id": "t1",
+      "paragraphIndex": 0,
+      "quote": "夜色像一层薄薄的墨，从瓦檐上渗下来",
+      "techniqueIds": ["simile", "imagery"],
+      "effect": "以「墨」与「渗」将夜色写得缓慢而具有触感，奠定沉静、略带压抑的氛围。"
+    },
+    {
+      "id": "t2",
+      "paragraphIndex": 1,
+      "quote": "把叶子翻成一片细碎的铜片声",
+      "techniqueIds": ["metaphor", "imagery"],
+      "effect": "听觉意象将落叶声金属化，突出清冷、醒神的秋意，也映衬内心的细微躁动。"
+    },
+    {
+      "id": "t3",
+      "paragraphIndex": 1,
+      "quote": "却像把整条街的灯都轻轻按暗了一寸",
+      "techniqueIds": ["simile", "hyperbole"],
+      "effect": "将关门声的心理放大，表现外在微响如何牵动内在情绪的「整体变暗」。"
+    },
+    {
+      "id": "t4",
+      "paragraphIndex": 2,
+      "quote": "让自己被这清凉重新写一遍",
+      "techniqueIds": ["metaphor"],
+      "effect": "将秋气拟化为「书写」主体，暗示人物借自然完成自我整理与重新开始。"
+    }
+  ],
+  "quiz": [
+    {
+      "id": "q1",
+      "paragraphIndex": 0,
+      "prompt": "「夜色像一层薄薄的墨，从瓦檐上渗下来」主要运用了哪些手法？",
+      "options": ["simile", "metaphor", "imagery", "parallelism"],
+      "correctTechniqueIds": ["simile", "imagery"],
+      "effectAnswer": "通过明喻与视觉意象，使夜色具有可渗透的物质感，营造缓慢、沉静的开篇氛围。"
+    },
+    {
+      "id": "q2",
+      "paragraphIndex": 1,
+      "prompt": "「把叶子翻成一片细碎的铜片声」的核心手法是？",
+      "options": ["simile", "metaphor", "repetition", "rhetorical-question"],
+      "correctTechniqueIds": ["metaphor"],
+      "effectAnswer": "「铜片声」以隐喻改写落叶，使自然声响带上冷硬质感，强化秋夜清冽。"
+    },
+    {
+      "id": "q3",
+      "paragraphIndex": 2,
+      "prompt": "结尾「让自己被这清凉重新写一遍」如何服务情感走向？",
+      "options": ["metaphor", "irony", "flashback", "statistics"],
+      "correctTechniqueIds": ["metaphor"],
+      "effectAnswer": "以书写隐喻完成从苦涩回忆到自我安顿的转折，使清凉秋气成为情绪更新的力量。"
+    }
+  ],
+  "writingPrompt": "回应引导问题，写一段 120–180 字的分析。至少引用一处文本，点明手法并分析效果。",
+  "sentenceFrames": [
+    "文中「【引文】」运用了【手法】，使【对象/情绪/场景】显得【效果】，从而【对读者的影响】。",
+    "作者以【手法】呈现「【引文】」，将【A】与【B】联系起来，突出了【态度/主题】。",
+    "从【前文语气】到「【引文】」，语气转为【新语气】；这一转变通过【手法/句式】实现，推动读者【重新评估……】。"
+  ],
+  "checklist": [
+    "首句回应引导问题或提出明确主张",
+    "至少一处带引号的文本证据",
+    "点名至少一种手法（或文体特征）",
+    "说明该手法的效果（非仅定义）",
+    "结尾将局部分析连回文本整体目的/态度",
+    "少复述，多分析；句子通顺"
+  ]
+}
