@@ -12,6 +12,9 @@
 | Cambridge-style Writing Test | **Task 1:** Line graph — % of population living in cities in Philippines, Malaysia, Thailand, Indonesia (1970–2040) | Core Task 1 diagnostic + model rewriting |
 | Same test | **Task 2:** *“The most important aim of science should be to improve people’s lives. To what extent do you agree or disagree?”* | Core Task 2 diagnostic + full essay cycle |
 | Opinion essay mini-lesson | Agree/disagree structure + space programme vs public services planning notes | Structure training, idea planning, transfer practice |
+| Exercise pack | Grammar, vocabulary, and linking-word drills tied to the same topics | Accuracy & range training between writing tasks |
+
+**Exercise file:** [`ielts-writing-exercises.md`](./ielts-writing-exercises.md)
 
 ---
 
@@ -46,16 +49,16 @@ A typical 6.5 writer already produces a complete essay with a clear position. Th
 
 ### Lesson Map
 
-| Lesson | Focus | Core material |
-|---|---|---|
-| 1 | Diagnostic + gap analysis | Full Cambridge writing test (Task 1 graph + Task 2 science) |
-| 2 | Agree/disagree architecture | Opinion mini-lesson + space vs public services |
-| 3 | Task 2 deep dive — science essay | Science aim prompt |
-| 4 | Lexis & grammar for Band 7 | Student’s own science essay rewrite |
-| 5 | Task 1 essentials — line graphs | Urbanisation graph |
-| 6 | Task 1 precision writing | Same graph → Band 7 model comparison |
-| 7 | Integrated timed practice | New prompts + transfer skills from materials |
-| 8 | Final mock + feedback conference | Full Writing paper under exam conditions |
+| Lesson | Focus | Core material | Exercises (see exercise pack) |
+|---|---|---|---|
+| 1 | Diagnostic + gap analysis | Full Cambridge writing test (Task 1 graph + Task 2 science) | Start Error Log only |
+| 2 | Agree/disagree architecture | Opinion mini-lesson + space vs public services | **A1–A4** linking words |
+| 3 | Task 2 deep dive — science essay | Science aim prompt | **B2, B4, B5** + **A2** |
+| 4 | Lexis & grammar for Band 7 | Student’s own science essay rewrite | **B1, B3** + **D1–D4, D6** + **E1** |
+| 5 | Task 1 essentials — line graphs | Urbanisation graph | **C1–C4** + **A5** |
+| 6 | Task 1 precision writing | Same graph → Band 7 model comparison | **C5, D5** + **E2** |
+| 7 | Integrated timed practice | New prompts + transfer skills from materials | **E3** mini-test + weak-area review |
+| 8 | Final mock + feedback conference | Full Writing paper under exam conditions | **F** daily drills continue until test day |
 
 ---
 
@@ -156,13 +159,20 @@ Use the material’s planning sequence, upgraded for Band 7:
 5. **Wrap-up (5 min)**  
    Student states their personal template in one sentence.
 
+**In-class exercises (15–20 min, can replace part of guided writing if needed)**
+- **A1** Sort the linkers  
+- **A3** Replace mechanical linkers (*Firstly / Moreover / In conclusion*)  
+- **A4** Build one cohesive body paragraph with 4 linkers  
+
 **Homework**
 Write a full 250+ word essay on the **space vs public services** question in 40 minutes.  
+Plus: **A2** linker choice exercise.  
 Self-check checklist:
 - [ ] Position clear in introduction  
 - [ ] Each body paragraph has one central idea  
 - [ ] Example is specific  
-- [ ] Conclusion matches introduction position
+- [ ] Conclusion matches introduction position  
+- [ ] No sentence-start linker in every sentence  
 
 ---
 
@@ -209,8 +219,13 @@ Many 6.5 answers say “I agree” and give two general benefits of science. Ban
 5. **Micro conclusion drill (10 min)**  
    Write conclusion in 4 minutes. Criteria: mirrors position; no new argument; 2–3 sentences.
 
+**In-class exercises (10–15 min)**
+- **B5** Science gap-fill paragraph (activates target lexis before writing)  
+- **A2** review if linker use was mechanical in Lesson 2 homework  
+
 **Homework**
-Complete full essay (intro already drafted in class). Then rewrite **one** body paragraph using the Claim → Explain → Example → Link chain.
+Complete full essay (intro already drafted in class). Then rewrite **one** body paragraph using the Claim → Explain → Example → Link chain.  
+Plus: **B2** vocabulary upgrade + **B4** write 8 original phrase-bank sentences.
 
 ---
 
@@ -256,9 +271,19 @@ Complete full essay (intro already drafted in class). Then rewrite **one** body 
    - 1 concession sentence  
    - zero article errors
 
+**In-class exercises (use inside stages above)**
+- **B1** collocation match  
+- **B3** word forms  
+- **D1** articles & countable nouns  
+- **D2** complex sentence combining  
+- **D3** error correction paragraph  
+- Finish with **E1** paragraph upgrade if time allows  
+
 **Homework**
-- 15-minute grammar clinic: 10 sentence transformations from Error Log  
-- Add 10 personal collocations to phrase bank (science / education / health / government)
+- **D4** conditionals & concession completions  
+- **D6** relative clause upgrade  
+- Add 10 personal collocations to phrase bank (science / education / health / government)  
+- Reuse 5 new items in a 4-sentence mini-paragraph
 
 ---
 
@@ -305,8 +330,15 @@ Complete full essay (intro already drafted in class). Then rewrite **one** body 
 5. **Quick accuracy check (5 min)**  
    Circle every number/date; verify against graph.
 
+**In-class exercises**
+- **C1** trend verb choice  
+- **C2** paraphrase the question (3 versions)  
+- **C4** overview gap-fill  
+- **A5** Task 1 comparison linkers  
+
 **Homework**
-Write full Task 1 (20 minutes). Then write a second overview only (5 minutes) without looking at the first.
+Write full Task 1 (20 minutes). Then write a second overview only (5 minutes) without looking at the first.  
+Plus: **C3** data language upgrade.
 
 ---
 
@@ -347,8 +379,14 @@ Write full Task 1 (20 minutes). Then write a second overview only (5 minutes) wi
    - [ ] Future language used for 2030/2040  
    - [ ] No opinions
 
+**In-class exercises**
+- **C5** avoid repetition of *increase*  
+- **D5** Task 1 tense control  
+- **E2** Task 1 paragraph upgrade  
+
 **Homework**
-One new line-graph Task 1 from a different topic (teacher provides). Apply the same 4-paragraph template.
+One new line-graph Task 1 from a different topic (teacher provides). Apply the same 4-paragraph template.  
+Plus: review any missed grammar items from **D1–D3**.
 
 ---
 
@@ -381,8 +419,13 @@ One new line-graph Task 1 from a different topic (teacher provides). Apply the s
    - better overview?  
    - fewer repeated grammar faults?
 
+**In-class / homework exercises**
+- **E3** mixed mini-test (linking + grammar + vocabulary) before or after the timed practice  
+- Personal weak-area pack: teacher selects 1 section from A/B/C/D based on Lesson 7 mistakes  
+
 **Homework**
-Revise only the weaker task from today’s practice (full rewrite). Prepare questions for final mock.
+Revise only the weaker task from today’s practice (full rewrite). Prepare questions for final mock.  
+Continue **Section F** daily 10-minute drills until the test.
 
 ---
 
@@ -521,7 +564,20 @@ Use as the **spine** of assessment:
 | Day after lesson | Rewrite 1 weak paragraph from class essay | 20–25 min |
 | Mid-week | Timed mini-task (intro + 1 body **or** Task 1 overview + 1 detail para) | 20 min |
 | Day before next lesson | Full timed Task 1 **or** Task 2 (alternate) | 20 or 40 min |
-| Daily | Error Log: 5 corrections + 3 phrase-bank sentences | 10 min |
+| Daily | Error Log: 5 corrections + 3 phrase-bank sentences **or** one drill from Exercise Pack Section F | 10 min |
+
+### Exercise Pack Quick Index
+
+| Section | Focus | Examples |
+|---|---|---|
+| **A** | Linking words & cohesion | Sort linkers, replace *Firstly/Moreover*, Task 1 comparison linkers |
+| **B** | Task 2 vocabulary | Collocations, word forms, science gap-fill, phrase bank |
+| **C** | Task 1 vocabulary | Trend verbs, paraphrasing, overview language, avoiding repetition |
+| **D** | Grammar | Articles, complex sentences, error correction, conditionals, tenses, relative clauses |
+| **E** | Mixed upgrades | Turn Band 6.5 paragraphs into Band 7 paragraphs |
+| **F** | Daily 10-min drills | Mon–Sun micro practice schedule |
+
+Full worksheets + answer keys: [`ielts-writing-exercises.md`](./ielts-writing-exercises.md)
 
 ---
 
@@ -552,8 +608,9 @@ If a gate is missed, insert one remediation lesson focused only on that bottlene
 2. **Reuse the same two authentic tasks** (cities graph + science essay) for measurable before/after gains.  
 3. **Use the opinion mini-lesson as process training**, then demand richer explanation than the bullet list provides.  
 4. **Mark less, mark better:** every script gets a band profile + top 3 actions only.  
-5. **Aim for stability, not one lucky essay.** Band 7.5 usually appears when Band 7 habits are automatic under time pressure.
+5. **Aim for stability, not one lucky essay.** Band 7.5 usually appears when Band 7 habits are automatic under time pressure.  
+6. **Exercises must transfer into essays.** After every drill set, require 3–5 reused items in the next piece of writing.
 
 ---
 
-*Plan designed for one-to-one teaching, using the uploaded Cambridge-style Writing test and the agree/disagree planning material as the core teaching sources.*
+*Plan designed for one-to-one teaching, using the uploaded Cambridge-style Writing test and the agree/disagree planning material as the core teaching sources. Language exercises are in the companion exercise pack.*
