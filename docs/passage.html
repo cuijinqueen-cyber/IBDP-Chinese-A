@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>原文关键句 Highlight｜Why we need silence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1c241c;
+      --muted: #5a675a;
+      --paper: #f3f6f1;
+      --panel: #fff;
+      --line: #d5ddd4;
+      --accent: #2f6b4f;
+      /* highlight colors by question type */
+      --h-match: #fff3a3;
+      --h-summary: #c8ebff;
+      --h-people: #ffd6e7;
+      --h-colloc: #d8f5d0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 70% 40% at 0% 0%, #e2ebdf 0%, transparent 55%),
+        var(--paper);
+      line-height: 1.65;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background: rgba(243,246,241,.94);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+    }
+    .topbar a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+    }
+    h1 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: clamp(1.7rem, 4vw, 2.3rem);
+      margin: 0 0 8px;
+      line-height: 1.2;
+    }
+    .subtitle { color: var(--muted); margin: 0 0 18px; }
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px;
+      margin: 0 0 22px;
+    }
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 0.88rem;
+    }
+    .swatch {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+    .swatch.match { background: var(--h-match); }
+    .swatch.summary { background: var(--h-summary); }
+    .swatch.people { background: var(--h-people); }
+    .swatch.colloc { background: var(--h-colloc); }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .controls button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .controls button.active,
+    .controls button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #e4efe8;
+    }
+    .passage {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 8px 0 4px;
+    }
+    .section {
+      padding: 16px 22px 18px;
+      border-top: 1px solid var(--line);
+    }
+    .section:first-child { border-top: 0; }
+    .sec-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: #e4efe8;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+    .section p {
+      margin: 0 0 12px;
+      font-size: 1.02rem;
+    }
+    .section p:last-child { margin-bottom: 0; }
+    mark {
+      padding: 0.08em 0.12em;
+      border-radius: 3px;
+      background: var(--h-match);
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    mark.summary { background: var(--h-summary); }
+    mark.people { background: var(--h-people); }
+    mark.colloc { background: var(--h-colloc); }
+    mark .tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      vertical-align: super;
+      margin-left: 2px;
+      color: #7a4e00;
+      background: rgba(255,255,255,.65);
+      border-radius: 3px;
+      padding: 0 4px;
+      line-height: 1.4;
+    }
+    mark.summary .tag { color: #0b4f78; }
+    mark.people .tag { color: #8a2458; }
+    mark.colloc .tag { color: #1f5a2a; }
+    body.filter-match mark.summary,
+    body.filter-match mark.people,
+    body.filter-match mark.colloc,
+    body.filter-summary mark:not(.summary),
+    body.filter-people mark:not(.people),
+    body.filter-colloc mark:not(.colloc) {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    body.filter-match mark.summary .tag,
+    body.filter-match mark.people .tag,
+    body.filter-match mark.colloc .tag,
+    body.filter-summary mark:not(.summary) .tag,
+    body.filter-people mark:not(.people) .tag,
+    body.filter-colloc mark:not(.colloc) .tag {
+      display: none;
+    }
+    .key-list {
+      margin-top: 28px;
+    }
+    .key-list h2 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: 1.3rem;
+      margin: 0 0 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--panel);
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 11px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: #e4efe8; color: var(--accent); }
+    td.q { font-weight: 700; white-space: nowrap; color: var(--accent); }
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    @media print {
+      .topbar, .controls { display: none; }
+      body { background: #fff; }
+      mark { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="./index.html">← 返回目录</a>
+    <span>原文关键句 Highlight · 对应 Q14–26</span>
+  </div>
+  <main class="wrap">
+    <h1>Why we need silence</h1>
+    <p class="subtitle">高亮 = 做题定位句 / 同义替换锚点 / 重点搭配所在句</p>
+
+    <div class="legend">
+      <span><i class="swatch match"></i> Matching Information（14–17）</span>
+      <span><i class="swatch summary"></i> Summary 填空（18–21）</span>
+      <span><i class="swatch people"></i> Matching People（22–26）</span>
+      <span><i class="swatch colloc"></i> 重点搭配句</span>
+    </div>
+
+    <div class="controls" id="filters">
+      <button type="button" class="active" data-filter="all">全部高亮</button>
+      <button type="button" data-filter="match">只看 14–17</button>
+      <button type="button" data-filter="summary">只看 18–21</button>
+      <button type="button" data-filter="people">只看 22–26</button>
+      <button type="button" data-filter="colloc">只看搭配句</button>
+    </div>
+
+    <article class="passage">
+      <section class="section" id="A">
+        <div class="sec-label">A</div>
+        <p>
+          Humans are
+          <mark class="colloc">finely attuned to noise<span class="tag">搭配</span></mark>,
+          and for good reason. From an evolutionary perspective, sounds give us vital information, helping us navigate the world and avoid danger.
+          To help ensure loud or unexpected noises get the attention they deserve, our internal chemistry alters
+          <mark class="colloc">in response to<span class="tag">搭配</span></mark> them.
+          <mark>Our blood pressure goes up, muscles tense and glands release hormones that prepare us for
+          <mark class="colloc" style="background:transparent;padding:0">fight or flight</mark>.
+          <span class="tag">Q16</span></mark>
+          In the short term, this is a good thing.
+          When we are
+          <mark class="colloc">exposed to<span class="tag">搭配</span></mark>
+          too much noise over the long term, however, those responses can
+          <mark class="colloc">lead to<span class="tag">搭配</span></mark>
+          a multitude of health issues, from sleep disturbance to even cardiovascular disease.
+        </p>
+      </section>
+
+      <section class="section" id="B">
+        <div class="sec-label">B</div>
+        <p>
+          The World Health Organization has recently designated excessive noise as an
+          <mark class="colloc">‘underestimated threat’<span class="tag">搭配</span></mark>
+          to public health, and has said that
+          <mark>people living in cities such as Mumbai, Tokyo and Buenos Aires are being exposed to far more than the recommended 40 decibels of noise at night.
+          <span class="tag">Q15</span></mark>
+          A report from the European Environment Agency concluded that noise was an ongoing and widespread issue in Europe, with
+          <mark>at least 1 in 5 people consistently exposed to levels considered
+          <mark class="colloc" style="background:transparent;padding:0">harmful to health</mark>.
+          <span class="tag">Q15</span></mark>
+          “There are no ‘earlids’ that can protect your brain from noise,” says Nick Antonio, an acoustic consultant who has contributed to the British and international standards for noise.
+        </p>
+      </section>
+
+      <section class="section" id="C">
+        <div class="sec-label">C</div>
+        <p>
+          The good news is that several cities have been working to
+          <mark class="colloc">turn the volume down<span class="tag">搭配</span></mark>.
+          One of the first to do so was London.
+          <mark>‘By providing recommendations for quieter buses, reducing noise from roads and also controlling noise from aircraft, they were able to make the city quieter,’ says Antonio.
+          <span class="tag">Q14</span></mark>
+          <mark>Other cities have introduced noise-reducing road coatings, for instance, alongside greenery that
+          <mark class="colloc" style="background:transparent;padding:0">muffles sound</mark>.
+          <span class="tag">Q14</span></mark>
+          <mark>Some solutions are more specific: Washington DC’s ban on petrol-powered leaf blowers
+          <mark class="colloc" style="background:transparent;padding:0">came into effect</mark>
+          recently, while in New York City,
+          <mark class="colloc" style="background:transparent;padding:0">legislation has been approved</mark>
+          to fine people who modify their vehicles to make them noisier.
+          <span class="tag">Q14</span></mark>
+          ‘People are seeing the benefits of these more quiet environments in their cities,’ Antonio says.
+          <mark class="people">‘I expect we will see much more of this in the future.’
+          <span class="tag">Q23 · A</span></mark>
+        </p>
+      </section>
+
+      <section class="section" id="D">
+        <div class="sec-label">D</div>
+        <p>
+          Researchers are also seeking to understand what aspects of silent experiences are most
+          <mark class="colloc">beneficial to<span class="tag">搭配</span></mark>
+          our health. One of the best-researched is the flotation tank: a lightproof, soundproof tank of salt water in which a person floats as a form of deep relaxation.
+          While some people experience altered perception in the tanks,
+          <mark class="people">involving subtle humming sounds and visual effects<span class="tag">Q24 · B</span></mark>,
+          these effects are benign and do not detract from the benefits of the experience, says Justin Feinstein, a clinical neuropsychologist.
+          <mark class="people">‘When you don’t have external sensory stimuli coming in, the brain tries to
+          <mark class="colloc" style="background:transparent;padding:0">fill the void</mark>
+          to make sense of this dark and silent world,’ he explains.
+          <span class="tag">Q24 · B</span></mark>
+          ‘In these tanks, some people can even hear the sound of their eyes blinking,’ says Feinstein.
+          <mark class="summary">‘But it is the ability to
+          <mark class="colloc" style="background:transparent;padding:0">focus on the breath</mark>
+          that helps people reach a relaxed or meditative state.’
+          <span class="tag">Q18</span></mark>
+        </p>
+      </section>
+
+      <section class="section" id="E">
+        <div class="sec-label">E</div>
+        <p>
+          To further explore flotation tanks as a therapeutic tool, Feinstein and his colleagues recruited 50 people with a variety of conditions
+          <mark class="colloc">related to stress<span class="tag">搭配</span></mark>
+          and had them
+          <mark class="summary">answer a questionnaire<span class="tag">Q19</span></mark>
+          prior to and following a flotation session.
+          Participants reported decreases in muscle tension, pain and symptoms of their conditions after a single, 1-hour float, alongside an increase in feelings of relaxation and overall
+          <mark class="summary">wellbeing<span class="tag">Q20</span></mark>.
+        </p>
+        <p>
+          Less is known about what effects sensory deprivation can have on the brain. To investigate, Feinstein’s team had 48 people participate in either three 90-minute float sessions or three 90-minute periods of relaxing on a chair which reclined.
+          Participants had their brains scanned using functional magnetic resonance imaging at the beginning and end of the trial.
+          Float sessions uniquely decreased activity in the default mode network (DMN), a collection of brain regions commonly
+          <mark class="summary">linked with depression<span class="tag">Q21</span></mark>.
+          Feinstein says it is an exciting finding, because flotation tanks seem to offer a way of ‘resetting’ our nervous system to prevent it from
+          <mark class="colloc">getting out of balance<span class="tag">搭配</span></mark>.
+        </p>
+      </section>
+
+      <section class="section" id="F">
+        <div class="sec-label">F</div>
+        <p>
+          Neurobiologist Tal Dotan Ben-Soussan is also an
+          <mark class="colloc">advocate of<span class="tag">搭配</span></mark>
+          silence as a therapy.
+          <mark class="people">‘When we find ways to be quiet, we are not only quiet in our environment, but quiet in our inner selves,’ she explains.
+          ‘This allows us to be more
+          <mark class="colloc" style="background:transparent;padding:0">aware of</mark>
+          what is happening around us and what the situation may require from us so we can provide [a more]
+          <mark class="colloc" style="background:transparent;padding:0">adequate response</mark>.’
+          <span class="tag">Q26 · C</span></mark>
+        </p>
+        <p>
+          Not everyone will benefit from silence to the same extent, but Ben-Soussan says one characteristic is key: the person must need to want to engage in the experience.
+          ‘We see from animal models and human studies that volition and intentionality is important,’ she says.
+          <mark class="people">‘When people do not want silence, it can be very distressing.’
+          <span class="tag">Q22 · C</span></mark>
+        </p>
+      </section>
+
+      <section class="section" id="G">
+        <div class="sec-label">G</div>
+        <p>
+          Eric Pfeifer, a psychotherapy researcher, also concedes that some people may not benefit from silence, particularly those who are in a heightened state of stress.
+          ‘People in these states may not be able to relax or
+          <mark class="colloc">calm down<span class="tag">搭配</span></mark>
+          in a silent condition,’ he says.
+          Professional guidance can be useful, he adds, allowing people to approach silence slowly so that they can gradually enjoy the benefits.
+          And Pfeifer is convinced that silence is more
+          <mark class="colloc">attainable in everyday life<span class="tag">搭配</span></mark>
+          than people think. First, complete silence isn’t necessary.
+          <mark>In a recent study, he found that participants reported more relaxation and less boredom when they sat quietly in an outdoor garden
+          <mark class="colloc" style="background:transparent;padding:0">compared with</mark>
+          a completely silent room.
+          <span class="tag">Q17</span></mark>
+          Second, Pfeifer believes we don’t need a lot of silence to
+          <mark class="colloc">gain benefits<span class="tag">搭配</span></mark>.
+          <mark class="people">‘You don’t need to spend hours in silence,’ he says. ‘It is likely better to have more frequency of silence for a few minutes at a time than a longer period of silence only once a week.
+          Just finding those places in your daily life where you can find some silence … can
+          <mark class="colloc" style="background:transparent;padding:0">make a big difference</mark>.’
+          <span class="tag">Q25 · D</span></mark>
+        </p>
+      </section>
+    </article>
+
+    <section class="key-list">
+      <h2>关键句 ↔ 题目对照表</h2>
+      <table>
+        <thead>
+          <tr><th>题</th><th>题干核心</th><th>原文关键句（定位）</th><th>段</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="q">14</td>
+            <td>strategies to decrease noise</td>
+            <td>quieter buses / road coatings / muffles sound / leaf blowers / vehicle fines</td>
+            <td>C</td>
+          </tr>
+          <tr>
+            <td class="q">15</td>
+            <td>data / extent of excessive noise</td>
+            <td>40 decibels … at least 1 in 5 people … harmful to health</td>
+            <td>B</td>
+          </tr>
+          <tr>
+            <td class="q">16</td>
+            <td>physiological changes / sudden noises</td>
+            <td>blood pressure goes up, muscles tense … fight or flight</td>
+            <td>A</td>
+          </tr>
+          <tr>
+            <td class="q">17</td>
+            <td>relatively quiet &gt; totally silent</td>
+            <td>outdoor garden compared with a completely silent room</td>
+            <td>G</td>
+          </tr>
+          <tr>
+            <td class="q">18</td>
+            <td>concentrate on their own ____</td>
+            <td>focus on the <strong>breath</strong></td>
+            <td>D</td>
+          </tr>
+          <tr>
+            <td class="q">19</td>
+            <td>given a ____ to complete</td>
+            <td>answer a <strong>questionnaire</strong></td>
+            <td>E</td>
+          </tr>
+          <tr>
+            <td class="q">20</td>
+            <td>improved general ____</td>
+            <td>overall <strong>wellbeing</strong></td>
+            <td>E</td>
+          </tr>
+          <tr>
+            <td class="q">21</td>
+            <td>associated with ____</td>
+            <td>linked with <strong>depression</strong></td>
+            <td>E</td>
+          </tr>
+          <tr>
+            <td class="q">22</td>
+            <td>against their will / upsetting</td>
+            <td>do not want silence … very <strong>distressing</strong> → C Ben-Soussan</td>
+            <td>F</td>
+          </tr>
+          <tr>
+            <td class="q">23</td>
+            <td>quieter urban trend will increase</td>
+            <td>much more of this in the future → A Antonio</td>
+            <td>C</td>
+          </tr>
+          <tr>
+            <td class="q">24</td>
+            <td>deprived of input → illusion</td>
+            <td>fill the void … humming sounds and visual effects → B Feinstein</td>
+            <td>D</td>
+          </tr>
+          <tr>
+            <td class="q">25</td>
+            <td>short silent time / positive impact</td>
+            <td>a few minutes at a time … make a big difference → D Pfeifer</td>
+            <td>G</td>
+          </tr>
+          <tr>
+            <td class="q">26</td>
+            <td>external + internal quiet → aware / react</td>
+            <td>quiet in environment + inner selves … aware … adequate response → C</td>
+            <td>F</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer>黄 = 信息匹配｜蓝 = 摘要填空｜粉 = 人物匹配｜绿 = 重点搭配 · 打印时勾选“背景图形”</footer>
+  </main>
+  <script>
+    const buttons = document.querySelectorAll("#filters button");
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        buttons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const f = btn.dataset.filter;
+        document.body.className = f === "all" ? "" : "filter-" + f;
+      });
+    });
+  </script>
+</body>
+</html>
