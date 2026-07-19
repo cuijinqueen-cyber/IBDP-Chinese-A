@@ -6,6 +6,7 @@
 | **题型** | Q14–17 Matching Information｜Q18–21 Summary Completion｜Q22–26 Matching Features |
 | **课时** | 90 分钟（可拆成 2×45） |
 | **教学目标** | ① 识别题干与原文的**同义词替换** ② 掌握三类题型的**做题流程** ③ 积累高频**搭配** |
+| **学生讲义** | 见同目录 [`why-we-need-silence-学生讲义.md`](./why-we-need-silence-学生讲义.md)（练习版，不含答案） |
 
 ---
 
