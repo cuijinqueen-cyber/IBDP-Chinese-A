@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>02-教案-学生版 · Timur Gareyev</title>
+<style>
+:root {
+  --ink: #1c2430;
+  --muted: #5b6573;
+  --bg: #f7f4ef;
+  --paper: #fffdf9;
+  --accent: #0f6b5c;
+  --line: #d9d2c5;
+  --highlight: #e8f3f0;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC", Georgia, serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 0%, #efe7d8 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, #dcece8 0%, transparent 35%),
+    var(--bg);
+  line-height: 1.7;
+}
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 12px 14px;
+  background: rgba(255,253,249,.9);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  position: sticky;
+  top: 8px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+.nav a {
+  text-decoration: none;
+  color: var(--accent);
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.nav a:hover { background: var(--highlight); }
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 26px;
+  box-shadow: 0 10px 30px rgba(40,30,10,.05);
+}
+h1,h2,h3 {
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  line-height: 1.35;
+}
+h1 { font-size: 1.7rem; margin-top: 0; color: #12352f; }
+h2 {
+  font-size: 1.25rem;
+  margin-top: 1.8em;
+  padding-bottom: .35em;
+  border-bottom: 2px solid #cfe3de;
+}
+h3 { font-size: 1.05rem; margin-top: 1.4em; color: #234; }
+p, li { font-size: 1.02rem; }
+a { color: var(--accent); }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  font-size: 14.5px;
+}
+th, td { border: 1px solid var(--line); padding: .55em .65em; vertical-align: top; }
+th { background: var(--highlight); text-align: left; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88rem; }
+pre { background: #f2eee5; padding: 12px 14px; border-radius: 10px; overflow: auto; }
+blockquote { margin: 1em 0; padding: .3em 1em; border-left: 4px solid var(--accent); background: var(--highlight); }
+hr { border: 0; border-top: 1px solid var(--line); margin: 1.8em 0; }
+@media(max-width:640px){ .card{padding:18px 14px;} h1{font-size:1.4rem;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="nav">
+<a href="index.html">目录</a>
+<a href="01-原文翻译与段落大意.html">翻译与大意</a>
+<a href="02-教案-学生版.html">学生版</a>
+<a href="03-教案-老师版.html">老师版</a>
+<a href="full-lesson.html">完整网页版</a>
+</nav>
+<article class="card">
+<h1>教案 · 学生版</h1>
+<h2>IELTS Reading Passage 3：<em>Timur Gareyev – blindfold chess champion</em></h2>
+<p><strong>目标：</strong> 读懂人物特写结构 · 掌握同义词替换 · 记忆重点搭配 · 练三类题型技巧<br />
+<strong>建议时长：</strong> 90 分钟（课上）+ 课后巩固<br />
+<strong>题号范围：</strong> Questions 27–40</p>
+<hr />
+<h2>一、学习目标（Learning Outcomes）</h2>
+<p>学完本课后，你应该能够：</p>
+<ol>
+<li>用自己的话概括 A–H 每段大意，并标出段落功能（引入 / 科研动机 / 生平 / 历史 / 机制 / 发现 / 态度）。</li>
+<li>识别题目与原文之间的 <strong>同义词替换（paraphrase）</strong>。</li>
+<li>掌握本篇至少 <strong>14 组重点搭配</strong>，并会在句子中使用。</li>
+<li>用正确步骤完成三种题型：段落信息匹配、TRUE/FALSE/NOT GIVEN、摘要填空（ONE WORD ONLY）。</li>
+</ol>
+<hr />
+<h2>二、课前热身（5–8 分钟）</h2>
+<h3>Task A · 预测</h3>
+<p>读标题 <em>Timur Gareyev – blindfold chess champion</em>，预测文章可能写什么（勾选）：</p>
+<ul>
+<li>[ ] 蒙眼象棋如何进行、难在哪里  </li>
+<li>[ ] 棋手的生平与纪录挑战  </li>
+<li>[ ] 科学家如何用脑扫描研究他  </li>
+<li>[ ] 教读者如何学会蒙眼下棋  </li>
+</ul>
+<h3>Task B · 关键词预热</h3>
+<p>先不看文章，猜下列词在文中可能的意思，再查证：</p>
+<table>
+<thead>
+<tr>
+<th>词</th>
+<th>我的猜测</th>
+<th>文中意思（课后填）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>blindfold</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>simultaneously</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>prowess</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>rarefied</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>exhaustion</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>allocate attention</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>三、重点搭配（Collocations）——必须会认、会换</h2>
+<p>把下列搭配抄进笔记本，并写出中文意思：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>搭配</th>
+<th>中文</th>
+<th>我造一句</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>take on … opponents at once</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>sets a high bar for…</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>get one’s kicks from…</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>keep … active / in mind</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>play … simultaneously</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>call for superhuman skill</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>run through possible moves</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>recreate … in your mind</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>9</td>
+<td>fragmented memory</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>standard memory tests</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>11</td>
+<td>greater than average communication</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>12</td>
+<td>allocate attention</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>13</td>
+<td>keep rules in mind</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>14</td>
+<td>visual network / visual images</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>15</td>
+<td>claim the title</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td>fully dedicate oneself to…</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>练习 1 · 搭配填空（不看原文）</h3>
+<ol>
+<li>Playing nearly 50 games <strong><em>_</em></strong><strong><em> sets a high </em></strong><strong><em>_</em></strong> for human performance.  </li>
+<li>Accomplished players often <strong><em>_</em></strong>___ possible moves in the mind before deciding.  </li>
+<li>When he is tired, his recall can become a <strong><em>_</em></strong>___ memory of the board.  </li>
+<li>The frontoparietal network helps you <strong><em>_</em></strong><strong><em> attention and keep rules </em></strong><strong><em>_</em></strong>.  </li>
+<li>He says the most important part is finding something he can fully <strong><em>_</em></strong>___ himself to.</li>
+</ol>
+<hr />
+<h2>四、同义词替换专训（Paraphrase Focus）</h2>
+<p>雅思阅读几乎每题都在考：<strong>题目换一种说法，原文换另一种说法，意思相同。</strong></p>
+<h3>替换表 A（做题前先学）</h3>
+<table>
+<thead>
+<tr>
+<th>原文表达</th>
+<th>题目/摘要常见替换</th>
+<th>中文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>go back centuries / first recorded… Florence / Najdorf 1947</td>
+<td>earlier examples of blindfold chess</td>
+<td>更早的盲棋先例</td>
+</tr>
+<tr>
+<td>recreate it in your mind / memorised… recalled… updated… stored</td>
+<td>what blindfold chess involves / an outline of the process</td>
+<td>盲棋涉及什么</td>
+</tr>
+<tr>
+<td>nothing other than playing chess… supremely gifted at</td>
+<td>skill is limited to chess</td>
+<td>天赋主要限于象棋</td>
+</tr>
+<tr>
+<td>researchers… called him in / hope of understanding… mental feats</td>
+<td>why… of interest to scientists</td>
+<td>为何引起科学兴趣</td>
+</tr>
+<tr>
+<td>most important… fully dedicate… obsession</td>
+<td>Gareyev’s priorities</td>
+<td>他最看重什么</td>
+</tr>
+<tr>
+<td>ends of games… exhaustion sets in</td>
+<td>why the last part… may be difficult</td>
+<td>残局为何更难</td>
+</tr>
+<tr>
+<td>challengers… play… as normal / himself… blindfolded</td>
+<td>（对照）all participants blindfolded</td>
+<td>只有他蒙眼 ≠ 全体蒙眼</td>
+</tr>
+<tr>
+<td>fondness for… BASE jumping</td>
+<td>（对照）has won competitions in…</td>
+<td>喜欢 ≠ 赢过比赛</td>
+</tr>
+<tr>
+<td>not a far reach for most accomplished players</td>
+<td>Good chess players… able to play blindfold</td>
+<td>高水平棋手多半能盲棋</td>
+</tr>
+<tr>
+<td>standard memory tests</td>
+<td>testing Gareyev’s memory</td>
+<td>记忆测试</td>
+</tr>
+<tr>
+<td>how many numbers… repeat… forwards and backwards</td>
+<td>recall a string of numbers… in reverse order</td>
+<td>正序/倒序复述数字</td>
+</tr>
+<tr>
+<td>greater… communication… frontoparietal… allocate attention</td>
+<td>unusual amount of communication… directing attention</td>
+<td>注意控制相关连通更强</td>
+</tr>
+<tr>
+<td>process visual images</td>
+<td>visual input</td>
+<td>视觉输入/图像加工</td>
+</tr>
+</tbody>
+</table>
+<h3>练习 2 · 同义配对</h3>
+<p>把左边原文与右边释义连线（写字母）：</p>
+<table>
+<thead>
+<tr>
+<th>原文</th>
+<th></th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. sets a high bar</td>
+<td>__</td>
+<td>a. remember and bring back accurately when needed</td>
+</tr>
+<tr>
+<td>2. keep games active at once</td>
+<td>__</td>
+<td>b. creates a very demanding standard</td>
+</tr>
+<tr>
+<td>3. recall faithfully</td>
+<td>__</td>
+<td>c. maintain several boards in working memory together</td>
+</tr>
+<tr>
+<td>4. exhaustion sets in</td>
+<td>__</td>
+<td>d. tiredness begins to affect performance</td>
+</tr>
+<tr>
+<td>5. allocate attention</td>
+<td>__</td>
+<td>e. decide what to focus on</td>
+</tr>
+</tbody>
+</table>
+<h3>练习 3 · 句子改写（同义替换输出）</h3>
+<p>用括号中的词改写句子，保持意思不变：</p>
+<ol>
+<li>
+<p>Displays of blindfold chess go back centuries.<br />
+   （earlier examples / recorded）<br />
+   → <strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong>_____</p>
+</li>
+<li>
+<p>The ends of games are taxing as exhaustion sets in.<br />
+   （last part / difficult / tired）<br />
+   → <strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong>_____</p>
+</li>
+<li>
+<p>They didn’t find anything other than chess that he seems supremely gifted at.<br />
+   （skill / limited to）<br />
+   → <strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong>_____</p>
+</li>
+</ol>
+<hr />
+<h2>五、做题技巧（按题型）</h2>
+<h3>题型 1｜Which paragraph contains…？ Q27–32</h3>
+<p><strong>步骤：</strong><br />
+1. 先读 6 道题干，圈出<strong>信息类型</strong>（历史例子 / 过程说明 / 科研动机 / 优先级…），不要先通读全文找“感觉”。<br />
+2. Matching Information <strong>可以乱序</strong>，且 <strong>同一段可能用两次</strong>（NB: You may use any letter more than once）。<br />
+3. 用段落首尾句 + 专有名词/年代快速定位，再用 paraphrase 验证。<br />
+4. 找到后在题干旁写段落字母，并在原文轻标题号，避免重复使用同一句证据却答错题。</p>
+<p><strong>本篇定位提示：</strong></p>
+<table>
+<thead>
+<tr>
+<th>题号</th>
+<th>你要找的信息类型</th>
+<th>可能信号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>27</td>
+<td>earlier examples</td>
+<td>世纪、历史人物、旧纪录</td>
+</tr>
+<tr>
+<td>28</td>
+<td>outline of what it involves</td>
+<td>脑中复盘、记忆—提取—更新</td>
+</tr>
+<tr>
+<td>29</td>
+<td>skill limited to chess</td>
+<td>标准测试平常 / only chess</td>
+</tr>
+<tr>
+<td>30</td>
+<td>why scientists interested</td>
+<td>researchers / UCLA / astonishing</td>
+</tr>
+<tr>
+<td>31</td>
+<td>Gareyev’s priorities</td>
+<td>most important / dedicate / obsession</td>
+</tr>
+<tr>
+<td>32</td>
+<td>why last part difficult</td>
+<td>ends of games / exhaustion</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>题型 2｜TRUE / FALSE / NOT GIVEN Q33–36</h3>
+<p><strong>步骤：</strong><br />
+1. 圈出题干中的绝对词与范围词（all / first / competitions / likely…）。<br />
+2. 回原文找<strong>同话题句子</strong>，比较是否同向、反向，或根本没说。<br />
+3. 判定口诀：<br />
+   - <strong>TRUE</strong>：原文支持该说法（常为 paraphrase）<br />
+   - <strong>FALSE</strong>：原文明确相反或范围冲突<br />
+   - <strong>NOT GIVEN</strong>：相关话题可能提到，但<strong>关键细节作者没说</strong></p>
+<p><strong>本篇提醒：</strong><br />
+- “喜欢某运动”≠“赢过该运动比赛”<br />
+- “已有初步结果”≠“第一所研究该主题的大学”<br />
+- “对手正常下、他蒙眼”≠“所有参赛者都蒙眼”</p>
+<table>
+<thead>
+<tr>
+<th>题号</th>
+<th>题干关键词</th>
+<th>你要验证的焦点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>33</td>
+<td>forthcoming / all participants / blindfolded</td>
+<td>谁蒙眼？</td>
+</tr>
+<tr>
+<td>34</td>
+<td>won competitions / BASE jumping</td>
+<td>有无“获胜”信息？</td>
+</tr>
+<tr>
+<td>35</td>
+<td>UCLA / first university / research</td>
+<td>有无“第一所大学”？</td>
+</tr>
+<tr>
+<td>36</td>
+<td>Good chess players / likely / blindfold</td>
+<td>高水平棋手能否盲棋？</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>题型 3｜Summary（ONE WORD ONLY）Q37–40</h3>
+<p><strong>步骤：</strong><br />
+1. 先读摘要标题 <em>How the research was carried out</em>，锁定对应段落（脑科学研究部分）。<br />
+2. 空格前看<strong>语法</strong>：名词？不可数？复数？<br />
+3. 答案必须是<strong>原文原词</strong>（可变形极少；本篇要求 ONE WORD ONLY）。<br />
+4. 抄写后回读整句，检查单复数与搭配是否通顺。</p>
+<p><strong>词性预判：</strong></p>
+<table>
+<thead>
+<tr>
+<th>题号</th>
+<th>语法线索</th>
+<th>语义方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>37</td>
+<td>testing Gareyev’s ______</td>
+<td>被测试的能力类别</td>
+</tr>
+<tr>
+<td>38</td>
+<td>a string of ______ … reverse order</td>
+<td>复述材料（经典测试）</td>
+</tr>
+<tr>
+<td>39</td>
+<td>unusual amount of ______ … directing attention</td>
+<td>脑区之间的关系/互动</td>
+</tr>
+<tr>
+<td>40</td>
+<td>parts… that deal with ______ input</td>
+<td>感官通道（与棋盘图像相关）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>六、答题纸 + 错题反思</h2>
+<h3>Answers（先独立完成，再对答案）</h3>
+<table>
+<thead>
+<tr>
+<th>题号</th>
+<th>我的答案</th>
+<th>订正</th>
+<th>错因（定位 / 替换 / 过度推断 / 未看清范围）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>27</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>28</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>29</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>30</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>31</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>32</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>33</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>34</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>35</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>36</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>37</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>38</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>39</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>40</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>错题反思（至少写 2 条）</h3>
+<ol>
+<li>
+<hr />
+</li>
+<li>
+<hr />
+</li>
+</ol>
+<hr />
+<h2>七、课后巩固</h2>
+<ol>
+<li><strong>闪卡（10 分钟）：</strong> 用替换表 A，正面写题目说法，背面写原文表达 + 段落字母。  </li>
+<li><strong>口头复述（3 分钟）：</strong> 不看文，用中文说出：A 在讲什么挑战？E 为什么残局更难？F/G 科学家发现了什么？H 他最看重什么？  </li>
+<li><strong>输出一句：</strong> 用 <code>allocate attention</code> / <code>fully dedicate oneself to</code> / <code>fragmented memory</code> 各造一句。</li>
+</ol>
+<hr />
+<h2>八、自检清单</h2>
+<ul>
+<li>[ ] 我能不看译文说出 A–H 每段一句话大意  </li>
+<li>[ ] 我知道 Matching Information 可以一段多用  </li>
+<li>[ ] 我能区分 FALSE 与 NOT GIVEN（尤其 Q34、Q35）  </li>
+<li>[ ] 我能解释 Q37–40 每个空对应哪类原文信息  </li>
+<li>[ ] 我至少记住 10 组搭配并能英译中  </li>
+</ul>
+</article>
+</div>
+</body>
+</html>

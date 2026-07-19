@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>教案 · 老师版</title>
+<style>
+:root {
+  --ink: #1c2430;
+  --muted: #5b6573;
+  --bg: #f7f4ef;
+  --paper: #fffdf9;
+  --accent: #0f6b5c;
+  --line: #d9d2c5;
+  --highlight: #e8f3f0;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC", Georgia, serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 0%, #efe7d8 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, #dcece8 0%, transparent 35%),
+    var(--bg);
+  line-height: 1.7;
+}
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 12px 14px;
+  background: rgba(255,253,249,.9);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  position: sticky;
+  top: 8px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+.nav a {
+  text-decoration: none;
+  color: var(--accent);
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.nav a:hover { background: var(--highlight); }
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 26px;
+  box-shadow: 0 10px 30px rgba(40,30,10,.05);
+}
+h1,h2,h3 {
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  line-height: 1.35;
+}
+h1 { font-size: 1.7rem; margin-top: 0; color: #12352f; }
+h2 {
+  font-size: 1.25rem;
+  margin-top: 1.8em;
+  padding-bottom: .35em;
+  border-bottom: 2px solid #cfe3de;
+}
+h3 { font-size: 1.05rem; margin-top: 1.4em; color: #234; }
+p, li { font-size: 1.02rem; }
+a { color: var(--accent); }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0 1.4em;
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  font-size: .95rem;
+}
+th, td {
+  border: 1px solid var(--line);
+  padding: .55em .7em;
+  vertical-align: top;
+}
+th { background: var(--highlight); text-align: left; }
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .9rem;
+}
+pre {
+  background: #f1eee7;
+  padding: 12px 14px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+blockquote {
+  margin: 1em 0;
+  padding: .2em 1em;
+  border-left: 4px solid var(--accent);
+  background: var(--highlight);
+  color: #243;
+}
+hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
+.footer {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: .9rem;
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+}
+@media (max-width: 640px) {
+  .card { padding: 20px 16px; }
+  h1 { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="nav">
+  <a href="01-原文翻译与段落大意.html">翻译与大意</a>
+  <a href="02-教案-学生版.html">学生版</a>
+  <a href="03-教案-老师版.html">老师版</a>
+  <a href="index.html">首页</a>
+</nav>
+
+<div class="card">
+<h1>教案 · 老师版</h1>
+<h2>IELTS Reading Passage 3：<em>The World of Sugar</em> 书评</h2>
+<p><strong>配套：</strong> <code>01-原文翻译与段落大意.md</code> · <code>02-教案-学生版.md</code><br />
+<strong>课时：</strong> 90 分钟（可拆成 2×45）<br />
+<strong>班型建议：</strong> 雅思阅读强化 / 高中英语拓展 / 大学学术英语</p>
+<hr />
+<h2>一、教学重点与设计意图</h2>
+<table>
+<thead>
+<tr>
+<th>重点</th>
+<th>设计意图</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>同义词替换</strong></td>
+<td>本篇干扰项强，几乎每题依赖 paraphrase，而非原词扫描</td>
+</tr>
+<tr>
+<td><strong>重点搭配</strong></td>
+<td>书评+经济史语域（subsidise, livelihood, diffusion 等）高频可迁移</td>
+</tr>
+<tr>
+<td><strong>做题技巧</strong></td>
+<td>覆盖选择题功能题、摘要选词、Y/N/NG 观点题三类核心技能</td>
+</tr>
+</tbody>
+</table>
+<p><strong>课堂主线：</strong><br />
+热身预测 → 分段大意 → 搭配/替换输入 → 限时做题 → 精讲答案（替换链）→ 错题反思</p>
+<hr />
+<h2>二、教学目标</h2>
+<h3>知识目标</h3>
+<ul>
+<li>理解全球糖史书评的八个信息块及末段总评态度。  </li>
+<li>掌握核心词汇与搭配（见学生版搭配表）。</li>
+</ul>
+<h3>技能目标</h3>
+<ul>
+<li>能定位段落功能信号（<em>Contrary to popular belief</em> 等）。  </li>
+<li>能完成同义替换配对并解释“题目—原文”对应链。  </li>
+<li>能区分 YES / NO / NOT GIVEN（观点题）。</li>
+</ul>
+<h3>情感/策略目标</h3>
+<ul>
+<li>建立“先理解逻辑，再找同义”的做题习惯，减少逐词翻译。</li>
+</ul>
+<hr />
+<h2>三、课时流程（90′）</h2>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>环节</th>
+<th>教师活动</th>
+<th>学生活动</th>
+<th>材料</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–8′</td>
+<td>热身预测</td>
+<td>展示标题，问：书评会写历史/劳工/健康/评价吗？</td>
+<td>Task A/B</td>
+<td>学生版第二节</td>
+</tr>
+<tr>
+<td>8–25′</td>
+<td>分段阅读</td>
+<td>分段限时（每段 1–1.5′），抽问大意；板书八段关键词</td>
+<td>读段+口答大意</td>
+<td>原文+翻译稿</td>
+</tr>
+<tr>
+<td>25–40′</td>
+<td>语言输入</td>
+<td>带领搭配朗读；完成练习1；讲替换表A</td>
+<td>填空、配对、改写</td>
+<td>学生版第三、四节</td>
+</tr>
+<tr>
+<td>40–65′</td>
+<td>限时做题</td>
+<td>严格计时：27–30（8′）→31–36（10′）→37–40（7′）</td>
+<td>独立作答</td>
+<td>原题</td>
+</tr>
+<tr>
+<td>65–85′</td>
+<td>精讲答案</td>
+<td>每题出示“题干→定位句→替换链→排除项”</td>
+<td>订正+反思表</td>
+<td>下方答案详解</td>
+</tr>
+<tr>
+<td>85–90′</td>
+<td>布置作业</td>
+<td>明确闪卡与复述任务</td>
+<td>记录作业</td>
+<td>学生版第七节</td>
+</tr>
+</tbody>
+</table>
+<p><strong>若仅 45 分钟：</strong> 热身 5′ + 大意 12′ + 替换输入 10′ + 做题 15′（只做 27–30 与 37–40）+ 讲评 3′；摘要题留作课后，下节精讲。</p>
+<hr />
+<h2>四、分段教学脚本（教师用）</h2>
+<h3>P1 导入问题</h3>
+<blockquote>
+<p>“这本书只写甘蔗糖吗？甜菜糖为什么能威胁甘蔗生产者？”<br />
+<strong>期望答案：</strong> 不只写甘蔗；甜菜糖获补贴、人为低价销售。</p>
+</blockquote>
+<h3>P2 引导</h3>
+<blockquote>
+<p>“英国糖的来源变了几次？作者强调的是‘需求增加’还是‘来源变化’？”<br />
+<strong>期望答案：</strong> 来源变化（为 Q28 铺垫）。</p>
+</blockquote>
+<h3>P3 功能信号</h3>
+<p>板书：<code>Contrary to popular belief</code> = <strong>纠正误解</strong>（Q29 关键）。<br />
+强调：功能题看作者“在做什么”，不是看举例细节本身。</p>
+<h3>P4–P5（摘要题区）</h3>
+<p>让学生用两种颜色标出：<br />
+- 黄：migrant / imported labour<br />
+- 绿：small farms / traditional methods<br />
+- 红：bourgeoisie / trade barriers / subsidies / poor countries  </p>
+<h3>P6</h3>
+<p>一句带过：糖=农业+工业；为后文“技术发展→大量可得”埋伏笔（Q37）。</p>
+<h3>P7–P8（态度题区）</h3>
+<p>抓住态度词：<br />
+- <code>appalling obstruction</code> / <code>worrying new developments</code> → 负面（Q39）<br />
+- <code>could always have done without sugar</code> → unnecessary（Q30）<br />
+- <code>Yet… poorest… depend on it</code> → 悲剧与依赖并存</p>
+<hr />
+<h2>五、语言点精讲（教师补充）</h2>
+<h3>1) 同义词替换教学话术</h3>
+<p>不要说“记住这个等于那个”，而说：  </p>
+<blockquote>
+<p>“题目换了包装，意思没变。我们要找的是<strong>同义命题</strong>，不是相同单词。”</p>
+</blockquote>
+<p>示范链（写在黑板）：</p>
+<pre><code>artificially low prices + massively subsidised
+        ↓
+more internationally competitive（Q27 B）
+</code></pre>
+<h3>2) 易混词</h3>
+<table>
+<thead>
+<tr>
+<th>词</th>
+<th>提醒学生</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>subsidised</td>
+<td>政府给钱支持 ≠ 单纯 cheaper</td>
+</tr>
+<tr>
+<td>livelihood</td>
+<td>生计/饭碗，不只是 “life”</td>
+</tr>
+<tr>
+<td>abolition</td>
+<td>废除制度；后常跟 of slavery</td>
+</tr>
+<tr>
+<td>ubiquitous</td>
+<td>无处不在；常考替换 widespread / available everywhere</td>
+</tr>
+<tr>
+<td>penalised</td>
+<td>摘要里 = came off worse / 受损</td>
+</tr>
+</tbody>
+</table>
+<h3>3) 搭配纠错（口头纠音/用法）</h3>
+<ul>
+<li>✗ come off <strong>worst</strong> → ✓ come off <strong>worse</strong>（文中用法）  </li>
+<li>✗ contrary <strong>with</strong> popular belief → ✓ contrary <strong>to</strong>  </li>
+<li>✗ play a major role <strong>on</strong> politics → ✓ <strong>in</strong> politics  </li>
+</ul>
+<hr />
+<h2>六、学生版练习参考答案</h2>
+<h3>练习 1 · 搭配填空</h3>
+<ol>
+<li>massively; artificially  </li>
+<li>Contrary  </li>
+<li>profound  </li>
+<li>came off  </li>
+<li>regarded; promoted  </li>
+</ol>
+<h3>练习 2 · 同义配对</h3>
+<p>1–b, 2–d, 3–e, 4–a, 5–c  </p>
+<h3>练习 3 · 改写（示例）</h3>
+<ol>
+<li>Beet sugar has been made more competitive on international markets (through subsidies / low prices).  </li>
+<li>The reviewer addresses the misconception that cane production was restricted only to plantations.  </li>
+<li>Less wealthy nations were penalised / came off worse.</li>
+</ol>
+<hr />
+<h2>七、原题答案与详解（核心）</h2>
+<h3>Questions 27–30（选择题）</h3>
+<table>
+<thead>
+<tr>
+<th>题</th>
+<th>答案</th>
+<th>定位句（意译/关键词）</th>
+<th>同义替换链</th>
+<th>干扰项为何错</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>27</strong></td>
+<td><strong>B</strong></td>
+<td>P1: beet sugar massively subsidised… artificially low prices… threatening cane producers</td>
+<td>subsidised + low prices → <strong>more internationally competitive</strong></td>
+<td>A 国际关系未提；C 质量优劣未比；D “新产地增加产量”非本段重点</td>
+</tr>
+<tr>
+<td><strong>28</strong></td>
+<td><strong>A</strong></td>
+<td>P2: first… colonial → after abolition… Cuba/Brazil → late 19th… beet from Europe → 20th… national beet industry</td>
+<td>来源时间线 → <strong>sources used changed over time</strong></td>
+<td>B 农业发展影响贸易未强调；C 需求增加非本段重心；D 伦理种植无依据</td>
+</tr>
+<tr>
+<td><strong>29</strong></td>
+<td><strong>C</strong></td>
+<td>P3: <strong>Contrary to popular belief</strong>, never just restricted to large plantations</td>
+<td>contrary to popular belief → <strong>addressing a misconception</strong></td>
+<td>A “高效方法”只是例子；B 种植园衰落未说；D 未比较评价多种方法优劣</td>
+</tr>
+<tr>
+<td><strong>30</strong></td>
+<td><strong>A</strong></td>
+<td>P8: could always have done without sugar… many alternative sources；兼及 harm（P7）</td>
+<td>done without → <strong>unnecessary</strong>；harm → <strong>harmful</strong></td>
+<td>B 征税是部分国家做法，非全书总信息；C 改善劳工条件非总信息；D 营销灾难非末段主旨</td>
+</tr>
+</tbody>
+</table>
+<p><strong>讲题顺序建议：</strong> 先 29（功能信号最明显）→ 28（时间线）→ 27（因果替换）→ 30（末段态度）。</p>
+<hr />
+<h3>Questions 31–36（摘要选词）</h3>
+<p><strong>对应原文：</strong> 主要 P4 + P5<br />
+<strong>答案：</strong></p>
+<table>
+<thead>
+<tr>
+<th>题</th>
+<th>答案</th>
+<th>原文依据</th>
+<th>替换说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>31</strong></td>
+<td><strong>H</strong> migrant workers</td>
+<td>German beet fields employed Polish workers; Mexicans… Sicilians… US</td>
+<td>imported/foreign labour → migrant workers</td>
+</tr>
+<tr>
+<td><strong>32</strong></td>
+<td><strong>E</strong> small-scale cultivation</td>
+<td>continuity of… traditional methods on <strong>small farms</strong>… South Asia and Latin America</td>
+<td>small farms / traditional methods → small-scale cultivation</td>
+</tr>
+<tr>
+<td><strong>33</strong></td>
+<td><strong>I</strong> powerful individuals and businesses</td>
+<td>capitalists and sugar dynasties… corporations… sugar bourgeoisie</td>
+<td>资本家/王朝/公司 → powerful individuals and businesses</td>
+</tr>
+<tr>
+<td><strong>34</strong></td>
+<td><strong>A</strong> national governments</td>
+<td>profound influence on the <strong>policies of states</strong>… major role in <strong>politics</strong></td>
+<td>states/politics → national governments</td>
+</tr>
+<tr>
+<td><strong>35</strong></td>
+<td><strong>G</strong> financial controls</td>
+<td>protected by <strong>trade barriers and subsidies</strong></td>
+<td>barriers &amp; subsidies → financial controls</td>
+</tr>
+<tr>
+<td><strong>36</strong></td>
+<td><strong>C</strong> less wealthy nations</td>
+<td>poor countries which <strong>came off worse</strong></td>
+<td>poor countries → less wealthy nations；came off worse → were penalised</td>
+</tr>
+</tbody>
+</table>
+<p><strong>未选项用途（防学生追问）：</strong><br />
+B agricultural developments → 更贴近 P6–P7，非本摘要前半；<br />
+D untrained workers → 文中强调 migrant，非 untrained；<br />
+F outdated methods → “traditional”≠题目要的“过时贬义”。</p>
+<p><strong>教学技巧：</strong> 先让学生根据语法缩小范围（31 人；35 复数制度），再做语义匹配，正确率会明显上升。</p>
+<hr />
+<h3>Questions 37–40（YES / NO / NOT GIVEN）</h3>
+<table>
+<thead>
+<tr>
+<th>题</th>
+<th>答案</th>
+<th>理由（教师讲解用语）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>37</strong></td>
+<td><strong>YES</strong></td>
+<td>P7: new techniques, varieties, fertilisers, irrigation… turned sugar into a ubiquitous chemical → 大量可得归因于一系列农业/技术发展。</td>
+</tr>
+<tr>
+<td><strong>38</strong></td>
+<td><strong>NO</strong></td>
+<td>原文：Once <strong>regarded as</strong> a luxury, sugar <strong>came to be promoted as</strong> a valuable source of energy。被“视为”奢侈品，但“宣传/推广”的是能量来源，并非广告起初把它营销为奢侈品。</td>
+</tr>
+<tr>
+<td><strong>39</strong></td>
+<td><strong>NO</strong></td>
+<td>原文称 HFCS 为 <strong>worrying</strong> new developments，并视为肥胖主因之一 → 与 “positive development” 相反。</td>
+</tr>
+<tr>
+<td><strong>40</strong></td>
+<td><strong>YES</strong></td>
+<td>原文：adopted in… soft drinks and a <strong>large number of processed foods</strong> → 与 “ingredient in many processed foods” 一致。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Y/N/NG 提醒话术：</strong></p>
+<blockquote>
+<p>“NOT GIVEN 不是‘我不确定’，而是‘作者没表态’。<br />
+第 38 题原文有相关信息，但方向相反或错位 → 判 NO，不是 NG。”</p>
+</blockquote>
+<hr />
+<h2>八、分层与差异化</h2>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>调整</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基础班</td>
+<td>先给段落大意中文，再做题；摘要题提供“31=劳动力，32=种植规模”提示</td>
+</tr>
+<tr>
+<td>目标 6.5–7.0</td>
+<td>严格限时；要求口头说出每题替换链</td>
+</tr>
+<tr>
+<td>冲刺班</td>
+<td>增加干扰项设计讨论：为何 A/C/D 像对的？各对应哪类陷阱（过度推断/细节错位/原词陷阱）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>九、板书设计（建议）</h2>
+<pre><code>The World of Sugar（书评）
+├─ Global cane + beet（补贴低价）
+├─ Britain: sources change
+├─ Labour: NOT only plantations
+├─ Continuity: migrants + small farms
+├─ Power: bourgeoisie → barriers/subsidies → poor lose
+├─ Industry + tech diffusion
+├─ Consumption ↑ / health ↓ / HFCS worrying
+└─ Message: unnecessary, yet poor depend on it
+
+做题口诀：定位 → 同义 → 排除 → 回读验证
+</code></pre>
+<hr />
+<h2>十、作业与检测</h2>
+<ol>
+<li>学生完成学生版第七节作业。  </li>
+<li>下节课抽查：任意抽 3 组搭配英译中 + 口述 Q29、Q38 的解题理由。  </li>
+<li>可选小测（10 分钟）：打乱替换表，让学生从选项反推原文句子位置。</li>
+</ol>
+<hr />
+<h2>十一、教师自查清单</h2>
+<ul>
+<li>[ ] 是否强调 Q29 为<strong>功能题</strong>而非细节题  </li>
+<li>[ ] 是否讲清 Q30 看<strong>末段总信息</strong>，不是只看健康段  </li>
+<li>[ ] 是否把摘要 31–36 全部落在 P4–P5 的替换链上  </li>
+<li>[ ] 是否区分 Q38 的 regarded vs promoted  </li>
+<li>[ ] 是否提醒 HFCS 的作者态度词 worrying  </li>
+</ul>
+<hr />
+<h2>十二、完整答案速查</h2>
+<p><strong>27 B　28 A　29 C　30 A</strong><br />
+<strong>31 H　32 E　33 I　34 A　35 G　36 C</strong><br />
+<strong>37 YES　38 NO　39 NO　40 YES</strong></p>
+</div>
+<p class="footer">本地 HTML 版本 · 可离线打开</p>
+</div>
+</body>
+</html>
