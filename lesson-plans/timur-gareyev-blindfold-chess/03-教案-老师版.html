@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>03-教案-老师版 · Timur Gareyev</title>
+<style>
+:root {
+  --ink: #1c2430;
+  --muted: #5b6573;
+  --bg: #f7f4ef;
+  --paper: #fffdf9;
+  --accent: #0f6b5c;
+  --line: #d9d2c5;
+  --highlight: #e8f3f0;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC", Georgia, serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 0%, #efe7d8 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, #dcece8 0%, transparent 35%),
+    var(--bg);
+  line-height: 1.7;
+}
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 12px 14px;
+  background: rgba(255,253,249,.9);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  position: sticky;
+  top: 8px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+.nav a {
+  text-decoration: none;
+  color: var(--accent);
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.nav a:hover { background: var(--highlight); }
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 26px;
+  box-shadow: 0 10px 30px rgba(40,30,10,.05);
+}
+h1,h2,h3 {
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  line-height: 1.35;
+}
+h1 { font-size: 1.7rem; margin-top: 0; color: #12352f; }
+h2 {
+  font-size: 1.25rem;
+  margin-top: 1.8em;
+  padding-bottom: .35em;
+  border-bottom: 2px solid #cfe3de;
+}
+h3 { font-size: 1.05rem; margin-top: 1.4em; color: #234; }
+p, li { font-size: 1.02rem; }
+a { color: var(--accent); }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  font-size: 14.5px;
+}
+th, td { border: 1px solid var(--line); padding: .55em .65em; vertical-align: top; }
+th { background: var(--highlight); text-align: left; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88rem; }
+pre { background: #f2eee5; padding: 12px 14px; border-radius: 10px; overflow: auto; }
+blockquote { margin: 1em 0; padding: .3em 1em; border-left: 4px solid var(--accent); background: var(--highlight); }
+hr { border: 0; border-top: 1px solid var(--line); margin: 1.8em 0; }
+@media(max-width:640px){ .card{padding:18px 14px;} h1{font-size:1.4rem;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="nav">
+<a href="index.html">目录</a>
+<a href="01-原文翻译与段落大意.html">翻译与大意</a>
+<a href="02-教案-学生版.html">学生版</a>
+<a href="03-教案-老师版.html">老师版</a>
+<a href="full-lesson.html">完整网页版</a>
+</nav>
+<article class="card">
+<h1>教案 · 老师版</h1>
+<h2>IELTS Reading Passage 3：<em>Timur Gareyev – blindfold chess champion</em></h2>
+<p><strong>配套：</strong> <code>01-原文翻译与段落大意.md</code> · <code>02-教案-学生版.md</code><br />
+<strong>课时：</strong> 90 分钟（可拆成 2×45）<br />
+<strong>班型建议：</strong> 雅思阅读强化 / 高中英语拓展 / 大学学术英语</p>
+<hr />
+<h2>一、教学重点与设计意图</h2>
+<table>
+<thead>
+<tr>
+<th>重点</th>
+<th>设计意图</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>同义词替换</strong></td>
+<td>Matching Information 与 T/F/NG 几乎全靠 paraphrase，而非原词扫描</td>
+</tr>
+<tr>
+<td><strong>重点搭配</strong></td>
+<td>认知科学 + 竞技表现语域（allocate attention, recreate in mind, dedicate oneself 等）可迁移</td>
+</tr>
+<tr>
+<td><strong>做题技巧</strong></td>
+<td>覆盖段落信息匹配、T/F/NG、ONE WORD 摘要三类核心技能</td>
+</tr>
+</tbody>
+</table>
+<p><strong>课堂主线：</strong><br />
+热身预测 → 分段大意 → 搭配/替换输入 → 限时做题 → 精讲答案（替换链）→ 错题反思</p>
+<hr />
+<h2>二、教学目标</h2>
+<h3>知识目标</h3>
+<ul>
+<li>理解人物特写八个信息块：挑战引入 → 科研动机 → 生平 → 历史 → 机制 → 扫描发现 → 态度/优先级。  </li>
+<li>掌握核心词汇与搭配（见学生版搭配表）。</li>
+</ul>
+<h3>技能目标</h3>
+<ul>
+<li>能按<strong>信息类型</strong>做 Matching Information，并接受一段多用。  </li>
+<li>能完成同义替换配对并解释“题目—原文”对应链。  </li>
+<li>能区分 TRUE / FALSE / NOT GIVEN（尤其“提到但未证实细节”）。</li>
+</ul>
+<h3>情感/策略目标</h3>
+<ul>
+<li>建立“先看题干信息类型，再回文定位”的习惯，减少从头精读浪费时间。</li>
+</ul>
+<hr />
+<h2>三、课时流程（90′）</h2>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>环节</th>
+<th>教师活动</th>
+<th>学生活动</th>
+<th>材料</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–8′</td>
+<td>热身预测</td>
+<td>展示标题，问：会写人物/机制/科学/教学吗？</td>
+<td>Task A/B</td>
+<td>学生版第二节</td>
+</tr>
+<tr>
+<td>8–25′</td>
+<td>分段阅读</td>
+<td>分段限时（每段约 1′），抽问大意；板书 A–H 关键词</td>
+<td>读段+口答大意</td>
+<td>原文+翻译稿</td>
+</tr>
+<tr>
+<td>25–40′</td>
+<td>语言输入</td>
+<td>带领搭配朗读；完成练习1；讲替换表A</td>
+<td>填空、配对、改写</td>
+<td>学生版第三、四节</td>
+</tr>
+<tr>
+<td>40–65′</td>
+<td>限时做题</td>
+<td>严格计时：27–32（10′）→33–36（7′）→37–40（8′）</td>
+<td>独立作答</td>
+<td>原题</td>
+</tr>
+<tr>
+<td>65–85′</td>
+<td>精讲答案</td>
+<td>每题出示“题干→定位句→替换链→排除项”</td>
+<td>订正+反思表</td>
+<td>下方答案详解</td>
+</tr>
+<tr>
+<td>85–90′</td>
+<td>布置作业</td>
+<td>明确闪卡与复述任务</td>
+<td>记录作业</td>
+<td>学生版第七节</td>
+</tr>
+</tbody>
+</table>
+<p><strong>若仅 45 分钟：</strong> 热身 5′ + 大意 12′ + 替换输入 10′ + 做题 15′（只做 27–32 与 33–36）+ 讲评 3′；摘要题留作课后，下节精讲。</p>
+<hr />
+<h2>四、分段教学脚本（教师用）</h2>
+<h3>A 导入问题</h3>
+<blockquote>
+<p>“下个月难在哪里？是对手多，还是他自己蒙眼？”<br />
+<strong>期望答案：</strong> 两者都难，但文强调他自己 blindfolded，对手正常下。</p>
+</blockquote>
+<h3>B 引导</h3>
+<blockquote>
+<p>“科学家惊讶的是‘会盲棋’，还是‘同时多盘’？”<br />
+<strong>期望答案：</strong> 同时维持的对局数量（为 Q30 铺垫）。</p>
+</blockquote>
+<h3>C 一带而过</h3>
+<p>生平段常出细节干扰，本套 Matching 未直接考 C，提醒学生别在生平原句上空耗时间。</p>
+<h3>D 历史信号</h3>
+<p>板书：<code>centuries</code> / <code>13th-century</code> / <code>1947 Najdorf</code> = <strong>earlier examples</strong>（Q27）。</p>
+<h3>E 机制 + 残局</h3>
+<p>让学生用两种颜色标出：<br />
+- 黄：recreate / memorised / recalled / updated / stored（过程 = Q28）<br />
+- 红：ends of games / exhaustion（残局难 = Q32）<br />
+强调：<strong>同一段可答两题</strong>。</p>
+<h3>F–G（科研发现区）</h3>
+<p>抓住两句关键：<br />
+- <code>nothing other than playing chess</code> → skill limited to chess（Q29）<br />
+- <code>communication</code> + <code>allocate attention</code> → summary Q39<br />
+- <code>visual</code> images/network → summary Q40  </p>
+<h3>H 优先级</h3>
+<blockquote>
+<p>“他对胜率担心吗？他最看重什么词？”<br />
+<strong>期望答案：</strong> 不太担心胜率；dedicate / obsession（Q31）。</p>
+</blockquote>
+<hr />
+<h2>五、语言点精讲（教师补充）</h2>
+<h3>1) 同义词替换教学话术</h3>
+<blockquote>
+<p>“Matching Information 找的是<strong>信息类型</strong>，不是原词。题干说 earlier examples，原文可能只给年代和人名。”</p>
+</blockquote>
+<p>示范链（写在黑板）：</p>
+<pre><code>ends of games + exhaustion sets in
+        ↓
+why the last part of a game may be difficult（Q32）
+</code></pre>
+<h3>2) 易混词</h3>
+<table>
+<thead>
+<tr>
+<th>词</th>
+<th>提醒学生</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>blindfold</td>
+<td>蒙眼；作动词/名词/形容词都见</td>
+</tr>
+<tr>
+<td>prowess</td>
+<td>高超本领（偏褒义技能）</td>
+</tr>
+<tr>
+<td>rarefied</td>
+<td>小众/高门槛圈子</td>
+</tr>
+<tr>
+<td>simultaneously</td>
+<td>= at once；摘要/匹配常换说法</td>
+</tr>
+<tr>
+<td>allocate</td>
+<td>分配（注意力/资源）；搭配 allocate attention</td>
+</tr>
+<tr>
+<td>obsession</td>
+<td>执念；H 段态度词，不等于“胜率焦虑”</td>
+</tr>
+</tbody>
+</table>
+<h3>3) 搭配纠错（口头）</h3>
+<ul>
+<li>✗ dedicate oneself <strong>in</strong> → ✓ dedicate oneself <strong>to</strong>  </li>
+<li>✗ keep rules <strong>on</strong> mind → ✓ keep rules <strong>in</strong> mind  </li>
+<li>✗ take on opponents <strong>in once</strong> → ✓ <strong>at once</strong>  </li>
+</ul>
+<hr />
+<h2>六、学生版练习参考答案</h2>
+<h3>练习 1 · 搭配填空</h3>
+<ol>
+<li>at once; bar  </li>
+<li>run through  </li>
+<li>fragmented  </li>
+<li>allocate; in mind  </li>
+<li>dedicate  </li>
+</ol>
+<h3>练习 2 · 同义配对</h3>
+<p>1–b, 2–c, 3–a, 4–d, 5–e  </p>
+<h3>练习 3 · 改写（示例）</h3>
+<ol>
+<li>There are earlier recorded examples of blindfold chess going back centuries.  </li>
+<li>The last part of a game may be difficult because the player becomes tired / exhaustion sets in.  </li>
+<li>His exceptional skill appears limited to chess.</li>
+</ol>
+<hr />
+<h2>七、原题答案与详解（核心）</h2>
+<h3>Questions 27–32（Which paragraph contains…）</h3>
+<table>
+<thead>
+<tr>
+<th>题</th>
+<th>答案</th>
+<th>定位句（关键词）</th>
+<th>同义替换链</th>
+<th>干扰提醒</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>27</strong></td>
+<td><strong>D</strong></td>
+<td>go back centuries; 13th-century Florence; Najdorf… 1947… 45 games</td>
+<td>earlier examples ← 历史先例与旧纪录</td>
+<td>A 是即将发生的挑战，不是“更早例子”</td>
+</tr>
+<tr>
+<td><strong>28</strong></td>
+<td><strong>E</strong></td>
+<td>recreate it in your mind; memorised… recalled… updated… stored</td>
+<td>outline of what… involves ← 过程说明</td>
+<td>A 只交代场景，未展开机制</td>
+</tr>
+<tr>
+<td><strong>29</strong></td>
+<td><strong>F</strong></td>
+<td>We didn’t find anything <strong>other than playing chess</strong> that he seems to be <strong>supremely gifted</strong> at</td>
+<td>skill limited to chess ← 仅象棋突出</td>
+<td>C 讲成就不等于“只擅长象棋”的研究结论</td>
+</tr>
+<tr>
+<td><strong>30</strong></td>
+<td><strong>B</strong></td>
+<td>researchers at UCLA called him in… hope of understanding… mental feats；astonishing number of games</td>
+<td>why… of interest to scientists ← 科研动机</td>
+<td>F/G 是研究结果，不是“为何感兴趣”的起点</td>
+</tr>
+<tr>
+<td><strong>31</strong></td>
+<td><strong>H</strong></td>
+<td>most important… fully dedicate myself to… miss having an <strong>obsession</strong></td>
+<td>priorities ← 最看重执念/投入</td>
+<td>胜率 80% 是目标条件，不是他的优先价值</td>
+</tr>
+<tr>
+<td><strong>32</strong></td>
+<td><strong>E</strong></td>
+<td>ends of games are taxing… <strong>exhaustion</strong> sets in；fragmented memory</td>
+<td>last part… difficult ← 疲劳导致残局难</td>
+<td>开局难记是另一点，题干问 last part</td>
+</tr>
+</tbody>
+</table>
+<p><strong>讲题顺序建议：</strong> 先 27（历史信号最硬）→ 30（科研动机在前）→ 28/32（同段双答案，强调 NB）→ 29 → 31。</p>
+<p><strong>课堂必讲：</strong>  </p>
+<blockquote>
+<p>“NB: You may use any letter more than once —— 本篇 E 段同时服务 Q28 与 Q32。”</p>
+</blockquote>
+<hr />
+<h3>Questions 33–36（TRUE / FALSE / NOT GIVEN）</h3>
+<table>
+<thead>
+<tr>
+<th>题</th>
+<th>答案</th>
+<th>理由（教师讲解用语）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>33</strong></td>
+<td><strong>FALSE</strong></td>
+<td>A：challengers play <strong>as normal</strong>，Gareyev <strong>himself</strong> will be blindfolded。题干 all participants 与原文冲突。</td>
+</tr>
+<tr>
+<td><strong>34</strong></td>
+<td><strong>NOT GIVEN</strong></td>
+<td>A 只说 he <strong>gets his kicks from</strong> BASE jumping（喜欢/从中获得快感），<strong>未提及</strong>是否赢过比赛。</td>
+</tr>
+<tr>
+<td><strong>35</strong></td>
+<td><strong>NOT GIVEN</strong></td>
+<td>B 说 UCLA called him in，并有 <strong>first results</strong>（他们的初步结果），但<strong>没有</strong>说 UCLA 是第一所研究盲棋棋手的大学。</td>
+</tr>
+<tr>
+<td><strong>36</strong></td>
+<td><strong>TRUE</strong></td>
+<td>B：not a far reach for most <strong>accomplished players</strong>；E：A lot of players are capable of doing what I’m doing。与 good chess players likely able to play blindfold 同向。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>T/F/NG 提醒话术：</strong></p>
+<blockquote>
+<p>“NOT GIVEN 不是‘我不确定’，而是‘作者没给这个具体信息’。<br />
+Q34、Q35 都是<strong>相关话题出现了，但关键限定没说</strong> → NG，不是 FALSE。”</p>
+</blockquote>
+<hr />
+<h3>Questions 37–40（Summary · ONE WORD ONLY）</h3>
+<p><strong>对应原文：</strong> 主要 Paragraph F（兼及 G 的 visual）<br />
+<strong>标题：</strong> How the research was carried out</p>
+<table>
+<thead>
+<tr>
+<th>题</th>
+<th>答案</th>
+<th>原文依据</th>
+<th>替换说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>37</strong></td>
+<td><strong>memory</strong></td>
+<td>standard <strong>memory</strong> tests；ability to hold numbers, pictures and words in mind</td>
+<td>testing Gareyev’s memory</td>
+</tr>
+<tr>
+<td><strong>38</strong></td>
+<td><strong>numbers</strong></td>
+<td>how many <strong>numbers</strong> a person can repeat, both forwards and backwards</td>
+<td>string of numbers… in reverse order</td>
+</tr>
+<tr>
+<td><strong>39</strong></td>
+<td><strong>communication</strong></td>
+<td>much greater than average <strong>communication</strong> between parts… frontoparietal… allocate <strong>attention</strong></td>
+<td>unusual amount of communication… directing attention</td>
+</tr>
+<tr>
+<td><strong>40</strong></td>
+<td><strong>visual</strong></td>
+<td>process <strong>visual</strong> images；<strong>visual</strong> network… more highly connected</td>
+<td>visual input</td>
+</tr>
+</tbody>
+</table>
+<p><strong>词性/单复数防错：</strong><br />
+- 37：不可数/范畴名词 memory（不要填 memories / tests）<br />
+- 38：复数 numbers（经典 digit span）<br />
+- 39：不可数 communication（不要填 communications / connectivity，除非原文原词；本篇原词为 communication）<br />
+- 40：形容词作前置修饰 visual（visual input）；不要填 vision / images</p>
+<p><strong>教学技巧：</strong> 先让学生根据摘要顺序在 F→G 画箭头，再填空；强调 ONE WORD ONLY，检查复数。</p>
+<hr />
+<h2>八、分层与差异化</h2>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>调整</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基础班</td>
+<td>先给段落大意中文，再做 Matching；T/F/NG 先判断“有没有说到”，再判断同/反</td>
+</tr>
+<tr>
+<td>目标 6.5–7.0</td>
+<td>严格限时；要求口头说出每题替换链；强调 E 段双答案</td>
+</tr>
+<tr>
+<td>冲刺班</td>
+<td>讨论陷阱类型：范围扩大（all）、过度推断（first university）、原词诱饵（BASE jumping）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>九、板书设计（建议）</h2>
+<pre><code>Timur Gareyev – Blindfold King
+A 挑战：~50 盘 + 自己蒙眼
+B 科学兴趣：多盘并进
+C 生平：最年轻特级大师 → 美国
+D 历史先例（earlier examples）
+E 机制 + 残局疲劳（involves / last part）
+F 记忆测试平常；额顶网络 communication
+G 视觉网络连接更强
+H 优先级：obsession / dedicate ≠ 胜率焦虑
+
+做题口诀：信息类型 → 定位段 → 同义验证 →（T/F/NG）查范围词
+</code></pre>
+<hr />
+<h2>十、作业与检测</h2>
+<ol>
+<li>学生完成学生版第七节作业。  </li>
+<li>下节课抽查：任意抽 3 组搭配英译中 + 口述 Q32、Q34、Q39 的解题理由。  </li>
+<li>可选小测（10 分钟）：打乱 27–32 题干，遮住答案，只说“去哪一段、看什么信号”。</li>
+</ol>
+<hr />
+<h2>十一、教师自查清单</h2>
+<ul>
+<li>[ ] 是否强调 Q28 与 Q32 <strong>同落 E 段</strong>（一段多用）  </li>
+<li>[ ] 是否讲清 Q30 在 <strong>B（动机）</strong>，不是 F/G（结果）  </li>
+<li>[ ] 是否区分 Q34/Q35 的 NOT GIVEN 与 Q33 的 FALSE  </li>
+<li>[ ] 是否把摘要 37–40 锚定在 F（+G visual）并检查 ONE WORD  </li>
+<li>[ ] 是否提醒 H 段 priority = dedicate/obsession，不是 winning percentage  </li>
+</ul>
+<hr />
+<h2>十二、完整答案速查</h2>
+<p><strong>27 D　28 E　29 F　30 B　31 H　32 E</strong><br />
+<strong>33 FALSE　34 NOT GIVEN　35 NOT GIVEN　36 TRUE</strong><br />
+<strong>37 memory　38 numbers　39 communication　40 visual</strong></p>
+</article>
+</div>
+</body>
+</html>
