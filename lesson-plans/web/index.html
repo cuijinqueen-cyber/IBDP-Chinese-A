@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Why we need silence｜教案与讲义</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1c241c;
+      --muted: #5a675a;
+      --paper: #f3f6f1;
+      --panel: #ffffff;
+      --line: #d5ddd4;
+      --accent: #2f6b4f;
+      --accent-soft: #e4efe8;
+      --warm: #c45c26;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 80% 50% at 10% 0%, #dfeadf 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 90% 10%, #ebe4d8 0%, transparent 50%),
+        var(--paper);
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 20px 64px;
+    }
+    .brand {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      line-height: 1.15;
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      margin: 0 0 36px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.55;
+      max-width: 36em;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-bottom: 28px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .meta span {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .links {
+      display: grid;
+      gap: 14px;
+    }
+    a.card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 22px 24px;
+      transition: border-color .2s, transform .2s;
+    }
+    a.card-link:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    a.card-link h2 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: 1.35rem;
+      margin: 0 0 8px;
+    }
+    a.card-link p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+    a.card-link .tag {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--warm);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="meta"><span>IELTS Reading</span><span>Test 1 · Passage 2</span></p>
+    <h1 class="brand">Why we need silence</h1>
+    <p class="lead">网页版教案与学生讲义。点击下方链接直接在浏览器阅读与打印，无需打开 GitHub。</p>
+    <div class="links">
+      <a class="card-link" href="./passage.html">
+        <h2>原文关键句 Highlight</h2>
+        <p>全文 A–G 高亮定位句，标注题号与搭配；可按题型筛选。</p>
+        <span class="tag">先看这篇</span>
+      </a>
+      <a class="card-link" href="./student.html">
+        <h2>学生讲义（练习版）</h2>
+        <p>同义词热身、重点搭配、Q14–26 答题表、错题复盘。不含答案。</p>
+        <span class="tag">推荐发给学生</span>
+      </a>
+      <a class="card-link" href="./teacher.html">
+        <h2>教师教案（含答案）</h2>
+        <p>同义词替换链、三类题型技巧、搭配清单与参考答案速查。</p>
+        <span class="tag">仅教师使用</span>
+      </a>
+    </div>
+    <footer>建议用 Chrome / Safari 打开 · 打印可选「背景图形」以保留配色</footer>
+  </main>
+</body>
+</html>

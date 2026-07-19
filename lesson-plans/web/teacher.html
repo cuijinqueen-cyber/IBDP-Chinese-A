@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>教师教案｜Why we need silence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1a1f2a;
+      --muted: #5c6575;
+      --paper: #f4f6fa;
+      --panel: #fff;
+      --line: #d8dee8;
+      --accent: #1f4e79;
+      --accent-soft: #e7eef6;
+      --ans: #0d6b4c;
+      --ans-bg: #e8f6ef;
+      --warm: #b45309;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.55;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background: rgba(244,246,250,.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+    }
+    .topbar a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 72px; }
+    h1 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: clamp(1.8rem, 4vw, 2.35rem);
+      margin: 0 0 8px;
+      line-height: 1.2;
+    }
+    .subtitle { color: var(--muted); margin: 0 0 18px; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .badge {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+    .warn {
+      background: #fff7ed;
+      border-left: 3px solid var(--warm);
+      padding: 12px 14px;
+      margin: 0 0 24px;
+      color: #7c2d12;
+      font-size: 0.95rem;
+    }
+    h2 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: 1.35rem;
+      margin: 36px 0 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+    h3 { font-size: 1.05rem; margin: 20px 0 10px; color: var(--accent); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--panel);
+      margin: 10px 0 16px;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 11px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: var(--accent-soft); color: var(--accent); }
+    .ans {
+      color: var(--ans);
+      font-weight: 700;
+      background: var(--ans-bg);
+      white-space: nowrap;
+    }
+    .map {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0 18px;
+    }
+    .map div {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 10px;
+      font-size: 0.92rem;
+    }
+    .map strong {
+      color: var(--accent);
+      font-size: 1.05rem;
+    }
+    .colgrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .chip-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .chip-box h4 {
+      margin: 0 0 8px;
+      font-size: 0.92rem;
+      color: var(--accent);
+    }
+    .chip-box ul {
+      margin: 0;
+      padding-left: 1.1em;
+      font-size: 0.88rem;
+    }
+    .chip-box code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.86em;
+      color: #163d2a;
+    }
+    .flow {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.92rem;
+      color: var(--muted);
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      line-height: 1.45;
+    }
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .answers div {
+      background: var(--ans-bg);
+      border: 1px solid #b7e0cb;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-weight: 700;
+      color: var(--ans);
+      text-align: center;
+    }
+    footer { margin-top: 36px; color: var(--muted); font-size: 0.85rem; }
+    @media print {
+      .topbar { display: none; }
+      body { background: #fff; }
+      h2 { break-before: page; }
+      h2:first-of-type { break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="./index.html">← 返回目录</a>
+    <span>教师教案 · 含答案 · 勿发给学生</span>
+  </div>
+  <main class="wrap">
+    <div class="badge-row">
+      <span class="badge">教师版</span>
+      <span class="badge">90 分钟</span>
+      <span class="badge">含参考答案</span>
+    </div>
+    <h1>Why we need silence</h1>
+    <p class="subtitle">教师教案｜同义词替换 · 做题技巧 · 重点搭配</p>
+    <div class="warn">含完整答案与替换链。上课请配合 <a href="./student.html">学生讲义网页</a> 使用。</div>
+
+    <h2>一、课堂结构</h2>
+    <table>
+      <thead><tr><th>环节</th><th>时长</th><th>重点</th></tr></thead>
+      <tbody>
+        <tr><td>Warm-up + 篇章结构</td><td>10′</td><td>段落功能速读</td></tr>
+        <tr><td>同义词替换工作坊</td><td>20′</td><td>题干→原文替换意识</td></tr>
+        <tr><td>重点搭配 Highlight</td><td>10′</td><td>按主题归类造句</td></tr>
+        <tr><td>分题型技巧 + 限时练习</td><td>40′</td><td>14–17 → 18–21 → 22–26</td></tr>
+        <tr><td>复盘错题</td><td>10′</td><td>替换 / 定位 / 词性</td></tr>
+      </tbody>
+    </table>
+
+    <h2>二、篇章地图</h2>
+    <div class="map">
+      <div><strong>A</strong><span>噪声触发生理反应；长期危害健康<br><em>blood pressure / fight or flight / cardiovascular</em></span></div>
+      <div><strong>B</strong><span>噪声问题有多严重（数据 + WHO）<br><em>40 decibels / 1 in 5 / Nick Antonio</em></span></div>
+      <div><strong>C</strong><span>城市降噪具体措施<br><em>London / road coatings / leaf blowers</em></span></div>
+      <div><strong>D</strong><span>漂浮舱简介；感官剥夺时大脑“填空”<br><em>flotation tank / Feinstein / fill the void</em></span></div>
+      <div><strong>E</strong><span>漂浮舱实验证据（问卷 + 脑扫描）<br><em>50 people / questionnaire / DMN / depression</em></span></div>
+      <div><strong>F</strong><span>沉默疗法；必须自愿<br><em>Ben-Soussan / volition / distressing</em></span></div>
+      <div><strong>G</strong><span>日常可实践：不必绝对静音；短时高频更好<br><em>Pfeifer / outdoor garden / few minutes</em></span></div>
+    </div>
+
+    <h2>三、同义词替换 + 答案</h2>
+    <h3>Q14–17 Matching Information</h3>
+    <table>
+      <thead><tr><th>题</th><th>题干关键词</th><th>同义/改写</th><th>答案</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>14</td>
+          <td>strategies / decrease / exposed to</td>
+          <td>turn the volume down; muffles; quieter buses; road coatings; ban…</td>
+          <td class="ans">C</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>data / extent / excessive noise</td>
+          <td>40 decibels; at least 1 in 5 people</td>
+          <td class="ans">B</td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td>physiological changes / sudden noises</td>
+          <td>blood pressure goes up; muscles tense; glands release hormones</td>
+          <td class="ans">A</td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td>relatively quiet &gt; totally silent</td>
+          <td>outdoor garden vs completely silent room</td>
+          <td class="ans">G</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Q18–21 Summary（ONE WORD）</h3>
+    <table>
+      <thead><tr><th>题</th><th>题干说法</th><th>原文说法</th><th>答案</th></tr></thead>
+      <tbody>
+        <tr><td>18</td><td>concentrate on their own ____</td><td>focus on the breath</td><td class="ans">breath</td></tr>
+        <tr><td>19</td><td>given a ____ to complete</td><td>answer a questionnaire</td><td class="ans">questionnaire</td></tr>
+        <tr><td>20</td><td>improved general ____</td><td>overall wellbeing</td><td class="ans">wellbeing</td></tr>
+        <tr><td>21</td><td>associated with ____</td><td>linked with depression</td><td class="ans">depression</td></tr>
+      </tbody>
+    </table>
+    <p style="color:var(--muted);font-size:0.92rem">易错：18 勿填 eyes/blinking；21 勿填 DMN/network。</p>
+
+    <h3>Q22–26 Matching People</h3>
+    <table>
+      <thead><tr><th>题</th><th>题干压缩</th><th>替换链</th><th>答案</th></tr></thead>
+      <tbody>
+        <tr><td>22</td><td>against their will → unpleasant</td><td>do not want → distressing</td><td class="ans">C</td></tr>
+        <tr><td>23</td><td>quieter urban → likely to increase</td><td>much more of this in the future</td><td class="ans">A</td></tr>
+        <tr><td>24</td><td>deprived of input → illusion</td><td>fill the void; humming / visual effects</td><td class="ans">B</td></tr>
+        <tr><td>25</td><td>short silent time → positive impact</td><td>few minutes; make a big difference</td><td class="ans">D</td></tr>
+        <tr><td>26</td><td>external + internal quiet → conscious → react appropriately</td><td>environment + inner selves; aware of; adequate response</td><td class="ans">C</td></tr>
+      </tbody>
+    </table>
+    <p style="color:var(--muted);font-size:0.92rem">NB：C 可多用（22 &amp; 26）。</p>
+
+    <h2>四、参考答案速查</h2>
+    <div class="answers">
+      <div>14 → C</div>
+      <div>15 → B</div>
+      <div>16 → A</div>
+      <div>17 → G</div>
+      <div>18 → breath</div>
+      <div>19 → questionnaire</div>
+      <div>20 → wellbeing</div>
+      <div>21 → depression</div>
+      <div>22 → C</div>
+      <div>23 → A</div>
+      <div>24 → B</div>
+      <div>25 → D</div>
+      <div>26 → C</div>
+    </div>
+
+    <h2>五、重点搭配 Highlight</h2>
+    <div class="colgrid">
+      <div class="chip-box">
+        <h4>噪声与健康</h4>
+        <ul>
+          <li><code>finely attuned to</code></li>
+          <li><code>in response to</code></li>
+          <li><code>fight or flight</code></li>
+          <li><code>exposed to</code></li>
+          <li><code>lead to</code></li>
+          <li><code>underestimated threat</code></li>
+          <li><code>harmful to health</code></li>
+        </ul>
+      </div>
+      <div class="chip-box">
+        <h4>城市降噪</h4>
+        <ul>
+          <li><code>turn the volume down</code></li>
+          <li><code>muffle sound</code></li>
+          <li><code>come into effect</code></li>
+          <li><code>legislation has been approved</code></li>
+          <li><code>see the benefits of</code></li>
+        </ul>
+      </div>
+      <div class="chip-box">
+        <h4>漂浮舱 / 大脑</h4>
+        <ul>
+          <li><code>fill the void</code></li>
+          <li><code>focus on the breath</code></li>
+          <li><code>sensory stimuli</code></li>
+          <li><code>linked with / associated with</code></li>
+          <li><code>get out of balance</code></li>
+        </ul>
+      </div>
+      <div class="chip-box">
+        <h4>沉默与日常</h4>
+        <ul>
+          <li><code>aware of</code></li>
+          <li><code>adequate response</code></li>
+          <li><code>benefit from</code></li>
+          <li><code>attainable in everyday life</code></li>
+          <li><code>make a big difference</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>六、做题流程口诀</h2>
+    <div class="flow">Matching Information
+① 判断信息类型（examples / data / description / evidence）
+② 圈关键词并预判同义说法
+③ 扫段定位 → 整句验证
+
+Summary Completion
+① 标题锁定 D–E
+② 先判词性 + 单复数
+③ 用人名/数字当 GPS
+④ 必须原文原词、仅一词
+
+Matching People
+① 先标四个人名位置
+② 陈述压缩成一句话
+③ 找改写，不找原词
+④ 注意 NB：一人可多题</div>
+
+    <h2>七、人物速记卡</h2>
+    <table>
+      <thead><tr><th>人物</th><th>标签</th></tr></thead>
+      <tbody>
+        <tr><td>A Nick Antonio</td><td>声学顾问；城市降噪；未来会更多</td></tr>
+        <tr><td>B Justin Feinstein</td><td>漂浮舱；大脑填空；DMN / depression</td></tr>
+        <tr><td>C Tal Dotan Ben-Soussan</td><td>内外皆静；必须自愿，否则痛苦</td></tr>
+        <tr><td>D Eric Pfeifer</td><td>花园 &gt; 绝对静音；短时高频更有效</td></tr>
+      </tbody>
+    </table>
+
+    <footer>完整 Markdown 版见仓库 lesson-plans/ · 本页可直接浏览器打开与打印</footer>
+  </main>
+</body>
+</html>
