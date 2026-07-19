@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The World of Sugar 教案包</title>
+<style>
+:root {
+  --ink: #1c2430;
+  --muted: #5b6573;
+  --bg: #f7f4ef;
+  --paper: #fffdf9;
+  --accent: #0f6b5c;
+  --line: #d9d2c5;
+  --highlight: #e8f3f0;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC", Georgia, serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 0%, #efe7d8 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, #dcece8 0%, transparent 35%),
+    var(--bg);
+  line-height: 1.7;
+}
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 12px 14px;
+  background: rgba(255,253,249,.9);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  position: sticky;
+  top: 8px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+.nav a {
+  text-decoration: none;
+  color: var(--accent);
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.nav a:hover { background: var(--highlight); }
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 26px;
+  box-shadow: 0 10px 30px rgba(40,30,10,.05);
+}
+h1,h2,h3 {
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  line-height: 1.35;
+}
+h1 { font-size: 1.7rem; margin-top: 0; color: #12352f; }
+h2 {
+  font-size: 1.25rem;
+  margin-top: 1.8em;
+  padding-bottom: .35em;
+  border-bottom: 2px solid #cfe3de;
+}
+h3 { font-size: 1.05rem; margin-top: 1.4em; color: #234; }
+p, li { font-size: 1.02rem; }
+a { color: var(--accent); }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0 1.4em;
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+  font-size: .95rem;
+}
+th, td {
+  border: 1px solid var(--line);
+  padding: .55em .7em;
+  vertical-align: top;
+}
+th { background: var(--highlight); text-align: left; }
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .9rem;
+}
+pre {
+  background: #f1eee7;
+  padding: 12px 14px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+blockquote {
+  margin: 1em 0;
+  padding: .2em 1em;
+  border-left: 4px solid var(--accent);
+  background: var(--highlight);
+  color: #243;
+}
+hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
+.footer {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: .9rem;
+  font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+}
+@media (max-width: 640px) {
+  .card { padding: 20px 16px; }
+  h1 { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="nav">
+  <a href="01-原文翻译与段落大意.html">翻译与大意</a>
+  <a href="02-教案-学生版.html">学生版</a>
+  <a href="03-教案-老师版.html">老师版</a>
+  <a href="index.html">首页</a>
+</nav>
+
+
+<div class="card">
+  <h1>《The World of Sugar》雅思阅读教案包</h1>
+  <p>请用浏览器直接打开下列页面（无需联网）：</p>
+  <ol>
+    <li><a href="01-原文翻译与段落大意.html">原文翻译与段落大意</a></li>
+    <li><a href="02-教案-学生版.html">教案 · 学生版</a></li>
+    <li><a href="03-教案-老师版.html">教案 · 老师版</a></li>
+  </ol>
+  <p>答案速查：27B 28A 29C 30A｜31H 32E 33I 34A 35G 36C｜37YES 38NO 39NO 40YES</p>
+</div>
+
+<p class="footer">若 GitHub 打不开，请下载本文件夹后双击 index.html</p>
+</div>
+</body>
+</html>
