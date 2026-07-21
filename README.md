@@ -4,29 +4,22 @@
 
 ## 对外开放链接（可直接发给别人）
 
-请复制下面任一链接：
+**https://purple-wileen-28.tiiny.site**
 
-1. **https://teal-emmalyn-50.tiiny.site** （推荐）
-2. **https://9e16d089a0f6be.lhr.life**
+备用：https://9e16d089a0f6be.lhr.life  
 
 打开后点底部 **「练习」**。
 
 ---
 
-## 固定长期域名（仓库主人操作一次即可）
-
-当前机器人没有权限直接打开 GitHub Pages，需要你点一下：
+## 固定长期域名（仓库主人操作一次）
 
 1. 打开 https://github.com/cuijinqueen-cyber/IBDP-Chinese-A/settings/pages  
 2. Source 选 **Deploy from a branch**  
-3. Branch 选 **gh-pages**，文件夹选 **/ (root)**  
+3. Branch 选 **gh-pages**，文件夹 **/ (root)**  
 4. Save  
 
-完成后固定地址：
-
-**https://cuijinqueen-cyber.github.io/IBDP-Chinese-A/**
-
-（已推送 `gh-pages` 分支，开完即可访问）
+完成后： **https://cuijinqueen-cyber.github.io/IBDP-Chinese-A/**
 
 ## 功能
 
