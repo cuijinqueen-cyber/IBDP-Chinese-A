@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>口升 SpeakRise · 口语 6.5→7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#13261f;--ink-soft:#3d5349;--brand:#1a5c45;--brand-deep:#0f3d2e;--accent:#d97706;--fog:#eef4f0;--line:#c5d4cc;--surface:rgba(255,255,255,.72);--surface-strong:rgba(255,255,255,.92);--danger:#b42318;--ok:#157a4b;--shadow:0 18px 50px rgba(19,38,31,.08);--font-display:'Instrument Serif','Noto Sans SC',Georgia,serif;--font-ui:'Outfit','Noto Sans SC',system-ui,sans-serif;--max:1080px}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);font-family:var(--font-ui);background:radial-gradient(1200px 600px at 10% -10%,rgba(26,92,69,.18),transparent 55%),radial-gradient(900px 500px at 95% 5%,rgba(217,119,6,.14),transparent 50%),linear-gradient(165deg,#e8f1ec,#f3f7f4 45%,#e6efe9);background-attachment:fixed}
+button,textarea,input{font:inherit}button{cursor:pointer}
+.shell{width:min(100% - 2rem,var(--max));margin:0 auto;padding:1.25rem 0 5.5rem}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.75rem;flex-wrap:wrap}
+.brand-mark{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.5rem);color:var(--brand-deep);line-height:1}
+.brand-sub{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-left:.65rem}
+.band-chip{display:inline-flex;gap:.45rem;align-items:center;padding:.45rem .8rem;background:var(--surface-strong);border:1px solid var(--line);border-radius:999px;font-size:.85rem;color:var(--ink-soft)}
+.band-chip strong{color:var(--brand)}
+.nav{position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);z-index:40;display:flex;gap:.35rem;padding:.4rem;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px;box-shadow:var(--shadow)}
+.nav button{border:0;background:transparent;color:var(--ink-soft);padding:.65rem .95rem;border-radius:999px;font-size:.86rem;font-weight:500}
+.nav button.active{background:var(--brand);color:#f7faf8}
+@media(min-width:840px){.nav{position:static;transform:none;margin-left:auto}.shell{padding-bottom:3rem}.hero{grid-template-columns:1.2fr .8fr;align-items:end}.checklist,.feedback-grid,.mode-cards,.option-grid{grid-template-columns:repeat(2,1fr)}.mode-cards.hub,.progress-stats{grid-template-columns:repeat(3,1fr)}.progress-stats{grid-template-columns:repeat(4,1fr)}}
+.hero{display:grid;gap:1.25rem;margin-bottom:2rem}
+.topic-badge{display:inline-block;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:.35rem}
+.hero h1{margin:.35rem 0 .75rem;font-family:var(--font-display);font-weight:400;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.05;color:var(--brand-deep)}
+.hero p{margin:0;max-width:34ch;font-size:1.05rem;line-height:1.55;color:var(--ink-soft)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.35rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:999px;padding:.8rem 1.25rem;font-weight:600;font-size:.95rem}
+.btn-primary{background:var(--brand);color:#f7faf8}.btn-secondary{background:var(--surface-strong);border-color:var(--line);color:var(--ink)}.btn-accent{background:linear-gradient(135deg,var(--accent),#ea8c1f);color:#fffaf3}.btn-ghost{background:transparent;color:var(--brand)}.btn:disabled{opacity:.5;cursor:not-allowed}
+.hero-panel{min-height:220px;border-radius:28px;background:linear-gradient(145deg,rgba(15,61,46,.92),rgba(26,92,69,.78)),radial-gradient(circle at 80% 20%,rgba(245,158,11,.35),transparent 40%);color:#f3faf6;padding:1.4rem 1.5rem;box-shadow:var(--shadow)}
+.hero-panel .label{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.hero-panel .score{font-family:var(--font-display);font-size:3.4rem;line-height:1;margin:.4rem 0 .2rem}
+.streak-row{display:flex;gap:.75rem;margin-top:1.25rem}.streak-item{flex:1;padding:.7rem .8rem;border-radius:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14)}.streak-item strong{display:block;font-size:1.2rem}.streak-item span{font-size:.75rem;opacity:.75}
+.section{margin-top:2rem}.section-head h2{margin:0;font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.1rem);font-weight:400;color:var(--brand-deep)}.section-head p{margin:.25rem 0 0;color:var(--ink-soft)}
+.checklist,.mode-cards,.option-grid,.feedback-grid,.progress-stats{display:grid;gap:.7rem}
+.check-item{display:flex;gap:.85rem;padding:1rem 1.1rem;background:var(--surface);border:1px solid var(--line);border-radius:18px;text-align:left;width:100%;color:inherit}
+.check-item.done{border-color:rgba(26,92,69,.35);background:rgba(26,92,69,.06)}
+.check-dot{width:1.35rem;height:1.35rem;border-radius:50%;border:2px solid var(--line);flex-shrink:0;display:grid;place-items:center;font-size:.75rem;color:transparent}
+.check-item.done .check-dot{background:var(--brand);border-color:var(--brand);color:#fff}
+.check-item h3{margin:0 0 .2rem;font-size:1rem}.check-item p{margin:0;color:var(--ink-soft);font-size:.88rem}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:1.15rem 1.2rem}.panel+.panel{margin-top:.9rem}
+.prompt-box{margin:.85rem 0;padding:1rem 1.1rem;border-left:3px solid var(--brand);background:rgba(26,92,69,.05);border-radius:0 14px 14px 0;white-space:pre-wrap;line-height:1.55}
+.tip,.muted{color:var(--ink-soft);font-size:.9rem;line-height:1.45}
+.focus-vocab{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.vocab-tag{display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .75rem;border-radius:999px;background:rgba(26,92,69,.1);color:var(--brand-deep);font-size:.84rem;font-weight:600;border:1px solid rgba(26,92,69,.22)}
+.vocab-tag .mark{font-size:.7rem;opacity:.75;font-weight:500}
+.part-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem}
+.part-tabs button{border:1px solid var(--line);background:var(--surface-strong);border-radius:999px;padding:.45rem .9rem;color:var(--ink-soft);font-weight:500}
+.part-tabs button.active{background:var(--brand-deep);border-color:var(--brand-deep);color:#f4faf7}
+.part-tabs button.done:not(.active){border-color:rgba(26,92,69,.4);color:var(--brand)}
+.recorder{display:grid;gap:.9rem;margin-top:1.1rem}.recorder-status{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.timer{font-family:var(--font-display);font-size:2.4rem;line-height:1;color:var(--brand-deep)}
+.rec-indicator{display:inline-flex;align-items:center;gap:.45rem;color:var(--danger);font-weight:600}.rec-indicator i{width:.55rem;height:.55rem;border-radius:50%;background:var(--danger);animation:blink 1s ease infinite}
+.recorder-actions{display:flex;flex-wrap:wrap;gap:.6rem}audio{width:100%}
+.note-input{width:100%;min-height:72px;resize:vertical;border:1px solid var(--line);border-radius:14px;padding:.75rem .9rem;background:#fff;margin-top:.45rem}
+.criterion{padding:.9rem 1rem;border-radius:16px;background:var(--fog);border:1px solid var(--line)}.criterion-top{display:flex;justify-content:space-between}.criterion-top strong{color:var(--brand);font-size:1.15rem}.criterion p{margin:.25rem 0 0;font-size:.88rem;color:var(--ink-soft)}
+.upgrade-list,.phrase-list{margin:.6rem 0 0;padding-left:1.1rem;color:var(--ink-soft);line-height:1.5}.phrase-list strong{color:var(--brand-deep)}
+.stat{padding:1rem;border-radius:18px;background:var(--surface);border:1px solid var(--line)}.stat .num{font-family:var(--font-display);font-size:2rem;color:var(--brand-deep);line-height:1}.stat .lbl{margin-top:.35rem;font-size:.82rem;color:var(--ink-soft)}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;margin-top:1rem}
+.day-cell{aspect-ratio:1;border-radius:10px;background:rgba(255,255,255,.55);border:1px solid var(--line);display:grid;place-items:center;font-size:.75rem;color:var(--ink-soft)}
+.day-cell.partial{background:rgba(217,119,6,.15);color:#9a4e06}.day-cell.full{background:rgba(26,92,69,.18);color:var(--brand-deep);font-weight:600}.day-cell.today{outline:2px solid var(--brand);outline-offset:1px}
+.prep-banner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1rem;border-radius:14px;background:rgba(217,119,6,.12);border:1px solid rgba(217,119,6,.25);margin-bottom:.9rem}.prep-banner strong{font-family:var(--font-display);font-size:1.6rem;color:#9a4e06}
+.mode-card{display:flex;flex-direction:column;align-items:flex-start;gap:.25rem;text-align:left;padding:1rem 1.1rem;border-radius:18px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.mode-card strong{font-size:1.05rem}.mode-card span{font-size:.84rem;color:var(--ink-soft)}
+.mode-card.active{border-color:var(--brand);background:rgba(26,92,69,.08)}
+.game-board{padding:1.1rem 1.2rem;border-radius:22px;background:var(--surface);border:1px solid var(--line);margin-top:.5rem}
+.game-hud{display:flex;justify-content:space-between;margin-bottom:1rem;color:var(--ink-soft)}.game-hud strong{color:var(--brand-deep)}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}.match-col{display:grid;gap:.55rem}
+.match-tile{border:1px solid var(--line);background:#fff;border-radius:14px;padding:.85rem .9rem;text-align:left;font-weight:600;color:var(--brand-deep);min-height:3.2rem}
+.match-tile.zh{font-weight:500;color:var(--ink);font-size:.92rem}.match-tile.picked{border-color:var(--accent);background:rgba(217,119,6,.1)}.match-tile.matched{opacity:.45;background:rgba(26,92,69,.1)}
+.cloze-sentence,.quiz-prompt,.practice-target{font-family:var(--font-display);font-size:clamp(1.25rem,3vw,1.8rem);line-height:1.35;color:var(--brand-deep);margin:.3rem 0 .9rem}
+.option-btn{border:1px solid var(--line);background:#fff;border-radius:14px;padding:.85rem 1rem;text-align:left;font-weight:600}
+.option-btn.correct{border-color:var(--ok);background:rgba(21,122,75,.1);color:var(--ok)}
+.game-feedback{margin-top:.9rem;padding:.85rem 1rem;border-radius:14px;font-weight:600;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
+.game-feedback.ok{background:rgba(21,122,75,.1);color:var(--ok);border:1px solid rgba(21,122,75,.25)}
+.game-feedback.bad{background:rgba(180,35,24,.08);color:var(--danger);border:1px solid rgba(180,35,24,.2)}
+.game-win{padding:1.5rem;text-align:center;font-family:var(--font-display);font-size:1.5rem;color:var(--brand-deep)}
+.model-box{padding:.85rem 1rem;border-radius:14px;background:rgba(26,92,69,.06);border:1px solid rgba(26,92,69,.12)}.model-box p{margin:.35rem 0 0;line-height:1.5}
+.self-check{display:grid;gap:.55rem;margin-top:.9rem}.self-check label{display:flex;align-items:center;gap:.55rem}
+.frame-line{color:var(--ink-soft);font-size:.92rem}.frame-line code{background:rgba(26,92,69,.08);padding:.15rem .45rem;border-radius:6px}
+.bank-details{margin-top:.75rem;color:var(--ink-soft)}.bank-details summary{cursor:pointer;font-weight:600;color:var(--brand-deep)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <div><span class="brand-mark">口升</span><span class="brand-sub">SpeakRise</span></div>
+  <div class="band-chip"><span>6.5 → 7.0</span><strong id="chipBand">6.5</strong></div>
+  <nav class="nav" id="nav">
+    <button data-view="today" class="active">今日</button>
+    <button data-view="mock">模考</button>
+    <button data-view="vocab">练习</button>
+    <button data-view="progress">进度</button>
+  </nav>
+</header>
+<main id="app"></main>
+</div>
+<script>
+const DATA = {"VOCAB_BANK":[{"id":"v1","phrase":"a steep learning curve","meaning":"陡峭的学习曲线；上手难但进步快","example":"Teaching myself coding has been a steep learning curve.","topic":"Education","level":"band7","type":"collocation","writeCue":"用 a steep learning curve 写一句：你学某项技能起初很难。","speakCue":"Describe a skill that was hard at first. Use “a steep learning curve”."},{"id":"v2","phrase":"broaden my horizons","meaning":"开阔视野","example":"Travelling abroad really broadened my horizons.","topic":"Travel","level":"band7","type":"collocation","writeCue":"用 broaden my/one’s horizons 写一句关于旅行或读书的句子。","speakCue":"How can travel help young people? Use “broaden my horizons”."},{"id":"v3","phrase":"play a pivotal role","meaning":"起关键作用","example":"Technology plays a pivotal role in modern education.","topic":"Technology","level":"band7","type":"collocation","writeCue":"用 play a pivotal role 写科技或教育的作用。","speakCue":"What role does technology play in education? Use “play a pivotal role”."},{"id":"v4","phrase":"strike a balance between","meaning":"在…之间取得平衡","example":"I try to strike a balance between work and leisure.","topic":"Lifestyle","level":"band7","type":"collocation","writeCue":"用 strike a balance between A and B 写工作与生活。","speakCue":"How do you manage busy days? Use “strike a balance between”."},{"id":"v5","phrase":"a double-edged sword","meaning":"双刃剑","example":"Social media is a double-edged sword for teenagers.","topic":"Society","level":"band7","type":"collocation","writeCue":"用 a double-edged sword 写社交媒体或AI的利弊。","speakCue":"Is social media good for teenagers? Use “a double-edged sword”."},{"id":"v6","phrase":"take something for granted","meaning":"把…视为理所当然","example":"We often take clean water for granted.","topic":"Environment","level":"upgrade","type":"collocation","writeCue":"用 take … for granted 写人们忽视某资源的句子。","speakCue":"What do people often ignore in daily life? Use “take … for granted”."},{"id":"v7","phrase":"shed light on","meaning":"阐明；揭示","example":"This documentary sheds light on climate change.","topic":"Media","level":"band7","type":"collocation","writeCue":"用 shed light on 写一部纪录片或新闻的作用。","speakCue":"How can documentaries help us? Use “shed light on”."},{"id":"v8","phrase":"a sense of belonging","meaning":"归属感","example":"Community events give people a sense of belonging.","topic":"Community","level":"band7","type":"topic","writeCue":"用 a sense of belonging 写社区或学校的感受。","speakCue":"Why are community events important? Use “a sense of belonging”."},{"id":"v9","phrase":"hands-on experience","meaning":"实践经验","example":"Internships provide valuable hands-on experience.","topic":"Work","level":"upgrade","type":"collocation","writeCue":"用 hands-on experience 写实习或实践的价值。","speakCue":"Are internships useful? Use “hands-on experience”."},{"id":"v10","phrase":"cultural immersion","meaning":"文化沉浸","example":"Living with a host family offers true cultural immersion.","topic":"Culture","level":"band7","type":"topic","writeCue":"用 cultural immersion 写留学或寄宿家庭。","speakCue":"What is the best way to learn a culture? Use “cultural immersion”."},{"id":"v11","phrase":"cut down on","meaning":"减少","example":"I am trying to cut down on sugary drinks.","topic":"Health","level":"upgrade","type":"collocation","writeCue":"用 cut down on 写一个健康或环保习惯。","speakCue":"What healthy changes have you made? Use “cut down on”."},{"id":"v12","phrase":"food for thought","meaning":"发人深省的内容","example":"Her speech really gave me food for thought.","topic":"Ideas","level":"band7","type":"collocation","writeCue":"用 food for thought 写一次演讲或文章给你的启发。","speakCue":"Tell me about an idea that made you think. Use “food for thought”."},{"id":"v13","phrase":"urban sprawl","meaning":"城市扩张 / 摊大饼","example":"Urban sprawl has put pressure on public transport.","topic":"Cities","level":"band7","type":"topic","writeCue":"用 urban sprawl 写城市扩张的影响。","speakCue":"How are cities changing? Use “urban sprawl”."},{"id":"v14","phrase":"keep abreast of","meaning":"紧跟；了解最新情况","example":"I read tech blogs to keep abreast of new trends.","topic":"Technology","level":"band7","type":"collocation","writeCue":"用 keep abreast of 写跟上趋势/新闻。","speakCue":"How do you stay updated? Use “keep abreast of”."},{"id":"v15","phrase":"a tight-knit community","meaning":"紧密团结的社区","example":"I grew up in a tight-knit community where neighbours helped each other.","topic":"Community","level":"band7","type":"topic","writeCue":"用 a tight-knit community 写你的家乡或邻里。","speakCue":"Describe your neighbourhood. Use “a tight-knit community”."},{"id":"v16","phrase":"recharge my batteries","meaning":"恢复精力；充电","example":"A quiet weekend helps me recharge my batteries.","topic":"Lifestyle","level":"upgrade","type":"collocation","writeCue":"用 recharge my batteries 写周末如何休息。","speakCue":"What do you do to relax? Use “recharge my batteries”."},{"id":"v17","phrase":"make ends meet","meaning":"勉强维持生计","example":"Some graduates struggle to make ends meet in big cities.","topic":"Work","level":"upgrade","type":"collocation","writeCue":"用 make ends meet 写大城市生活成本。","speakCue":"Is it hard for graduates in big cities? Use “make ends meet”."},{"id":"v18","phrase":"environmental footprint","meaning":"环境足迹","example":"Cycling reduces my environmental footprint.","topic":"Environment","level":"band7","type":"topic","writeCue":"用 environmental footprint 写减少影响的做法。","speakCue":"How can individuals help the planet? Use “environmental footprint”."},{"id":"v19","phrase":"go the extra mile","meaning":"多付出努力；格外用心","example":"Good teachers go the extra mile for their students.","topic":"Education","level":"band7","type":"collocation","writeCue":"用 go the extra mile 写一位老师或同事。","speakCue":"Describe a helpful teacher. Use “go the extra mile”."},{"id":"v20","phrase":"a household name","meaning":"家喻户晓的名字","example":"That brand has become a household name worldwide.","topic":"Media","level":"upgrade","type":"collocation","writeCue":"用 a household name 写一个品牌或名人。","speakCue":"Talk about a famous brand. Use “a household name”."},{"id":"v21","phrase":"quality time","meaning":"高质量陪伴时间","example":"I cherish quality time with my family on weekends.","topic":"Family","level":"upgrade","type":"topic","writeCue":"用 quality time 写和家人朋友相处。","speakCue":"How do you spend weekends with family? Use “quality time”."},{"id":"v22","phrase":"break the ice","meaning":"打破僵局；缓和气氛","example":"A shared joke can break the ice in a new group.","topic":"People","level":"upgrade","type":"collocation","writeCue":"用 break the ice 写认识新朋友的场景。","speakCue":"How do you start conversations with strangers? Use “break the ice”."},{"id":"v23","phrase":"sustainable lifestyle","meaning":"可持续的生活方式","example":"More young people are adopting a sustainable lifestyle.","topic":"Environment","level":"band7","type":"topic","writeCue":"用 sustainable lifestyle 写年轻人的环保选择。","speakCue":"Are young people more eco-friendly now? Use “sustainable lifestyle”."},{"id":"v24","phrase":"think outside the box","meaning":"跳出思维定式","example":"Creative jobs require you to think outside the box.","topic":"Work","level":"upgrade","type":"collocation","writeCue":"用 think outside the box 写创意工作或解题。","speakCue":"What skills do creative jobs need? Use “think outside the box”."}],"SENTENCE_PATTERNS":[{"id":"sp1","pattern":"Although…, I still believe…","meaning":"让步 + 坚持观点（Part 3 高分结构）","frame":"Although __, I still believe __.","example":"Although online courses are flexible, I still believe classroom interaction matters.","writeCue":"用 Although…, I still believe… 写：虽然网购方便，但我仍认为实体店体验重要。","speakCue":"Can technology replace teachers? Answer with “Although…, I still believe…”.","topic":"Opinion"},{"id":"sp2","pattern":"One clear example is…","meaning":"举例展开，避免空泛","frame":"One clear example is __.","example":"One clear example is students using apps to keep abreast of news.","writeCue":"用 One clear example is… 举例说明科技如何帮助学习。","speakCue":"How does technology help learning? Start with “One clear example is…”.","topic":"Example"},{"id":"sp3","pattern":"This is largely because…","meaning":"解释原因，提升连贯","frame":"This is largely because __.","example":"This is largely because people want to strike a balance between work and rest.","writeCue":"用 This is largely because… 解释为什么年轻人重视工作生活平衡。","speakCue":"Why do people value work-life balance? Use “This is largely because…”.","topic":"Reason"},{"id":"sp4","pattern":"Compared with the past,…","meaning":"古今对比","frame":"Compared with the past, __.","example":"Compared with the past, people spend less quality time with neighbours.","writeCue":"用 Compared with the past,… 对比现在与过去的社交方式。","speakCue":"How have friendships changed? Use “Compared with the past,…”.","topic":"Comparison"},{"id":"sp5","pattern":"Not only… but also…","meaning":"递进强调两个好处/影响","frame":"Not only __, but also __.","example":"Travel not only broadens our horizons, but also builds confidence.","writeCue":"用 Not only… but also… 写旅行的两个好处。","speakCue":"What are the benefits of travelling? Use “Not only… but also…”.","topic":"Emphasis"},{"id":"sp6","pattern":"If …, then …","meaning":"条件假设，适合给建议","frame":"If __, then __.","example":"If cities invest in green transport, then our environmental footprint will shrink.","writeCue":"用 If…, then… 给城市环保一条建议。","speakCue":"How can cities become greener? Use “If…, then…”.","topic":"Suggestion"},{"id":"sp7","pattern":"What matters most is…","meaning":"突出最重要的一点","frame":"What matters most is __.","example":"What matters most is getting hands-on experience before graduation.","writeCue":"用 What matters most is… 写找工作时最重要的因素。","speakCue":"What matters most when choosing a job? Use “What matters most is…”.","topic":"Focus"},{"id":"sp8","pattern":"In the long run,…","meaning":"谈长远影响","frame":"In the long run, __.","example":"In the long run, a sustainable lifestyle benefits both people and the planet.","writeCue":"用 In the long run,… 写坚持环保习惯的长远好处。","speakCue":"Why should we care about the environment? Use “In the long run,…”.","topic":"Future"}],"DAILY_MOCKS":[{"id":"m0","dayIndex":0,"topic":"Hometown & Daily Life","topicZh":"家乡与日常生活","modelHighlights":["a tight-knit community","strike a balance between","quality time","recharge my batteries"],"parts":[{"id":"p1","label":"Part 1","prompt":"Where is your hometown? What do you like most about living there? Has it changed much in recent years?","tips":"用具体细节回答，避免只说 “it’s nice”。尝试自然插入 1–2 个搭配。","speakSeconds":90,"focusVocabIds":["v15","v4","v21"]},{"id":"p2","label":"Part 2","prompt":"Describe a place in your hometown that you often visit.\nYou should say:\n• where it is\n• how often you go there\n• what you do there\nand explain why this place is special to you.","tips":"1 分钟准备，说满 1.5–2 分钟。结构：地点 → 频率 → 活动 → 情感原因。","prepSeconds":60,"speakSeconds":120,"focusVocabIds":["v15","v16","v21"]},{"id":"p3","label":"Part 3","prompt":"Do you think people today spend enough quality time with their neighbours? How can cities help build stronger communities?","tips":"先给立场，再举例对比过去/现在，最后给建议。目标词汇：a sense of belonging。","speakSeconds":120,"focusVocabIds":["v8","v15","v13"]}]},{"id":"m1","dayIndex":1,"topic":"Education & Learning","topicZh":"教育与学习","modelHighlights":["a steep learning curve","hands-on experience","go the extra mile","play a pivotal role"],"parts":[{"id":"p1","label":"Part 1","prompt":"What subjects did you enjoy at school? Do you prefer studying alone or in a group? How do you usually learn new skills?","tips":"用过去时谈学校经历，再用现在时谈习惯。插入 hands-on experience。","speakSeconds":90,"focusVocabIds":["v1","v9","v19"]},{"id":"p2","label":"Part 2","prompt":"Describe a skill you learned that was difficult at first.\nYou should say:\n• what the skill was\n• how you learned it\n• what challenges you faced\nand explain how you feel about this skill now.","tips":"强调过程与转折：困难 → 坚持 → 突破。推荐搭配：a steep learning curve。","prepSeconds":60,"speakSeconds":120,"focusVocabIds":["v1","v9","v19"]},{"id":"p3","label":"Part 3","prompt":"Should schools focus more on practical skills or academic knowledge? How is technology changing the way people learn?","tips":"两面讨论，避免极端。用 play a pivotal role / a double-edged sword。","speakSeconds":120,"focusVocabIds":["v3","v5","v9"]}]},{"id":"m2","dayIndex":2,"topic":"Technology & Media","topicZh":"科技与媒体","modelHighlights":["a double-edged sword","keep abreast of","shed light on","a household name"],"parts":[{"id":"p1","label":"Part 1","prompt":"How often do you use social media? Which apps are most popular among young people? Do you prefer reading news online or in print?","tips":"给出频率词 + 原因。避免堆砌 “convenient”。","speakSeconds":90,"focusVocabIds":["v5","v14","v20"]},{"id":"p2","label":"Part 2","prompt":"Describe a useful app or website you often use.\nYou should say:\n• what it is\n• how you use it\n• how often you use it\nand explain why you find it useful.","tips":"具体场景 > 抽象优点。可提 keep abreast of trends。","prepSeconds":60,"speakSeconds":120,"focusVocabIds":["v14","v3","v20"]},{"id":"p3","label":"Part 3","prompt":"Is technology making people more informed or more distracted? What responsibility do media companies have when reporting news?","tips":"先定义 “informed”，再谈利弊。用 shed light on / double-edged sword。","speakSeconds":120,"focusVocabIds":["v5","v7","v14"]}]},{"id":"m3","dayIndex":3,"topic":"Environment & Lifestyle","topicZh":"环境与生活方式","modelHighlights":["environmental footprint","sustainable lifestyle","cut down on","take something for granted"],"parts":[{"id":"p1","label":"Part 1","prompt":"Do you care about environmental issues? What do you do to protect the environment in daily life? Are people in your country environmentally conscious?","tips":"举 2 个具体行动（骑车、少用塑料）。用 cut down on。","speakSeconds":90,"focusVocabIds":["v11","v18","v23"]},{"id":"p2","label":"Part 2","prompt":"Describe an environmentally friendly habit you have.\nYou should say:\n• what the habit is\n• when you started it\n• how you keep it up\nand explain why it matters to you.","tips":"习惯的起源 + 坚持方法 + 意义。目标：sustainable lifestyle。","prepSeconds":60,"speakSeconds":120,"focusVocabIds":["v23","v18","v11"]},{"id":"p3","label":"Part 3","prompt":"Should governments or individuals take more responsibility for protecting the environment? How can cities reduce their environmental footprint?","tips":"政府 vs 个人分层回答。用 take … for granted 谈资源。","speakSeconds":120,"focusVocabIds":["v6","v18","v13"]}]},{"id":"m4","dayIndex":4,"topic":"Work & Ambition","topicZh":"工作与志向","modelHighlights":["hands-on experience","think outside the box","make ends meet","go the extra mile"],"parts":[{"id":"p1","label":"Part 1","prompt":"Do you work or are you a student? What kind of job would you like in the future? Is it important to enjoy your work?","tips":"未来志向用 would like / aspire to。补充一条现实考量。","speakSeconds":90,"focusVocabIds":["v9","v24","v17"]},{"id":"p2","label":"Part 2","prompt":"Describe a job you would like to try.\nYou should say:\n• what the job is\n• what skills it requires\n• how you would prepare for it\nand explain why this job appeals to you.","tips":"技能清单要具体。可用 think outside the box / go the extra mile。","prepSeconds":60,"speakSeconds":120,"focusVocabIds":["v24","v19","v9"]},{"id":"p3","label":"Part 3","prompt":"Is job satisfaction more important than a high salary? How has remote work changed people’s work-life balance?","tips":"明确比较维度，再举例。呼应 strike a balance between。","speakSeconds":120,"focusVocabIds":["v4","v17","v16"]}]},{"id":"m5","dayIndex":5,"topic":"Travel & Culture","topicZh":"旅行与文化","modelHighlights":["broaden my horizons","cultural immersion","break the ice","food for thought"],"parts":[{"id":"p1","label":"Part 1","prompt":"Do you like travelling? Where did you last go on holiday? Do you prefer travelling alone or with others?","tips":"用一次真实行程细节（交通、食物、感受）。","speakSeconds":90,"focusVocabIds":["v2","v10","v22"]},{"id":"p2","label":"Part 2","prompt":"Describe a trip that helped you learn about another culture.\nYou should say:\n• where you went\n• who you went with\n• what you learned\nand explain how the trip changed your views.","tips":"重点放在 “学到了什么”。推荐：cultural immersion / broaden my horizons。","prepSeconds":60,"speakSeconds":120,"focusVocabIds":["v2","v10","v12"]},{"id":"p3","label":"Part 3","prompt":"Why do people travel abroad? Can tourism harm local cultures? How can travellers show respect for local traditions?","tips":"利弊 + 建议三段。可用 food for thought 收尾。","speakSeconds":120,"focusVocabIds":["v2","v10","v12"]}]},{"id":"m6","dayIndex":6,"topic":"People & Relationships","topicZh":"人物与人际关系","modelHighlights":["break the ice","a sense of belonging","quality time","go the extra mile"],"parts":[{"id":"p1","label":"Part 1","prompt":"Who do you spend most of your free time with? Are you good at making new friends? What makes a good friend?","tips":"用具体品质替代空泛形容词（reliable / supportive）。","speakSeconds":90,"focusVocabIds":["v22","v21","v8"]},{"id":"p2","label":"Part 2","prompt":"Describe a person who has had a positive influence on you.\nYou should say:\n• who the person is\n• how you know them\n• what they did\nand explain how they influenced you.","tips":"影响要可观察：态度/习惯/选择的变化。","prepSeconds":60,"speakSeconds":120,"focusVocabIds":["v19","v21","v8"]},{"id":"p3","label":"Part 3","prompt":"Is it harder to maintain friendships today than in the past? How do social activities help people feel they belong?","tips":"对比线上/线下。目标词汇：a sense of belonging。","speakSeconds":120,"focusVocabIds":["v8","v22","v5"]}]}]};
+const VOCAB = DATA.VOCAB_BANK;
+const PATTERNS = DATA.SENTENCE_PATTERNS;
+const MOCKS = DATA.DAILY_MOCKS;
+const STORAGE_KEY = 'speakrise-html-v2';
+const LABELS = {fluency:'流利连贯',lexical:'词汇资源',grammar:'语法多样性',pronunciation:'发音'};
+
+function todayKey(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function yesterdayKey(){const d=new Date();d.setDate(d.getDate()-1);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function byId(ids){return ids.map(id=>VOCAB.find(v=>v.id===id)).filter(Boolean);}
+function byPhrase(p){return VOCAB.find(v=>v.phrase.toLowerCase()===p.toLowerCase());}
+function mock(){return MOCKS[state.dayCursor % MOCKS.length];}
+function todayVocab(){const m=mock();const map=new Map();m.parts.flatMap(p=>byId(p.focusVocabIds)).forEach(v=>map.set(v.id,v));m.modelHighlights.map(byPhrase).filter(Boolean).forEach(v=>map.set(v.id,v));return [...map.values()];}
+function todayPatterns(){const s=state.dayCursor%PATTERNS.length;return [0,1,2].map(i=>PATTERNS[(s+i)%PATTERNS.length]);}
+function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
+function containsTarget(text,target){const n=s=>s.toLowerCase().replace(/[’']/g,"'").replace(/\s+/g,' ').trim();const t=n(text),k=n(target);if(t.includes(k))return true;if(k.includes('something'))return /take .+ for granted/.test(t);return false;}
+function clamp(n){return Math.round(Math.min(7.5,Math.max(6,n))*2)/2;}
+function fmt(sec){return `${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;}
+function isComplete(c){return c.recorded&&c.mockDone&&c.vocabDrilled&&c.feedbackSeen;}
+function speak(text){if(!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=.92;speechSynthesis.speak(u);}
+function defaultState(){return{currentBand:6.5,targetBand:7,streak:0,longestStreak:0,dayCursor:0,checkIns:[],recordings:[],lastFeedback:null,lastFeedbackDate:null,vocabProgress:Object.fromEntries(VOCAB.map(v=>[v.id,{id:v.id,reps:0,mastered:false}]))};}
+function load(){try{return{...defaultState(),...JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')};}catch{return defaultState();}}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+
+let state=load();
+let view='today';
+let partIndex=0,doneParts=[],prepLeft=null,prepTimer=null,noted='',report=state.lastFeedbackDate===todayKey()?state.lastFeedback:null;
+let rec={status:'idle',sec:0,url:null,media:null,chunks:[],timer:null,stream:null};
+let practiceMode='games', gameKind='match', gameSeed=0;
+let writeIdx=0,writeDraft='',writeResult=null,showModel=false;
+let speakIdx=0,speakUsed=false,speakClear=false,speakDone=false,recKey=0;
+let matchState=null, clozeState=null, quizState=null;
+
+function todayCheckIn(){return state.checkIns.find(c=>c.date===todayKey())||{date:todayKey(),recorded:false,mockDone:false,vocabDrilled:false,feedbackSeen:false};}
+function upsertCheckIn(patch){
+  const today=todayKey();const existing=state.checkIns.find(c=>c.date===today);
+  const next={date:today,recorded:false,mockDone:false,vocabDrilled:false,feedbackSeen:false,...existing,...patch};
+  const others=state.checkIns.filter(c=>c.date!==today);
+  if(isComplete(next)&&(!existing||!isComplete(existing))){const y=yesterdayKey();const hadY=state.checkIns.some(c=>c.date===y&&isComplete(c));state.streak=hadY?state.streak+1:1;state.longestStreak=Math.max(state.longestStreak,state.streak);state.dayCursor+=1;}
+  state.checkIns=[...others,next].sort((a,b)=>a.date.localeCompare(b.date));
+  const full=state.checkIns.filter(isComplete).length;state.currentBand=Math.min(7,Math.round((6.5+Math.min(full,20)*0.025)*2)/2);save();
+}
+function practiceVocab(id,mastered){const cur=state.vocabProgress[id]||{id,reps:0,mastered:false};state.vocabProgress[id]={...cur,reps:cur.reps+1,mastered:mastered!==undefined?mastered:(cur.mastered||cur.reps+1>=5)};upsertCheckIn({vocabDrilled:true});save();}
+
+function generateFeedback(durationSec,focus,notedPhrases,partLabel){
+  const notedLower=notedPhrases.map(p=>p.toLowerCase());
+  const used=focus.filter(v=>notedLower.some(n=>n.includes(v.phrase.toLowerCase())||v.phrase.toLowerCase().includes(n)));
+  const missed=focus.filter(v=>!used.includes(v));
+  let base=6.5;if(durationSec>=45)base+=.1;if(durationSec>=80)base+=.1;if(durationSec<25)base-=.3;if(used.length>=Math.min(2,focus.length))base+=.2;else if(!used.length&&focus.length)base-=.15;base=clamp(base);
+  const criteria=[
+    {criterion:'fluency',score:clamp(base+(durationSec>=60?.1:-.1)),note:durationSec>=60?`${partLabel} 时长充足`:`${partLabel} 偏短`,tip:'减少自我修正，用连接词串意群。'},
+    {criterion:'lexical',score:clamp(base+(used.length?.2:-.15)),note:used.length?`已尝试：${used.map(u=>u.phrase).join('、')}`:'今日重点搭配几乎未出现。',tip:'用精准搭配替换 good/important。'},
+    {criterion:'grammar',score:clamp(base),note:'混合简单句与复杂句。',tip:'试 Although…, I still believe…'},
+    {criterion:'pronunciation',score:clamp(base),note:'回听并标出含糊词尾。',tip:'跟读范句，注意重音。'},
+  ];
+  const overall=Math.round(criteria.reduce((s,c)=>s+c.score,0)/criteria.length*2)/2;
+  return{overall,summary:overall>=7?'已触及 7 分区间。':'仍在 6.5 附近：加长输出 + 自然使用搭配。',criteria,upgrades:['连续输出 20–30 秒。','每答嵌入 1 个今日搭配。',missed[0]?`优先练：${missed[0].phrase}`:'换场景复述已用搭配。'],collocationsUsed:used.map(u=>u.phrase),collocationsMissed:missed.map(m=>m.phrase),practiceNext:[...missed.slice(0,2),...used.slice(0,1)].map(v=>v.phrase)};
+}
+
+async function startRec(){stopTracks();if(rec.url)URL.revokeObjectURL(rec.url);rec={...rec,status:'idle',sec:0,url:null,chunks:[],media:null};if(!navigator.mediaDevices?.getUserMedia||typeof MediaRecorder==='undefined'){rec.status='unsupported';render();return;}try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});rec.stream=stream;const mime=MediaRecorder.isTypeSupported('audio/webm')?'audio/webm':(MediaRecorder.isTypeSupported('audio/mp4')?'audio/mp4':undefined);const media=new MediaRecorder(stream,mime?{mimeType:mime}:undefined);rec.media=media;rec.chunks=[];media.ondataavailable=e=>{if(e.data.size)rec.chunks.push(e.data);};media.onstop=()=>{rec.url=URL.createObjectURL(new Blob(rec.chunks,{type:media.mimeType||'audio/webm'}));rec.status='stopped';stopTracks();render();};media.start(250);rec.status='recording';rec.sec=0;clearInterval(rec.timer);rec.timer=setInterval(()=>{rec.sec++;const el=document.getElementById('timer');if(el)el.textContent=fmt(rec.sec);},1000);render();}catch{rec.status='denied';render();}}
+function stopRec(){clearInterval(rec.timer);if(rec.media&&rec.media.state!=='inactive')rec.media.stop();else{rec.status='stopped';stopTracks();render();}}
+function stopTracks(){rec.stream?.getTracks().forEach(t=>t.stop());rec.stream=null;}
+function resetRec(){clearInterval(rec.timer);stopTracks();if(rec.url)URL.revokeObjectURL(rec.url);rec={status:'idle',sec:0,url:null,media:null,chunks:[],timer:null,stream:null};render();}
+
+function submitRecording(durationSec){
+  const m=mock(),part=m.parts[partIndex],focus=byId(part.focusVocabIds);
+  const phrases=noted.split(/[,，、\n]/).map(s=>s.trim()).filter(Boolean);
+  state.recordings.push({id:'r'+Date.now(),date:todayKey(),mockId:m.id,partId:part.id,durationSec,note:noted||undefined});
+  report=generateFeedback(durationSec,focus,phrases,part.label);state.lastFeedback=report;state.lastFeedbackDate=todayKey();
+  upsertCheckIn({recorded:true,mockDone:true,feedbackSeen:true,overallScore:report.overall});
+  if(!doneParts.includes(part.id))doneParts.push(part.id);save();render();
+}
+
+function ensureMatch(){if(matchState&&matchState.seed===gameSeed)return matchState;const pool=todayVocab().length>=3?todayVocab():VOCAB.slice(0,8);const pairs=shuffle(pool).slice(0,Math.min(4,pool.length));matchState={seed:gameSeed,pairs,left:shuffle(pairs),right:shuffle(pairs),selected:null,matched:[],moves:0,wrong:false};return matchState;}
+function ensureCloze(){if(clozeState&&clozeState.seed===gameSeed)return clozeState;const deck=shuffle(todayVocab().length?todayVocab():VOCAB);clozeState={seed:gameSeed,deck,idx:0,score:0,feedback:null};return clozeState;}
+function ensureQuiz(){if(quizState&&quizState.seed===gameSeed)return quizState;const deck=shuffle(todayVocab().length?todayVocab():VOCAB);quizState={seed:gameSeed,deck,idx:0,score:0,streak:0,feedback:null};return quizState;}
+
+function renderGames(){
+  const kinds=[['match','配对消消乐','英文搭配 ↔ 中文意思'],['cloze','填空闯关','根据例句选对搭配'],['quiz','极速选义','看中文，抢答英文']];
+  let body='';
+  if(gameKind==='match'){
+    const g=ensureMatch();const done=g.matched.length===g.pairs.length&&g.pairs.length;
+    body=`<div class="game-board"><div class="game-hud"><span>配对消消乐</span><strong>${g.matched.length}/${g.pairs.length} · 步数 ${g.moves}</strong></div>${done?'<div class="game-win">全部配对成功！</div>':`<div class="match-grid"><div class="match-col">${g.left.map(v=>`<button class="match-tile ${g.matched.includes(v.id)?'matched':''} ${g.selected==='en:'+v.id?'picked':''}" data-mpick="en:${v.id}" ${g.matched.includes(v.id)?'disabled':''}>${v.phrase}</button>`).join('')}</div><div class="match-col">${g.right.map(v=>`<button class="match-tile zh ${g.matched.includes(v.id)?'matched':''} ${g.selected==='zh:'+v.id?'picked':''}" data-mpick="zh:${v.id}" ${g.matched.includes(v.id)?'disabled':''}>${v.meaning}</button>`).join('')}</div></div>`}</div>`;
+  } else if(gameKind==='cloze'){
+    const g=ensureCloze();const item=g.deck[g.idx%g.deck.length];const blanked=item.example.replace(new RegExp(item.phrase.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i'),'______');
+    const options=shuffle([item,...shuffle(VOCAB.filter(v=>v.id!==item.id)).slice(0,3)]);
+    body=`<div class="game-board"><div class="game-hud"><span>填空闯关</span><strong>得分 ${g.score} · 第 ${g.idx+1} 题</strong></div><p class="cloze-sentence">${blanked}</p><div class="option-grid">${options.map(o=>`<button class="option-btn ${g.feedback&&o.id===item.id?'correct':''}" data-cloze="${o.id}">${o.phrase}</button>`).join('')}</div>${g.feedback?`<div class="game-feedback ${g.feedback}">${g.feedback==='ok'?'正确！':'答案：'+item.phrase}<button class="btn btn-primary" id="clozeNext" style="margin-left:.75rem">下一题</button></div>`:''}</div>`;
+  } else {
+    const g=ensureQuiz();const item=g.deck[g.idx%g.deck.length];const pool=todayVocab().length?todayVocab():VOCAB;
+    const distractors=shuffle(pool.filter(v=>v.id!==item.id).concat(VOCAB)).filter((v,i,a)=>v.id!==item.id&&a.findIndex(x=>x.id===v.id)===i).slice(0,3);
+    const options=shuffle([item,...distractors]);
+    body=`<div class="game-board"><div class="game-hud"><span>极速选义</span><strong>${g.score} 分 · 连对 ${g.streak}</strong></div><p class="quiz-prompt">${item.meaning}</p><p class="muted">选出对应英文</p><div class="option-grid">${options.map(o=>`<button class="option-btn" data-quiz="${o.id}">${o.phrase}</button>`).join('')}</div>${g.feedback?`<div class="game-feedback ${g.feedback}">${g.feedback==='ok'?'漂亮！':'答案：'+item.phrase}<button class="btn btn-primary" id="quizNext" style="margin-left:.75rem">继续</button></div>`:''}</div>`;
+  }
+  return `<div class="mode-cards">${kinds.map(([id,t,d])=>`<button class="mode-card ${gameKind===id?'active':''}" data-gkind="${id}"><strong>${t}</strong><span>${d}</span></button>`).join('')}</div>${body}<button class="btn btn-ghost" id="reshuffle" style="margin-top:.8rem">换一局</button>`;
+}
+
+function writeTargets(){return [...todayVocab().map(item=>({kind:'vocab',item})),...todayPatterns().map(item=>({kind:'pattern',item}))];}
+function speakTargets(){return writeTargets();}
+
+function renderWriting(){
+  const targets=writeTargets();if(!targets.length)return '<div class="panel">暂无内容</div>';
+  const cur=targets[writeIdx%targets.length];const phrase=cur.kind==='vocab'?cur.item.phrase:cur.item.pattern;
+  return `<div class="panel"><div class="topic-badge">${cur.kind==='vocab'?'重点词语 · 写作':'重点句型 · 写作'}</div>
+    <h3 class="practice-target">${phrase}</h3>
+    ${cur.kind==='pattern'?`<p class="frame-line">句型框架：<code>${cur.item.frame}</code></p>`:''}
+    <p class="tip">${cur.item.meaning}</p><div class="prompt-box">${cur.item.writeCue}</div>
+    <label class="muted">写下英文句子（必须用上目标）</label>
+    <textarea class="note-input" id="writeDraft" placeholder="${cur.item.example}">${writeDraft}</textarea>
+    <div class="hero-cta" style="margin-top:.9rem">
+      <button class="btn btn-primary" id="writeCheck">检查是否用上目标</button>
+      <button class="btn btn-secondary" id="writeModel">看范句</button>
+      <button class="btn btn-ghost" id="writeNext">下一题</button>
+    </div>
+    ${writeResult==='pass'?'<div class="game-feedback ok">合格：已用上目标表达。</div>':''}
+    ${writeResult==='fail'?'<div class="game-feedback bad">未检测到目标表达，请改写。</div>':''}
+    ${showModel?`<div class="model-box"><strong>范句</strong><p>${cur.item.example}</p></div>`:''}
+    <div class="muted" style="margin-top:1rem">写作 ${(writeIdx%targets.length)+1}/${targets.length}</div>
+    <details class="bank-details"><summary>今日写作目标</summary><ul class="phrase-list">${targets.map((t,i)=>`<li><button class="btn btn-ghost" data-widx="${i}">${t.kind==='vocab'?t.item.phrase:t.item.pattern}</button></li>`).join('')}</ul></details>
+  </div>`;
+}
+
+function renderSpeaking(){
+  const targets=speakTargets();if(!targets.length)return '<div class="panel">暂无内容</div>';
+  const cur=targets[speakIdx%targets.length];const phrase=cur.kind==='vocab'?cur.item.phrase:cur.item.pattern;
+  const statusLine={idle:'准备好后开始录音',recording:`<span class="rec-indicator"><i></i> 录音中</span>`,stopped:'可回听后提交',denied:'麦克风被拒，可跳过',unsupported:'不支持录音，可跳过'}[rec.status];
+  return `<div class="panel"><div class="topic-badge">${cur.kind==='vocab'?'重点词语 · 口语':'重点句型 · 口语'}</div>
+    <h3 class="practice-target">${phrase}</h3><p class="tip">${cur.item.meaning}</p><div class="prompt-box">${cur.item.speakCue}</div>
+    <div class="hero-cta"><button class="btn btn-secondary" id="spkPhrase">听目标表达</button><button class="btn btn-secondary" id="spkModel">听范句跟读</button></div>
+    <div class="model-box" style="margin-top:.9rem"><strong>范句</strong><p>${cur.item.example}</p></div>
+    <p class="muted" style="margin-top:1rem">录音作答（30–60秒），说完自我勾选：</p>
+    <div class="recorder"><div class="recorder-status"><div class="timer" id="timer">${fmt(rec.sec)}</div><div>${statusLine}</div></div>
+    ${rec.url?`<audio controls src="${rec.url}"></audio>`:''}
+    <div class="recorder-actions">
+      ${rec.status!=='recording'?`<button class="btn btn-accent" id="startRec">${rec.status==='stopped'?'重新录制':'开始录音'}</button>`:''}
+      ${rec.status==='recording'?'<button class="btn btn-primary" id="stopRec">结束录音</button>':''}
+      ${rec.status==='stopped'?'<button class="btn btn-primary" id="submitSpeak">提交本轮</button><button class="btn btn-ghost" id="resetRec">清空</button>':''}
+      ${rec.status==='denied'||rec.status==='unsupported'?'<button class="btn btn-secondary" id="skipSpeak">跳过录音并完成</button>':''}
+    </div></div>
+    <div class="self-check">
+      <label><input type="checkbox" id="chkUsed" ${speakUsed?'checked':''}/> 我用上了目标词/句型</label>
+      <label><input type="checkbox" id="chkClear" ${speakClear?'checked':''}/> 发音与停顿比较清楚</label>
+    </div>
+    ${speakDone&&speakUsed&&speakClear?'<div class="game-feedback ok">本轮口语练习完成。</div>':''}
+    ${speakDone&&(!speakUsed||!speakClear)?'<div class="game-feedback bad">再录一次，确保用上目标并保持清晰。</div>':''}
+    <div class="hero-cta" style="margin-top:.8rem"><button class="btn btn-primary" id="speakNext">下一题</button></div>
+    <div class="muted" style="margin-top:1rem">口语 ${(speakIdx%targets.length)+1}/${targets.length}</div>
+  </div>`;
+}
+
+function renderVocab(){
+  const modes=[['games','词汇游戏','配对 · 填空 · 极速选义'],['writing','写作练习','重点词 + 重点句型'],['speaking','口语练习','跟读录音 + 目标表达']];
+  return `<section class="section"><div class="section-head"><h2>重点练</h2><p>词语与句型：游戏巩固 · 写作落地 · 口语出口</p></div>
+  <div class="mode-cards hub">${modes.map(([id,t,d])=>`<button class="mode-card ${practiceMode===id?'active':''}" data-pmode="${id}"><strong>${t}</strong><span>${d}</span></button>`).join('')}</div>
+  ${practiceMode==='games'?renderGames():practiceMode==='writing'?renderWriting():renderSpeaking()}</section>`;
+}
+
+function renderToday(){
+  const c=todayCheckIn(),m=mock(),done=[c.recorded,c.mockDone,c.vocabDrilled,c.feedbackSeen].filter(Boolean).length;
+  return `<section class="hero"><div><div class="topic-badge">每日口语日课</div><h1>口升</h1>
+  <p>从 6.5 稳到 7.0：模考录音拿反馈，再用游戏 / 写作 / 口语把重点词句练到脱口而出。</p>
+  <div class="hero-cta"><button class="btn btn-primary" data-go="mock">开始今日模考</button><button class="btn btn-secondary" data-go="vocab">重点练</button></div></div>
+  <div class="hero-panel"><div class="label">当前预估分数</div><div class="score">${state.currentBand.toFixed(1)}</div>
+  <div class="meta">目标 Band 7.0 · 今日完成 ${done}/4</div>
+  <div class="streak-row"><div class="streak-item"><strong>${state.streak}</strong><span>连续打卡</span></div><div class="streak-item"><strong>${state.longestStreak}</strong><span>最长纪录</span></div></div></div></section>
+  <section class="section"><div class="section-head"><h2>今日清单</h2><p>主题：${m.topicZh}</p></div>
+  <div class="checklist">
+    <button class="check-item ${c.mockDone?'done':''}" data-go="mock"><span class="check-dot">✓</span><div><h3>口语模考</h3><p>Part 1–3 录音</p></div></button>
+    <button class="check-item ${c.recorded?'done':''}" data-go="mock"><span class="check-dot">✓</span><div><h3>打卡录音</h3><p>至少完成一个 Part</p></div></button>
+    <button class="check-item ${c.feedbackSeen?'done':''}" data-go="mock"><span class="check-dot">✓</span><div><h3>系统反馈</h3><p>四项评分 + 升级点</p></div></button>
+    <button class="check-item ${c.vocabDrilled?'done':''}" data-go="vocab"><span class="check-dot">✓</span><div><h3>重点练</h3><p>游戏 + 写作 + 口语</p></div></button>
+  </div></section>
+  <section class="section"><div class="section-head"><h2>今日必练搭配</h2></div><div class="focus-vocab">${m.modelHighlights.map(h=>`<span class="vocab-tag"><span class="mark">Band 7</span>${h}</span>`).join('')}</div></section>`;
+}
+
+function renderFeedback(r){if(!r)return '';return `<div class="panel" style="margin-top:1rem"><div class="topic-badge">系统反馈</div><h3 style="font-family:var(--font-display);font-size:1.8rem;margin:0 0 .35rem">预估 ${r.overall}</h3><p class="tip">${r.summary}</p>
+<div class="feedback-grid" style="margin-top:1rem">${r.criteria.map(c=>`<div class="criterion"><div class="criterion-top"><span>${LABELS[c.criterion]}</span><strong>${c.score}</strong></div><p>${c.note}</p><p>${c.tip}</p></div>`).join('')}</div>
+<ul class="upgrade-list">${r.upgrades.map(u=>`<li>${u}</li>`).join('')}</ul>
+<div class="hero-cta" style="margin-top:1rem"><button class="btn btn-accent" data-go="vocab">去重点练</button>${partIndex<mock().parts.length-1?'<button class="btn btn-secondary" id="nextPart">下一部分</button>':''}</div></div>`;}
+
+function renderMock(){
+  const m=mock(),part=m.parts[partIndex],focus=byId(part.focusVocabIds);
+  const statusLine={idle:'准备好后开始录音打卡',recording:`<span class="rec-indicator"><i></i> 录音中 · 约 ${part.speakSeconds}s</span>`,stopped:'可回听后提交反馈',denied:'麦克风被拒',unsupported:'不支持录音'}[rec.status];
+  return `<section class="section"><div class="section-head"><h2>今日口语模考</h2><p>${m.topicZh} · ${m.topic}</p></div>
+  <div class="panel"><div class="topic-badge">重点搭配</div><div class="focus-vocab" style="margin-top:0">${m.modelHighlights.map(h=>`<span class="vocab-tag"><span class="mark">搭配</span>${h}</span>`).join('')}</div></div>
+  <div class="panel"><div class="part-tabs">${m.parts.map((p,i)=>`<button data-part="${i}" class="${i===partIndex?'active':''} ${doneParts.includes(p.id)?'done':''}">${p.label}${doneParts.includes(p.id)?' ✓':''}</button>`).join('')}</div>
+  ${prepLeft!=null?`<div class="prep-banner"><span>准备时间</span><strong>${prepLeft}s</strong></div>`:''}
+  <div class="topic-badge">${part.label}</div><div class="prompt-box">${part.prompt}</div>${part.tips?`<p class="tip">${part.tips}</p>`:''}
+  <div class="focus-vocab">${focus.map(v=>`<span class="vocab-tag"><span class="mark">${v.type==='collocation'?'搭配':'主题词'}</span>${v.phrase}</span>`).join('')}</div>
+  ${part.prepSeconds&&prepLeft==null?`<div style="margin-top:.9rem"><button class="btn btn-secondary" id="startPrep">开始 ${part.prepSeconds}s 准备</button></div>`:''}
+  <label class="muted" style="display:block;margin-top:1.1rem">用到的搭配（可选）</label>
+  <textarea class="note-input" id="noted">${noted}</textarea>
+  <div class="recorder"><div class="recorder-status"><div class="timer" id="timer">${fmt(rec.sec)}</div><div>${statusLine}</div></div>
+  ${rec.url?`<audio controls src="${rec.url}"></audio>`:''}
+  <div class="recorder-actions">
+    ${rec.status!=='recording'?`<button class="btn btn-accent" id="startRec">${rec.status==='stopped'?'重新录制':'开始录音'}</button>`:''}
+    ${rec.status==='recording'?'<button class="btn btn-primary" id="stopRec">结束录音</button>':''}
+    ${rec.status==='stopped'?'<button class="btn btn-primary" id="submitRec">提交并获取反馈</button><button class="btn btn-ghost" id="resetRec">清空</button>':''}
+    ${rec.status==='denied'||rec.status==='unsupported'?'<button class="btn btn-secondary" id="skipRec">跳过录音生成反馈</button>':''}
+  </div></div></div>${renderFeedback(report)}</section>`;
+}
+
+function renderProgress(){
+  const days=[];for(let i=27;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`);}
+  const map=Object.fromEntries(state.checkIns.map(c=>[c.date,c]));const mastered=Object.values(state.vocabProgress).filter(v=>v.mastered).length;const full=state.checkIns.filter(isComplete).length;const today=todayKey();
+  return `<section class="section"><div class="section-head"><h2>进度追踪</h2></div>
+  <div class="progress-stats"><div class="stat"><div class="num">${state.currentBand.toFixed(1)}</div><div class="lbl">预估 Band</div></div>
+  <div class="stat"><div class="num">${state.streak}</div><div class="lbl">连续天数</div></div>
+  <div class="stat"><div class="num">${full}</div><div class="lbl">完整打卡</div></div>
+  <div class="stat"><div class="num">${mastered}/${VOCAB.length}</div><div class="lbl">掌握搭配</div></div></div>
+  <div class="panel" style="margin-top:1rem"><div class="topic-badge">近 28 天</div><div class="calendar">${days.map(d=>{const c=map[d];const f=c&&isComplete(c);const p=c&&!f&&(c.recorded||c.mockDone||c.vocabDrilled);return `<div class="day-cell ${f?'full':p?'partial':''} ${d===today?'today':''}">${Number(d.slice(-2))}</div>`;}).join('')}</div></div>
+  <div class="panel"><button class="btn btn-ghost" id="resetAll">重置本地数据</button></div></section>`;
+}
+
+function render(){
+  document.getElementById('chipBand').textContent=state.currentBand.toFixed(1);
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+  document.getElementById('app').innerHTML=view==='today'?renderToday():view==='mock'?renderMock():view==='vocab'?renderVocab():renderProgress();
+  bind();
+}
+
+function bind(){
+  document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>{view=el.dataset.go;if(view==='vocab')practiceMode='games';render();}));
+  document.querySelectorAll('[data-part]').forEach(el=>el.addEventListener('click',()=>{partIndex=+el.dataset.part;prepLeft=null;clearInterval(prepTimer);noted='';resetRec();}));
+  document.querySelectorAll('[data-pmode]').forEach(el=>el.addEventListener('click',()=>{practiceMode=el.dataset.pmode;resetRec();render();}));
+  document.querySelectorAll('[data-gkind]').forEach(el=>el.addEventListener('click',()=>{gameKind=el.dataset.gkind;gameSeed++;matchState=clozeState=quizState=null;render();}));
+  document.getElementById('reshuffle')?.addEventListener('click',()=>{gameSeed++;matchState=clozeState=quizState=null;render();});
+  document.querySelectorAll('[data-mpick]').forEach(el=>el.addEventListener('click',()=>{
+    const g=ensureMatch();const [side,id]=el.dataset.mpick.split(':');if(g.matched.includes(id))return;
+    if(!g.selected){g.selected=side+':'+id;render();return;}
+    const [ps,pid]=g.selected.split(':');if(ps===side){g.selected=side+':'+id;render();return;}
+    g.moves++;if(pid===id){g.matched.push(id);practiceVocab(id);g.selected=null;}else{g.selected=null;}render();
+  }));
+  document.querySelectorAll('[data-cloze]').forEach(el=>el.addEventListener('click',()=>{
+    const g=ensureCloze();if(g.feedback)return;const item=g.deck[g.idx%g.deck.length];
+    if(el.dataset.cloze===item.id){g.feedback='ok';g.score++;practiceVocab(item.id);}else g.feedback='bad';render();
+  }));
+  document.getElementById('clozeNext')?.addEventListener('click',()=>{const g=ensureCloze();g.feedback=null;g.idx++;render();});
+  document.querySelectorAll('[data-quiz]').forEach(el=>el.addEventListener('click',()=>{
+    const g=ensureQuiz();if(g.feedback)return;const item=g.deck[g.idx%g.deck.length];
+    if(el.dataset.quiz===item.id){g.feedback='ok';g.score+=10+g.streak*2;g.streak++;practiceVocab(item.id);speak(item.phrase);}else{g.feedback='bad';g.streak=0;}render();
+  }));
+  document.getElementById('quizNext')?.addEventListener('click',()=>{const g=ensureQuiz();g.feedback=null;g.idx++;render();});
+  document.getElementById('writeDraft')?.addEventListener('input',e=>{writeDraft=e.target.value;writeResult=null;});
+  document.getElementById('writeCheck')?.addEventListener('click',()=>{
+    const cur=writeTargets()[writeIdx%writeTargets().length];
+    const ok=cur.kind==='vocab'?containsTarget(writeDraft,cur.item.phrase):/although|one clear example|largely because|compared with|not only|if\s+.+,|what matters most|in the long run/i.test(writeDraft);
+    writeResult=ok?'pass':'fail';if(ok&&cur.kind==='vocab')practiceVocab(cur.item.id);else if(ok)upsertCheckIn({vocabDrilled:true});render();
+  });
+  document.getElementById('writeModel')?.addEventListener('click',()=>{showModel=true;render();});
+  document.getElementById('writeNext')?.addEventListener('click',()=>{writeIdx++;writeDraft='';writeResult=null;showModel=false;render();});
+  document.querySelectorAll('[data-widx]').forEach(el=>el.addEventListener('click',()=>{writeIdx=+el.dataset.widx;writeDraft='';writeResult=null;showModel=false;render();}));
+  document.getElementById('spkPhrase')?.addEventListener('click',()=>{const cur=speakTargets()[speakIdx%speakTargets().length];speak(cur.kind==='vocab'?cur.item.phrase:cur.item.pattern);});
+  document.getElementById('spkModel')?.addEventListener('click',()=>{const cur=speakTargets()[speakIdx%speakTargets().length];speak(cur.item.example);});
+  document.getElementById('chkUsed')?.addEventListener('change',e=>{speakUsed=e.target.checked;});
+  document.getElementById('chkClear')?.addEventListener('change',e=>{speakClear=e.target.checked;});
+  document.getElementById('submitSpeak')?.addEventListener('click',()=>{const cur=speakTargets()[speakIdx%speakTargets().length];state.recordings.push({id:'r'+Date.now(),date:todayKey(),mockId:'speak-drill',partId:cur.item.id,durationSec:rec.sec});if(cur.kind==='vocab')practiceVocab(cur.item.id);else upsertCheckIn({vocabDrilled:true});speakDone=true;save();render();});
+  document.getElementById('skipSpeak')?.addEventListener('click',()=>{speakDone=true;upsertCheckIn({vocabDrilled:true});render();});
+  document.getElementById('speakNext')?.addEventListener('click',()=>{speakIdx++;speakUsed=speakClear=speakDone=false;resetRec();});
+  document.getElementById('startPrep')?.addEventListener('click',()=>{prepLeft=mock().parts[partIndex].prep||60;clearInterval(prepTimer);prepTimer=setInterval(()=>{prepLeft--;if(prepLeft<=0){clearInterval(prepTimer);prepLeft=null;}render();},1000);render();});
+  document.getElementById('startRec')?.addEventListener('click',()=>startRec());
+  document.getElementById('stopRec')?.addEventListener('click',()=>stopRec());
+  document.getElementById('resetRec')?.addEventListener('click',()=>resetRec());
+  document.getElementById('submitRec')?.addEventListener('click',()=>submitRecording(rec.sec));
+  document.getElementById('skipRec')?.addEventListener('click',()=>submitRecording(Math.max(rec.sec,45)));
+  document.getElementById('noted')?.addEventListener('input',e=>{noted=e.target.value;});
+  document.getElementById('nextPart')?.addEventListener('click',()=>{partIndex++;prepLeft=null;noted='';report=null;resetRec();});
+  document.getElementById('resetAll')?.addEventListener('click',()=>{if(confirm('清空本地数据？')){localStorage.removeItem(STORAGE_KEY);state=defaultState();report=null;doneParts=[];partIndex=0;render();}});
+}
+document.getElementById('nav').addEventListener('click',e=>{const btn=e.target.closest('button[data-view]');if(!btn)return;view=btn.dataset.view;render();});
+render();
+</script>
+</body>
+</html>
