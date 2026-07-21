@@ -10,7 +10,23 @@ export interface VocabItem {
   topic: string
   level: 'band7' | 'upgrade'
   type: 'collocation' | 'topic'
+  writeCue: string
+  speakCue: string
 }
+
+export interface SentencePattern {
+  id: string
+  pattern: string
+  meaning: string
+  frame: string
+  example: string
+  writeCue: string
+  speakCue: string
+  topic: string
+}
+
+export type PracticeMode = 'games' | 'writing' | 'speaking'
+export type GameKind = 'match' | 'cloze' | 'quiz'
 
 export interface MockPart {
   id: string

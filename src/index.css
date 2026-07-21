@@ -838,6 +838,262 @@ a {
   color: var(--ink-soft);
 }
 
+.mode-cards {
+  display: grid;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 720px) {
+  .mode-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.mode-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  text-align: left;
+  padding: 1rem 1.1rem;
+  border-radius: 18px;
+  border: 1px solid var(--cream-line);
+  background: var(--surface);
+  color: var(--ink);
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.mode-card strong {
+  font-size: 1.05rem;
+}
+
+.mode-card span {
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+}
+
+.mode-card:hover {
+  border-color: #9fb8aa;
+  transform: translateY(-1px);
+}
+
+.mode-card.active {
+  border-color: var(--brand);
+  background: rgba(26, 92, 69, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(26, 92, 69, 0.15);
+}
+
+.game-board {
+  padding: 1.1rem 1.2rem;
+  border-radius: 22px;
+  background: var(--surface);
+  border: 1px solid var(--cream-line);
+}
+
+.game-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.game-hud strong {
+  color: var(--brand-deep);
+  font-size: 1rem;
+}
+
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.match-col {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.match-tile {
+  border: 1px solid var(--cream-line);
+  background: white;
+  border-radius: 14px;
+  padding: 0.85rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--brand-deep);
+  min-height: 3.2rem;
+}
+
+.match-tile.zh {
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 0.92rem;
+}
+
+.match-tile.picked {
+  border-color: var(--accent);
+  background: rgba(217, 119, 6, 0.1);
+}
+
+.match-tile.matched {
+  opacity: 0.45;
+  background: rgba(26, 92, 69, 0.1);
+  border-color: rgba(26, 92, 69, 0.3);
+}
+
+.match-tile.shake {
+  animation: shake 0.4s ease;
+}
+
+.cloze-sentence,
+.quiz-prompt {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  line-height: 1.35;
+  color: var(--brand-deep);
+  margin: 0.3rem 0 0.9rem;
+}
+
+.option-grid {
+  display: grid;
+  gap: 0.55rem;
+}
+
+@media (min-width: 640px) {
+  .option-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.option-btn {
+  border: 1px solid var(--cream-line);
+  background: white;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.option-btn:hover {
+  border-color: var(--brand);
+}
+
+.option-btn.correct {
+  border-color: var(--ok);
+  background: rgba(21, 122, 75, 0.1);
+  color: var(--ok);
+}
+
+.game-feedback {
+  margin-top: 0.9rem;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  font-weight: 600;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.game-feedback.ok {
+  background: rgba(21, 122, 75, 0.1);
+  color: var(--ok);
+  border: 1px solid rgba(21, 122, 75, 0.25);
+}
+
+.game-feedback.bad {
+  background: rgba(180, 35, 24, 0.08);
+  color: var(--danger);
+  border: 1px solid rgba(180, 35, 24, 0.2);
+}
+
+.game-win {
+  padding: 1.5rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--brand-deep);
+}
+
+.practice-panel .practice-target {
+  margin: 0.2rem 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 400;
+  color: var(--brand-deep);
+}
+
+.frame-line {
+  margin: 0.2rem 0 0.5rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.frame-line code {
+  background: rgba(26, 92, 69, 0.08);
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  color: var(--brand-deep);
+}
+
+.model-box {
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  background: rgba(26, 92, 69, 0.06);
+  border: 1px solid rgba(26, 92, 69, 0.12);
+}
+
+.model-box p {
+  margin: 0.35rem 0 0;
+  line-height: 1.5;
+}
+
+.self-check {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+}
+
+.self-check label {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.95rem;
+}
+
+.practice-progress {
+  margin-top: 1rem;
+}
+
+.bank-details {
+  margin-top: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.bank-details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--brand-deep);
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
 @keyframes rise-in {
   from {
     opacity: 0;

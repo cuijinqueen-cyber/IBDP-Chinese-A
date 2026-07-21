@@ -4,18 +4,14 @@
 
 ## 打开网页
 
-**推荐（会话期间可用）：**  
-https://classical-boot-copy-mail.trycloudflare.com
+**在线（会话期间）：** https://classical-boot-copy-mail.trycloudflare.com  
 
-**GitHub 预览：**  
-https://htmlpreview.github.io/?https://raw.githubusercontent.com/cuijinqueen-cyber/IBDP-Chinese-A/cursor/ielts-speaking-tracker-4528/docs/index.html
+进入后点底部 **「练习」**：
+1. **词汇游戏**：配对消消乐 / 填空闯关 / 极速选义  
+2. **写作练习**：重点词语 + 重点句型造句  
+3. **口语练习**：听范句 → 录音作答 → 自我勾选
 
-**本机：** 下载 `docs/index.html` 或 `speakrise.html`，用 Chrome / Edge 打开。录音请用本地服务：
-
-```bash
-python3 -m http.server 8080
-# 打开 http://localhost:8080/docs/
-```
+**本机单文件：** `speakrise.html` 或 `docs/index.html`
 
 ## 功能
 

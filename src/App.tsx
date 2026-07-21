@@ -9,7 +9,7 @@ import { ProgressView } from './components/ProgressView'
 const NAV: { id: ViewId; label: string }[] = [
   { id: 'today', label: '今日' },
   { id: 'mock', label: '模考' },
-  { id: 'vocab', label: '词汇' },
+  { id: 'vocab', label: '练习' },
   { id: 'progress', label: '进度' },
 ]
 

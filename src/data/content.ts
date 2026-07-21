@@ -1,4 +1,4 @@
-import type { DailyMock, VocabItem } from '../types'
+import type { DailyMock, SentencePattern, VocabItem } from '../types'
 
 export const VOCAB_BANK: VocabItem[] = [
   {
@@ -9,6 +9,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Education',
     level: 'band7',
     type: 'collocation',
+    writeCue: "用 a steep learning curve 写一句：你学某项技能起初很难。",
+    speakCue: "Describe a skill that was hard at first. Use “a steep learning curve”.",
   },
   {
     id: 'v2',
@@ -18,6 +20,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Travel',
     level: 'band7',
     type: 'collocation',
+    writeCue: "用 broaden my/one’s horizons 写一句关于旅行或读书的句子。",
+    speakCue: "How can travel help young people? Use “broaden my horizons”.",
   },
   {
     id: 'v3',
@@ -27,6 +31,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Technology',
     level: 'band7',
     type: 'collocation',
+    writeCue: "用 play a pivotal role 写科技或教育的作用。",
+    speakCue: "What role does technology play in education? Use “play a pivotal role”.",
   },
   {
     id: 'v4',
@@ -36,6 +42,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Lifestyle',
     level: 'band7',
     type: 'collocation',
+    writeCue: "用 strike a balance between A and B 写工作与生活。",
+    speakCue: "How do you manage busy days? Use “strike a balance between”.",
   },
   {
     id: 'v5',
@@ -45,6 +53,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Society',
     level: 'band7',
     type: 'collocation',
+    writeCue: "用 a double-edged sword 写社交媒体或AI的利弊。",
+    speakCue: "Is social media good for teenagers? Use “a double-edged sword”.",
   },
   {
     id: 'v6',
@@ -54,6 +64,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Environment',
     level: 'upgrade',
     type: 'collocation',
+    writeCue: "用 take … for granted 写人们忽视某资源的句子。",
+    speakCue: "What do people often ignore in daily life? Use “take … for granted”.",
   },
   {
     id: 'v7',
@@ -63,6 +75,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Media',
     level: 'band7',
     type: 'collocation',
+    writeCue: "用 shed light on 写一部纪录片或新闻的作用。",
+    speakCue: "How can documentaries help us? Use “shed light on”.",
   },
   {
     id: 'v8',
@@ -72,6 +86,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Community',
     level: 'band7',
     type: 'topic',
+    writeCue: "用 a sense of belonging 写社区或学校的感受。",
+    speakCue: "Why are community events important? Use “a sense of belonging”.",
   },
   {
     id: 'v9',
@@ -81,6 +97,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Work',
     level: 'upgrade',
     type: 'collocation',
+    writeCue: "用 hands-on experience 写实习或实践的价值。",
+    speakCue: "Are internships useful? Use “hands-on experience”.",
   },
   {
     id: 'v10',
@@ -90,6 +108,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Culture',
     level: 'band7',
     type: 'topic',
+    writeCue: "用 cultural immersion 写留学或寄宿家庭。",
+    speakCue: "What is the best way to learn a culture? Use “cultural immersion”.",
   },
   {
     id: 'v11',
@@ -99,6 +119,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Health',
     level: 'upgrade',
     type: 'collocation',
+    writeCue: "用 cut down on 写一个健康或环保习惯。",
+    speakCue: "What healthy changes have you made? Use “cut down on”.",
   },
   {
     id: 'v12',
@@ -108,6 +130,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Ideas',
     level: 'band7',
     type: 'collocation',
+    writeCue: "用 food for thought 写一次演讲或文章给你的启发。",
+    speakCue: "Tell me about an idea that made you think. Use “food for thought”.",
   },
   {
     id: 'v13',
@@ -117,6 +141,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Cities',
     level: 'band7',
     type: 'topic',
+    writeCue: "用 urban sprawl 写城市扩张的影响。",
+    speakCue: "How are cities changing? Use “urban sprawl”.",
   },
   {
     id: 'v14',
@@ -126,6 +152,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Technology',
     level: 'band7',
     type: 'collocation',
+    writeCue: "用 keep abreast of 写跟上趋势/新闻。",
+    speakCue: "How do you stay updated? Use “keep abreast of”.",
   },
   {
     id: 'v15',
@@ -135,6 +163,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Community',
     level: 'band7',
     type: 'topic',
+    writeCue: "用 a tight-knit community 写你的家乡或邻里。",
+    speakCue: "Describe your neighbourhood. Use “a tight-knit community”.",
   },
   {
     id: 'v16',
@@ -144,6 +174,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Lifestyle',
     level: 'upgrade',
     type: 'collocation',
+    writeCue: "用 recharge my batteries 写周末如何休息。",
+    speakCue: "What do you do to relax? Use “recharge my batteries”.",
   },
   {
     id: 'v17',
@@ -153,6 +185,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Work',
     level: 'upgrade',
     type: 'collocation',
+    writeCue: "用 make ends meet 写大城市生活成本。",
+    speakCue: "Is it hard for graduates in big cities? Use “make ends meet”.",
   },
   {
     id: 'v18',
@@ -162,6 +196,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Environment',
     level: 'band7',
     type: 'topic',
+    writeCue: "用 environmental footprint 写减少影响的做法。",
+    speakCue: "How can individuals help the planet? Use “environmental footprint”.",
   },
   {
     id: 'v19',
@@ -171,6 +207,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Education',
     level: 'band7',
     type: 'collocation',
+    writeCue: "用 go the extra mile 写一位老师或同事。",
+    speakCue: "Describe a helpful teacher. Use “go the extra mile”.",
   },
   {
     id: 'v20',
@@ -180,6 +218,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Media',
     level: 'upgrade',
     type: 'collocation',
+    writeCue: "用 a household name 写一个品牌或名人。",
+    speakCue: "Talk about a famous brand. Use “a household name”.",
   },
   {
     id: 'v21',
@@ -189,6 +229,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Family',
     level: 'upgrade',
     type: 'topic',
+    writeCue: "用 quality time 写和家人朋友相处。",
+    speakCue: "How do you spend weekends with family? Use “quality time”.",
   },
   {
     id: 'v22',
@@ -198,6 +240,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'People',
     level: 'upgrade',
     type: 'collocation',
+    writeCue: "用 break the ice 写认识新朋友的场景。",
+    speakCue: "How do you start conversations with strangers? Use “break the ice”.",
   },
   {
     id: 'v23',
@@ -207,6 +251,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Environment',
     level: 'band7',
     type: 'topic',
+    writeCue: "用 sustainable lifestyle 写年轻人的环保选择。",
+    speakCue: "Are young people more eco-friendly now? Use “sustainable lifestyle”.",
   },
   {
     id: 'v24',
@@ -216,6 +262,8 @@ export const VOCAB_BANK: VocabItem[] = [
     topic: 'Work',
     level: 'upgrade',
     type: 'collocation',
+    writeCue: "用 think outside the box 写创意工作或解题。",
+    speakCue: "What skills do creative jobs need? Use “think outside the box”.",
   },
 ]
 
@@ -516,6 +564,89 @@ export const DAILY_MOCKS: DailyMock[] = [
   },
 ]
 
+export const SENTENCE_PATTERNS: SentencePattern[] = [
+  {
+    id: 'sp1',
+    pattern: 'Although…, I still believe…',
+    meaning: '让步 + 坚持观点（Part 3 高分结构）',
+    frame: 'Although __, I still believe __.',
+    example: 'Although online courses are flexible, I still believe classroom interaction matters.',
+    writeCue: '用 Although…, I still believe… 写：虽然网购方便，但我仍认为实体店体验重要。',
+    speakCue: 'Can technology replace teachers? Answer with “Although…, I still believe…”.',
+    topic: 'Opinion',
+  },
+  {
+    id: 'sp2',
+    pattern: 'One clear example is…',
+    meaning: '举例展开，避免空泛',
+    frame: 'One clear example is __.',
+    example: 'One clear example is students using apps to keep abreast of news.',
+    writeCue: '用 One clear example is… 举例说明科技如何帮助学习。',
+    speakCue: 'How does technology help learning? Start with “One clear example is…”.',
+    topic: 'Example',
+  },
+  {
+    id: 'sp3',
+    pattern: 'This is largely because…',
+    meaning: '解释原因，提升连贯',
+    frame: 'This is largely because __.',
+    example: 'This is largely because people want to strike a balance between work and rest.',
+    writeCue: '用 This is largely because… 解释为什么年轻人重视工作生活平衡。',
+    speakCue: 'Why do people value work-life balance? Use “This is largely because…”.',
+    topic: 'Reason',
+  },
+  {
+    id: 'sp4',
+    pattern: 'Compared with the past,…',
+    meaning: '古今对比',
+    frame: 'Compared with the past, __.',
+    example: 'Compared with the past, people spend less quality time with neighbours.',
+    writeCue: '用 Compared with the past,… 对比现在与过去的社交方式。',
+    speakCue: 'How have friendships changed? Use “Compared with the past,…”.',
+    topic: 'Comparison',
+  },
+  {
+    id: 'sp5',
+    pattern: 'Not only… but also…',
+    meaning: '递进强调两个好处/影响',
+    frame: 'Not only __, but also __.',
+    example: 'Travel not only broadens our horizons, but also builds confidence.',
+    writeCue: '用 Not only… but also… 写旅行的两个好处。',
+    speakCue: 'What are the benefits of travelling? Use “Not only… but also…”.',
+    topic: 'Emphasis',
+  },
+  {
+    id: 'sp6',
+    pattern: 'If …, then …',
+    meaning: '条件假设，适合给建议',
+    frame: 'If __, then __.',
+    example: 'If cities invest in green transport, then our environmental footprint will shrink.',
+    writeCue: '用 If…, then… 给城市环保一条建议。',
+    speakCue: 'How can cities become greener? Use “If…, then…”.',
+    topic: 'Suggestion',
+  },
+  {
+    id: 'sp7',
+    pattern: 'What matters most is…',
+    meaning: '突出最重要的一点',
+    frame: 'What matters most is __.',
+    example: 'What matters most is getting hands-on experience before graduation.',
+    writeCue: '用 What matters most is… 写找工作时最重要的因素。',
+    speakCue: 'What matters most when choosing a job? Use “What matters most is…”.',
+    topic: 'Focus',
+  },
+  {
+    id: 'sp8',
+    pattern: 'In the long run,…',
+    meaning: '谈长远影响',
+    frame: 'In the long run, __.',
+    example: 'In the long run, a sustainable lifestyle benefits both people and the planet.',
+    writeCue: '用 In the long run,… 写坚持环保习惯的长远好处。',
+    speakCue: 'Why should we care about the environment? Use “In the long run,…”.',
+    topic: 'Future',
+  },
+]
+
 export function getMockForDay(dayCursor: number): DailyMock {
   return DAILY_MOCKS[dayCursor % DAILY_MOCKS.length]
 }
@@ -530,3 +661,44 @@ export function getVocabByPhrase(phrase: string): VocabItem | undefined {
   const lower = phrase.toLowerCase()
   return VOCAB_BANK.find((v) => v.phrase.toLowerCase() === lower)
 }
+
+export function getTodayVocab(dayCursor: number): VocabItem[] {
+  const mock = getMockForDay(dayCursor)
+  const fromParts = mock.parts.flatMap((p) => getVocabByIds(p.focusVocabIds))
+  const fromHighlights = mock.modelHighlights
+    .map((p) => getVocabByPhrase(p))
+    .filter((v): v is VocabItem => Boolean(v))
+  const map = new Map([...fromParts, ...fromHighlights].map((v) => [v.id, v]))
+  return [...map.values()]
+}
+
+export function getPatternsForDay(dayCursor: number): SentencePattern[] {
+  const start = dayCursor % SENTENCE_PATTERNS.length
+  return [0, 1, 2].map((i) => SENTENCE_PATTERNS[(start + i) % SENTENCE_PATTERNS.length])
+}
+
+export function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+export function containsTarget(text: string, target: string): boolean {
+  const norm = (s: string) => s.toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, ' ').trim()
+  const t = norm(text)
+  const key = norm(target)
+  if (t.includes(key)) return true
+  // allow flexible "take X for granted"
+  if (key.includes('…') || key.includes('...')) {
+    const parts = key.split(/…|\.\.\./).map((p) => p.trim()).filter(Boolean)
+    return parts.every((p) => t.includes(p))
+  }
+  if (key.includes('something')) {
+    return t.includes(key.replace('something', '').trim()) || /take .+ for granted/.test(t)
+  }
+  return false
+}
+

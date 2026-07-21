@@ -108,7 +108,7 @@ export function TodayView({ store, onNavigate }: TodayViewProps) {
             <span className="check-dot">✓</span>
             <div>
               <h3>重点词汇反复练</h3>
-              <p>高分搭配与主题词，跟读、造句、标记掌握。</p>
+              <p>游戏巩固 + 写作落地 + 口语出口。</p>
             </div>
           </button>
         </div>
