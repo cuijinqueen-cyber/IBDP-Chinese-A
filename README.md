@@ -2,30 +2,31 @@
 
 雅思口语 **6.5 → 7.0** 每日打卡训练器。
 
-## 功能
+## 打开网页
 
-- **每日打卡录音**：浏览器麦克风录音，回听后提交
-- **口语模考**：Part 1 / 2 / 3，按主题轮换（7 套循环）
-- **系统反馈**：流利、词汇、语法、发音四项预估 + 升级建议
-- **搭配 / 主题词标注**：今日重点高亮，支持跟读与反复练习
-- **进度追踪**：连续打卡、28 日热力、词汇掌握度（本地存储）
+**推荐（会话期间可用）：**  
+https://classical-boot-copy-mail.trycloudflare.com
 
-## 直接打开网页（推荐）
+**GitHub 预览：**  
+https://htmlpreview.github.io/?https://raw.githubusercontent.com/cuijinqueen-cyber/IBDP-Chinese-A/cursor/ielts-speaking-tracker-4528/docs/index.html
 
-双击或用浏览器打开根目录的 **`speakrise.html`** 即可使用，无需安装依赖。
-
-本地静态服务：
+**本机：** 下载 `docs/index.html` 或 `speakrise.html`，用 Chrome / Edge 打开。录音请用本地服务：
 
 ```bash
 python3 -m http.server 8080
-# 打开 http://localhost:8080/speakrise.html
+# 打开 http://localhost:8080/docs/
 ```
 
-## React 开发版
+## 功能
+
+- 每日打卡录音（浏览器麦克风）
+- 口语模考 Part 1 / 2 / 3（7 套主题循环）
+- 系统反馈：流利、词汇、语法、发音 + 6.5→7 升级点
+- 搭配 / 主题词重点标注与反复练习
+- 进度热力与连续打卡（localStorage）
+
+## React 开发版（可选）
 
 ```bash
-npm install
-npm run dev
+npm install && npm run dev
 ```
-
-数据保存在浏览器 `localStorage`，无需后端。反馈为面向 6.5→7 的启发式教练建议；可在录音后填写「用到的搭配」以获得更精准的标注。
