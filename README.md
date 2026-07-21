@@ -10,17 +10,22 @@
 - **搭配 / 主题词标注**：今日重点高亮，支持跟读与反复练习
 - **进度追踪**：连续打卡、28 日热力、词汇掌握度（本地存储）
 
-## 使用
+## 直接打开网页（推荐）
+
+双击或用浏览器打开根目录的 **`speakrise.html`** 即可使用，无需安装依赖。
+
+本地静态服务：
+
+```bash
+python3 -m http.server 8080
+# 打开 http://localhost:8080/speakrise.html
+```
+
+## React 开发版
 
 ```bash
 npm install
 npm run dev
-```
-
-构建：
-
-```bash
-npm run build
 ```
 
 数据保存在浏览器 `localStorage`，无需后端。反馈为面向 6.5→7 的启发式教练建议；可在录音后填写「用到的搭配」以获得更精准的标注。
