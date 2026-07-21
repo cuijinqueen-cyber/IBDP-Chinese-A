@@ -356,7 +356,7 @@ function bind(){
   document.getElementById('submitSpeak')?.addEventListener('click',()=>{const cur=speakTargets()[speakIdx%speakTargets().length];state.recordings.push({id:'r'+Date.now(),date:todayKey(),mockId:'speak-drill',partId:cur.item.id,durationSec:rec.sec});if(cur.kind==='vocab')practiceVocab(cur.item.id);else upsertCheckIn({vocabDrilled:true});speakDone=true;save();render();});
   document.getElementById('skipSpeak')?.addEventListener('click',()=>{speakDone=true;upsertCheckIn({vocabDrilled:true});render();});
   document.getElementById('speakNext')?.addEventListener('click',()=>{speakIdx++;speakUsed=speakClear=speakDone=false;resetRec();});
-  document.getElementById('startPrep')?.addEventListener('click',()=>{prepLeft=mock().parts[partIndex].prep||60;clearInterval(prepTimer);prepTimer=setInterval(()=>{prepLeft--;if(prepLeft<=0){clearInterval(prepTimer);prepLeft=null;}render();},1000);render();});
+  document.getElementById('startPrep')?.addEventListener('click',()=>{prepLeft=mock().parts[partIndex].prepSeconds||60;clearInterval(prepTimer);prepTimer=setInterval(()=>{prepLeft--;if(prepLeft<=0){clearInterval(prepTimer);prepLeft=null;}render();},1000);render();});
   document.getElementById('startRec')?.addEventListener('click',()=>startRec());
   document.getElementById('stopRec')?.addEventListener('click',()=>stopRec());
   document.getElementById('resetRec')?.addEventListener('click',()=>resetRec());
