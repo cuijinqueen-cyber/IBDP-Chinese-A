@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>原文关键句 Highlight｜Mapungubwe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #2a2118; --muted: #6b5e50; --paper: #f6f1ea; --panel: #fffdf9; --line: #e0d5c8; --accent: #8b4518;
+      --h-match: #fff3a3; --h-mc: #ffd6e7; --h-summary: #c8ebff; --h-colloc: #d8f5d0;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "DM Sans", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.65; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      padding: 10px 20px; background: rgba(246,241,234,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); font-size: .9rem;
+    }
+    .topbar a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 28px 20px 80px; }
+    h1 { font-family: "Source Serif 4", Georgia, serif; font-size: clamp(1.7rem,4vw,2.3rem); margin: 0 0 6px; }
+    .subtitle { color: var(--muted); margin: 0 0 16px; }
+    .intro { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; font-size: .98rem; color: var(--muted); }
+    .legend { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 8px; margin-bottom: 14px; }
+    .legend span { display: flex; gap: 8px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: .86rem; }
+    .swatch { width: 16px; height: 16px; border-radius: 3px; border: 1px solid rgba(0,0,0,.08); }
+    .swatch.match { background: var(--h-match); } .swatch.mc { background: var(--h-mc); }
+    .swatch.summary { background: var(--h-summary); } .swatch.colloc { background: var(--h-colloc); }
+    .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .controls button {
+      border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 6px 12px;
+      font: inherit; font-size: .85rem; font-weight: 600; cursor: pointer; color: var(--ink);
+    }
+    .controls button.active, .controls button:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft, #f0e4d6); }
+    .passage { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+    .section { padding: 16px 22px 18px; border-top: 1px solid var(--line); }
+    .section:first-child { border-top: 0; }
+    .sec-label {
+      display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px;
+      border-radius: 6px; background: #f0e4d6; color: var(--accent); font-weight: 700; margin-bottom: 8px;
+    }
+    .section p { margin: 0 0 12px; font-size: 1.02rem; }
+    .section p:last-child { margin-bottom: 0; }
+    mark { padding: .08em .12em; border-radius: 3px; background: var(--h-match); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+    mark.mc { background: var(--h-mc); }
+    mark.summary { background: var(--h-summary); }
+    mark.colloc { background: var(--h-colloc); }
+    mark .tag {
+      display: inline-block; font-size: .68rem; font-weight: 700; vertical-align: super; margin-left: 2px;
+      color: #7a4e00; background: rgba(255,255,255,.65); border-radius: 3px; padding: 0 4px;
+    }
+    mark.mc .tag { color: #8a2458; }
+    mark.summary .tag { color: #0b4f78; }
+    mark.colloc .tag { color: #1f5a2a; }
+    body.filter-match mark.mc, body.filter-match mark.summary, body.filter-match mark.colloc,
+    body.filter-mc mark:not(.mc), body.filter-summary mark:not(.summary), body.filter-colloc mark:not(.colloc) {
+      background: transparent; padding: 0;
+    }
+    body.filter-match mark.mc .tag, body.filter-match mark.summary .tag, body.filter-match mark.colloc .tag,
+    body.filter-mc mark:not(.mc) .tag, body.filter-summary mark:not(.summary) .tag, body.filter-colloc mark:not(.colloc) .tag { display: none; }
+    h2 { font-family: "Source Serif 4", Georgia, serif; font-size: 1.3rem; margin: 28px 0 12px; }
+    table { width: 100%; border-collapse: collapse; background: var(--panel); font-size: .9rem; }
+    th, td { border: 1px solid var(--line); padding: 9px 11px; vertical-align: top; text-align: left; }
+    th { background: #f0e4d6; color: var(--accent); }
+    td.q { font-weight: 700; color: var(--accent); white-space: nowrap; }
+    footer { margin-top: 24px; color: var(--muted); font-size: .85rem; }
+    @media print {
+      .topbar, .controls { display: none; }
+      mark { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="./index.html">← 返回目录</a>
+    <span>原文关键句 Highlight · Q14–26</span>
+  </div>
+  <main class="wrap">
+    <h1>Mapungubwe</h1>
+    <p class="subtitle">高亮 = 做题定位句 / 同义替换锚点 / 重点搭配</p>
+    <p class="intro">Located in southern Africa just below the Limpopo River, the kingdom of Mapungubwe flourished between the 11th and 13th century CE.</p>
+
+    <div class="legend">
+      <span><i class="swatch match"></i> Matching Information（14–19）</span>
+      <span><i class="swatch mc"></i> Multiple Choice（20–21）</span>
+      <span><i class="swatch summary"></i> Summary（22–26）</span>
+      <span><i class="swatch colloc"></i> 重点搭配句</span>
+    </div>
+    <div class="controls" id="filters">
+      <button type="button" class="active" data-filter="all">全部高亮</button>
+      <button type="button" data-filter="match">只看 14–19</button>
+      <button type="button" data-filter="mc">只看 20–21</button>
+      <button type="button" data-filter="summary">只看 22–26</button>
+      <button type="button" data-filter="colloc">只看搭配句</button>
+    </div>
+
+    <article class="passage">
+      <section class="section" id="A">
+        <div class="sec-label">A</div>
+        <p>
+          Mapungubwe, which was one of the first states in southern Africa, was formed by Bantu-speaking peoples who were farmers.
+          The area controlled by the rulers of Mapungubwe had at its heart a large sandstone plateau, which was
+          <mark class="colloc">easily defended<span class="tag">搭配</span></mark>
+          due to its inaccessibility.
+          As with other kingdoms in the region of southern Africa,
+          <mark class="colloc">cattle herding<span class="tag">搭配</span></mark>
+          and other types of farming brought plenty of food and
+          <mark>a surplus that could be
+          <span class="colloc-inline">traded for</span>
+          needed goods.
+          <span class="tag">Q19</span></mark>
+          Archaeology has revealed extensive layers of bones and manure, which indicate that from the 9th century CE there were large cattle herds, the traditional
+          <mark class="colloc">source of political power<span class="tag">搭配</span></mark>
+          in southern African communities.
+          The archaeological record for the 10th century shows a marked increase in the number of domesticated cattle in the area as well as cotton cultivation and weaving, as indicated by abundant finds of spindle whorls.
+        </p>
+      </section>
+
+      <section class="section" id="B">
+        <div class="sec-label">B</div>
+        <p>
+          <mark>The total population of Mapungubwe
+          <mark class="colloc" style="background:transparent;padding:0">at its peak</mark>
+          in the mid-13th century was around 5,000 people.
+          <span class="tag">Q18</span></mark>
+          The chief or king of Mapungubwe was likely the wealthiest individual in the society, and would have owned more cattle and precious materials than anyone else.
+          The king and his advisers dwelt in a
+          <mark class="colloc">stone enclosure<span class="tag">搭配</span></mark>
+          composed of stone walls and housing built on the highest level of the community’s territory, a natural sandstone hill which is some 30 metres high and 100 metres in length.
+          Occupation on the hill dates from the 11th century and the entire complex was surrounded by a wooden palisade, as indicated by postholes made in the rock.
+          The rest of the community lived in
+          <mark class="colloc">mud and thatch housing<span class="tag">搭配</span></mark>
+          spread out below the hill, although there is one stone structure here.
+          This settlement, known as Babandyanalo, covers around 5 hectares (12.3 acres) and predates the hilltop structures.
+        </p>
+      </section>
+
+      <section class="section" id="C">
+        <div class="sec-label">C</div>
+        <p>
+          The kings of Mapungubwe were buried at the top of the hill site in a demarcated area away from the dwellings, while other members of the community were buried at the surrounding valley level.
+          A wooden staircase connected the two levels, the sockets for the steps being clearly visible in the sandstone cliff face.
+          <mark>There were some grander residences dotted around the outskirts of Babandyanalo, and these probably belonged to male relatives of the king.
+          <span class="tag">Q16</span></mark>
+          There are many other smaller but still impressive sites across the Mapungubwe plateau, which are located anywhere from 15 to 100 kilometres from the major hill site.
+          Containing stone residences and walls, they likely belonged to local chiefs who acted as servants to the king.
+        </p>
+      </section>
+
+      <section class="section" id="D">
+        <div class="sec-label">D</div>
+        <p>
+          The Mapungubwe plateau has a very high number of carnivore animal remains and ivory splinters, suggesting that the skins of these large animals and ivory elephant tusks were accumulated, probably for trade with coastal areas reached by the Limpopo River.
+          The presence of glass beads, almost certainly from India, indicate there was trade of some sort with other states on the coast who, in turn, traded with
+          <mark>merchants travelling from India by sea.
+          <span class="tag">Q17</span></mark>
+          Mapungubwe also benefitted from
+          <mark class="colloc">locally-sourced<span class="tag">搭配</span></mark>
+          copper and the gold trade as it passed from the kingdom of Great Zimbabwe (12–15th century), situated to the north of Mapungubwe, to the coastal city of Kosala.
+          It is likely that trade links led to a
+          <mark class="colloc">strengthening of political authority<span class="tag">搭配</span></mark>
+          in order to control and even monopolise these
+          <mark class="colloc">lucrative interregional connections<span class="tag">搭配</span></mark>.
+        </p>
+      </section>
+
+      <section class="section" id="E">
+        <div class="sec-label">E</div>
+        <p>
+          Archaeological discoveries reveal that pottery was produced on a scale large enough to suggest the presence of professional potters, and is another
+          <mark class="summary">indicator of the
+          <strong>prosperity</strong>
+          of Mapungubwe society.
+          <span class="tag">Q22</span></mark>
+          Archaeological finds include spherical vessels with short necks, beakers, and bowls, many of which have decorative stamps.
+          There are also
+          <mark class="summary">ceramic discs, and
+          <strong>whistles</strong>.
+          <span class="tag">Q23</span></mark>
+          In addition, cattle, sheep, and goat figurines, and small figures of highly stylised humans with elongated
+          <mark class="summary"><strong>bodies</strong>
+          <span class="tag">Q24</span></mark>
+          and short limbs have been found.
+          <mark class="summary">The figures may have been used in ceremonies as offerings to
+          <strong>ancestors</strong>,
+          <span class="tag">Q25</span></mark>
+          <mark>but their precise function is not known.
+          <span class="tag">Q14</span></mark>
+          Other discoveries include small
+          <mark class="summary"><strong>jewellery</strong>
+          items made from locally sourced copper.
+          <span class="tag">Q26</span></mark>
+        </p>
+      </section>
+
+      <section class="section" id="F">
+        <div class="sec-label">F</div>
+        <p>
+          Beautifully decorated artefacts made of gold have also been found at Mapungubwe.
+          <mark class="mc">A type of decoration, found nowhere else except Great Zimbabwe, involved the crafting of gold into small rectangular sheets and carving geometrical patterns into it.
+          <span class="tag">Q20–21 · D</span></mark>
+          These sheets were then used to cover wooden objects (which have not survived) using small tacks, also made of gold.
+          One such object that has been discovered may have been a sceptre, while additional evidence of local gold-working is a rhinoceros figurine made from small hammered sheets, and thousands of small gold beads.
+          <mark class="mc">These objects were all found at the royal burial site and date to c. 1150.
+          <span class="tag">Q20–21 · B</span></mark>
+          They are the first known indicators that gold had an
+          <mark class="colloc">intrinsic value<span class="tag">搭配</span></mark>
+          of its own
+          <mark class="colloc">(as opposed to that of a currency)<span class="tag">搭配</span></mark>
+          in southern Africa.
+        </p>
+      </section>
+
+      <section class="section" id="G">
+        <div class="sec-label">G</div>
+        <p>
+          The kingdom of Mapungubwe was already
+          <mark class="colloc">in decline<span class="tag">搭配</span></mark>
+          by the late 13th century, probably because overpopulation
+          <mark class="colloc">placed too much stress on<span class="tag">搭配</span></mark>
+          local resources, a situation that may have been
+          <mark>brought to a crisis point by a series of droughts.
+          <span class="tag">Q15</span></mark>
+          Trade routes may also have shifted northwards. Certainly, the areas that now prospered were to the north, such as Great Zimbabwe.
+        </p>
+      </section>
+    </article>
+
+    <h2>关键句 ↔ 题目对照</h2>
+    <table>
+      <thead><tr><th>题</th><th>题干核心</th><th>原文关键句</th><th>段</th></tr></thead>
+      <tbody>
+        <tr><td class="q">14</td><td>uncertainty / purpose</td><td>precise function is not known</td><td>E</td></tr>
+        <tr><td class="q">15</td><td>climatic factor / problems</td><td>crisis point by a series of droughts</td><td>G</td></tr>
+        <tr><td class="q">16</td><td>king’s family lived</td><td>grander residences … male relatives of the king</td><td>C</td></tr>
+        <tr><td class="q">17</td><td>goods by ship</td><td>merchants travelling from India by sea</td><td>D</td></tr>
+        <tr><td class="q">18</td><td>estimate of size</td><td>around 5,000 people</td><td>B</td></tr>
+        <tr><td class="q">19</td><td>produce exchanged</td><td>surplus … traded for needed goods</td><td>A</td></tr>
+        <tr><td class="q">20–21</td><td>gold info (选二)</td><td>royal burial site；nowhere else except Great Zimbabwe → <strong>B, D</strong></td><td>F</td></tr>
+        <tr><td class="q">22</td><td>community’s ____</td><td>prosperity</td><td>E</td></tr>
+        <tr><td class="q">23</td><td>ceramic objects, ____</td><td>whistles</td><td>E</td></tr>
+        <tr><td class="q">24</td><td>stretched ____</td><td>bodies</td><td>E</td></tr>
+        <tr><td class="q">25</td><td>honour ____</td><td>ancestors</td><td>E</td></tr>
+        <tr><td class="q">26</td><td>pieces of ____</td><td>jewellery</td><td>E</td></tr>
+      </tbody>
+    </table>
+    <footer>黄=信息匹配｜粉=双选｜蓝=摘要｜绿=搭配 · 打印勾选背景图形</footer>
+  </main>
+  <script>
+    document.querySelectorAll("#filters button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#filters button").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const f = btn.dataset.filter;
+        document.body.className = f === "all" ? "" : "filter-" + f;
+      });
+    });
+  </script>
+</body>
+</html>
