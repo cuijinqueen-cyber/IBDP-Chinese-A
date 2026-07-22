@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>教师精讲｜Rethinking the Past</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1a2332; --muted: #5a6578; --paper: #eef2f7; --panel: #fff;
+      --line: #d5dde8; --accent: #1e4d7b; --ans: #0b6e4f; --ans-bg: #d8f3e7;
+      --key: #7a3e0c; --key-bg: #ffe8cc; --colloc-bg: #e3f0ff; --warm: #b45309;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "DM Sans", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.55; }
+    .topbar {
+      position: sticky; top: 0; z-index: 30; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between;
+      padding: 10px 18px; background: rgba(238,242,247,.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); font-size: .9rem;
+    }
+    .topbar a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 24px 18px 80px; }
+    h1 { font-family: "Source Serif 4", Georgia, serif; font-size: clamp(1.7rem, 3.5vw, 2.25rem); margin: 0 0 6px; }
+    .subtitle { color: var(--muted); margin: 0 0 14px; }
+    .badge { display: inline-block; background: #dce8f5; color: var(--accent); font-size: .8rem; font-weight: 700; padding: 3px 9px; border-radius: 4px; margin: 0 6px 8px 0; }
+    .warn { background: #fff7ed; border-left: 3px solid var(--warm); padding: 11px 13px; margin: 0 0 18px; color: #7c2d12; font-size: .93rem; }
+    .legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-bottom: 16px; }
+    .legend span { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: .85rem; display: flex; gap: 8px; align-items: center; }
+    .dot { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+    .dot.ans { background: var(--ans-bg); border: 1px solid #8fd4b5; }
+    .dot.key { background: var(--key-bg); border: 1px solid #f0c48a; }
+    .dot.col { background: var(--colloc-bg); border: 1px solid #9ec2e8; }
+    h2 { font-family: "Source Serif 4", Georgia, serif; font-size: 1.28rem; margin: 34px 0 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.02rem; color: var(--accent); margin: 18px 0 8px; }
+    .passage {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px 0;
+    }
+    .para { padding: 14px 20px; border-top: 1px solid var(--line); font-size: 1.01rem; }
+    .para:first-child { border-top: 0; }
+    .para-tag {
+      display: inline-block; font-size: .75rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+      color: var(--accent); background: #dce8f5; border-radius: 4px; padding: 2px 7px; margin-bottom: 8px;
+    }
+    mark.ans {
+      background: var(--ans-bg); color: var(--ink); padding: .1em .15em; border-radius: 3px;
+      border-bottom: 2px solid var(--ans); box-decoration-break: clone; -webkit-box-decoration-break: clone;
+    }
+    mark.key {
+      background: var(--key-bg); padding: .08em .12em; border-radius: 3px;
+      box-decoration-break: clone; -webkit-box-decoration-break: clone;
+    }
+    mark.col {
+      background: var(--colloc-bg); padding: .05em .1em; border-radius: 3px;
+    }
+    .qtag {
+      display: inline-block; font-size: .68rem; font-weight: 800; vertical-align: super; margin-left: 2px;
+      background: #fff; border: 1px solid var(--ans); color: var(--ans); border-radius: 3px; padding: 0 4px; line-height: 1.35;
+    }
+    mark.key .qtag { border-color: var(--key); color: var(--key); }
+    .card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 0 0 12px;
+    }
+    .card .ans-line { background: var(--ans-bg); border-left: 3px solid var(--ans); padding: 10px 12px; margin: 8px 0; border-radius: 0 6px 6px 0; font-size: .95rem; }
+    .card .meta { font-size: .88rem; color: var(--muted); margin: 4px 0; }
+    .ans-pill { display: inline-block; background: var(--ans); color: #fff; font-weight: 800; border-radius: 999px; padding: 2px 10px; font-size: .85rem; margin-right: 6px; }
+    table { width: 100%; border-collapse: collapse; background: var(--panel); font-size: .9rem; margin: 10px 0; }
+    th, td { border: 1px solid var(--line); padding: 9px 10px; vertical-align: top; text-align: left; }
+    th { background: #dce8f5; color: var(--accent); }
+    .a { color: var(--ans); font-weight: 800; background: var(--ans-bg); white-space: nowrap; }
+    .answers { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+    .answers div { background: var(--ans-bg); border: 1px solid #8fd4b5; border-radius: 8px; padding: 9px; text-align: center; font-weight: 800; color: var(--ans); }
+    .flow { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; font-family: ui-monospace, Menlo, monospace; font-size: .86rem; color: var(--muted); white-space: pre-wrap; line-height: 1.45; }
+    footer { margin-top: 28px; color: var(--muted); font-size: .85rem; }
+    @media print {
+      .topbar { display: none; }
+      mark.ans, mark.key, mark.col { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="./index.html">← 返回目录</a>
+    <span>教师精讲 · 答案句 / 重点句已标注 · 勿发学生</span>
+  </div>
+  <main class="wrap">
+    <span class="badge">教师精讲版</span><span class="badge">Q27–40</span><span class="badge">含答案句</span>
+    <h1>Rethinking the Past</h1>
+    <p class="subtitle">同义词替换 · 做题技巧 · 重点搭配 · 原文答案句 / 重点句标注</p>
+    <div class="warn">绿底+下划线 = <strong>答案句</strong>（直接支撑得分）；橙底 = <strong>重点句</strong>（主旨/态度/易错对照）；蓝底 = <strong>重点搭配</strong>。讲课顺序：学生先找 → 再对照标注。</div>
+
+    <div class="legend">
+      <span><i class="dot ans"></i> 答案句（对应题号）</span>
+      <span><i class="dot key"></i> 重点句（主旨/态度/干扰对照）</span>
+      <span><i class="dot col"></i> 重点搭配</span>
+    </div>
+
+    <h2>一、原文全文标注</h2>
+    <article class="passage">
+      <div class="para">
+        <div class="para-tag">§1 背景</div>
+        It is by now a truism that the story of human evolution is being rethought. Discoveries have
+        <mark class="col">come thick and fast<span class="qtag">搭配</span></mark>
+        over the last decade or so, and these have forced us to rethink many crucial points, such as how old our species is – about 300,000 years old as opposed to 200,000 – and what extinct hominins, such as our cousins the Neanderthals, were really like. But because there are so many species and eras involved, it’s hard to discern the common threads linking them.
+      </div>
+
+      <div class="para">
+        <div class="para-tag">§2 全文两大主旨 → Q27</div>
+        <mark class="ans">However, I do think it’s possible to
+        <mark class="col">draw out some overall messages<span class="qtag">搭配</span></mark>
+        from the blizzard of archaeological finds in recent years. Two things stand out to me. One is the growing evidence that many supposedly ‘advanced’ behaviours, such as architecture and art, can be
+        <mark class="col">traced much further back in time<span class="qtag">搭配</span></mark>
+        than we thought, often to hominin species that existed before modern humans. And the other is that we have badly misunderstood gender roles in prehistoric societies, imposing patriarchal values onto cultures that had very different ideas about how women should behave.
+        <span class="qtag">Q27 · A</span></mark>
+      </div>
+
+      <div class="para">
+        <div class="para-tag">§3 建筑 + 高海拔 → Q31 / Q32</div>
+        Let’s start with architecture.
+        <mark class="ans">At Kalambo Falls in Zambia, researchers found buried logs that had been shaped with stone tools so that they interlocked. They seem to have once been part of a larger structure, perhaps a building. This would be unsurprising if they weren’t 476,000 years old. That’s almost 200,000 years before our species, Homo sapiens, evolved.
+        <span class="qtag">Q31 · E</span></mark>
+        Extinct hominins also managed to settle in extreme places.
+        <mark class="ans">For instance, we now know that extinct hominins such as the Denisovans lived on the frozen heights of high-altitude regions 200,000 years ago –
+        <mark class="col">upending the old notion<span class="qtag">搭配</span></mark>
+        that such environments were only settled by modern humans around 3,600 years ago.
+        <span class="qtag">Q32 · F</span></mark>
+      </div>
+
+      <div class="para">
+        <div class="para-tag">§4 艺术争议 → Q35 / Q36 / Q38</div>
+        <mark class="ans">Art also seems to have been invented by older hominins. We have had evidence for a long time now that Neanderthals painted on cave walls. Even earlier species, such as Homo erectus, may also have made art, for example by engraving patterns on shells.
+        <span class="qtag">Q35 · NO</span></mark>
+        <mark class="key">By far the most
+        <mark class="col">contentious claim<span class="qtag">搭配</span></mark>
+        in this area is that Homo naledi made art.
+        <span class="qtag">重点</span></mark>
+        H. naledi lived around 250,000 years ago, making it a contemporary of our species. However, it had quite a small brain, typical of older hominins – and was therefore, according to palaeoanthropological dogma, incapable of
+        <mark class="col">complex behaviours<span class="qtag">搭配</span></mark>.
+        Nevertheless, in the Rising Star cave system in South Africa where the H. naledi remains were found, researchers have found what seem to be etchings – resembling rudimentary artwork – on the cave walls,
+        <mark class="ans">though these have yet to be firmly dated.
+        <span class="qtag">Q38 · YES</span></mark>
+        <mark class="key">（Q36：文中仅举例 shells，未说 rare → NG）<span class="qtag">Q36 · NG</span></mark>
+      </div>
+
+      <div class="para">
+        <div class="para-tag">§5 争议升级 → Q37 / Q39</div>
+        To say these claims about H. naledi are controversial is to understate the situation. Many experts say the evidence presented so far is completely inadequate to support them.
+        <mark class="ans">The dispute has only been
+        <mark class="col">heightened by<span class="qtag">搭配</span></mark>
+        the way the results were released, in a non-traditional journal that publishes peer reviews publicly alongside the paper.
+        <span class="qtag">Q39 · YES</span></mark>
+        <mark class="key">注意：此处谈的是 <em>released / publicise</em>，不是 examine methods → Q37 为 NG。
+        <span class="qtag">Q37 · NG</span></mark>
+      </div>
+
+      <div class="para">
+        <div class="para-tag">§6 作者态度：脑容量 → Q40</div>
+        My views on the H. naledi controversy are complicated. I do think more evidence is needed: in particular
+        <mark class="col">with regard to<span class="qtag">搭配</span></mark>
+        the dating of the etchings.
+        <mark class="ans">At the same time, I think the species’ small brains are a distraction. Palaeoanthropologists got
+        <mark class="col">fixated on<span class="qtag">搭配</span></mark>
+        brain size because it was what they could see… But other properties, such as the brain’s internal wiring, are surely equally important and may explain how a species like H. naledi might have been capable of complex behaviours, despite their small brains.
+        <span class="qtag">Q40 · NO</span></mark>
+      </div>
+
+      <div class="para">
+        <div class="para-tag">§7 渐进演化 → Q28</div>
+        In a sense, we shouldn’t be surprised that so many of these behaviours had their origins in older, extinct hominins.
+        <mark class="ans">Evolution usually works by
+        <mark class="col">incremental steps<span class="qtag">搭配</span></mark>
+        and so does technology. The first birds weren’t great at flying, and the first mobile phones weren’t great at, well, anything really.
+        <span class="qtag">Q28 · A</span></mark>
+        <mark class="key">The idea that there was a sudden explosion of intelligence and creativity… isn’t inherently ridiculous… But there was never that much evidence that human evolution worked this way. Instead, it seems the Neanderthals and many others all walked so we could run.
+        <span class="qtag">重点</span></mark>
+      </div>
+
+      <div class="para">
+        <div class="para-tag">§8 偏见挡证据 → Q29</div>
+        <mark class="key">One way or another, the H. naledi story is going to be an example of letting our preconceptions
+        <mark class="col">get in the way of<span class="qtag">搭配</span></mark>
+        the evidence.
+        <span class="qtag">重点</span></mark>
+        The same is true for our ideas about gender in prehistory.
+        <mark class="ans">Archaeology was invented by individuals with now unfashionably patriarchal views about gender, and those notions fed into their research. Today’s researchers are trying to
+        <mark class="col">unpick this stuff<span class="qtag">搭配</span></mark>, and there have been some significant steps in recent years.
+        <span class="qtag">Q29 · D</span></mark>
+      </div>
+
+      <div class="para">
+        <div class="para-tag">§9 性别证据 → Q33 / Q34</div>
+        Perhaps the most dramatic was the
+        <mark class="col">demolition of<span class="qtag">搭配</span></mark>
+        ‘Man the Hunter’. This was the idea, promoted for decades, that in most prehistoric societies the men went out to hunt and the women looked after the home.
+        <mark class="ans">However, a meta-analysis published in June 2023 compiled data on several dozen foraging societies and found women hunted in 80 per cent of them.
+        <span class="qtag">Q33 · D</span></mark>
+        In line with this, it emerged that an ancient spear-throwing tool called an atlatl enables women to launch projectiles at the same speed as men. We have also seen growing evidence of women occupying
+        <mark class="col">positions of authority<span class="qtag">搭配</span></mark>
+        in ancient societies. The Viking queen Thyra may have helped unify Denmark in the 900s.
+        <mark class="ans">Going further back, an Iberian leader from around 4000 years ago turned out to be female, not male as many had assumed, when proteins in her teeth were analysed.
+        <span class="qtag">Q34 · B</span></mark>
+      </div>
+
+      <div class="para">
+        <div class="para-tag">§10 结尾启示 → Q30</div>
+        <mark class="key">It seems that the more we find out about past societies, the more our preconceptions about the ways society ‘has to be’ turn out to be wrong.
+        <span class="qtag">重点</span></mark>
+        <mark class="ans">Inequality, authoritarianism and patriarchy
+        <mark class="col">aren’t inevitable<span class="qtag">搭配</span></mark>.
+        They’re choices, and prehistory shows us that we can choose differently.
+        <span class="qtag">Q30 · A</span></mark>
+      </div>
+    </article>
+
+    <h2>二、逐题精讲卡</h2>
+
+    <div class="card">
+      <div><span class="ans-pill">27 → A</span> 第二段在做什么？</div>
+      <p class="meta">替换：key changes ≈ overall messages / Two things stand out</p>
+      <div class="ans-line">答案句：draw out some overall messages… Two things stand out… advanced behaviours further back… misunderstood gender roles…</div>
+      <p class="meta">排除 B poorly understood｜C attitudes｜D disagreements</p>
+    </div>
+
+    <div class="card">
+      <div><span class="ans-pill">28 → A</span> 手机例子说明什么？</div>
+      <p class="meta">替换：gradual ≈ incremental steps</p>
+      <div class="ans-line">答案句：Evolution usually works by incremental steps and so does technology… first mobile phones…</div>
+    </div>
+
+    <div class="card">
+      <div><span class="ans-pill">29 → D</span> unpick this stuff = ?</div>
+      <p class="meta">替换：outdated beliefs ≈ unfashionably patriarchal views … fed into their research</p>
+      <div class="ans-line">答案句：Archaeology was invented by individuals with… patriarchal views… Today’s researchers are trying to unpick this stuff…</div>
+      <p class="meta">易错：不是质疑证据真伪（B），而是拆解旧观念对研究的污染</p>
+    </div>
+
+    <div class="card">
+      <div><span class="ans-pill">30 → A</span> 末段暗示？</div>
+      <div class="ans-line">答案句：Inequality… aren’t inevitable. They’re choices… we can choose differently.</div>
+    </div>
+
+    <div class="card">
+      <div><span class="ans-pill">31 → E</span> Kalambo Falls</div>
+      <div class="ans-line">476,000-year-old interlocking structure… before Homo sapiens → not the only species with sophisticated workmanship</div>
+    </div>
+    <div class="card">
+      <div><span class="ans-pill">32 → F</span> high-altitude</div>
+      <div class="ans-line">Denisovans… frozen heights… 200,000 years ago → other species in harsh environments before Homo sapiens</div>
+    </div>
+    <div class="card">
+      <div><span class="ans-pill">33 → D</span> June 2023</div>
+      <div class="ans-line">women hunted in 80% → mistaken about who looked for food</div>
+    </div>
+    <div class="card">
+      <div><span class="ans-pill">34 → B</span> Iberian leader</div>
+      <div class="ans-line">female, not male as many had assumed → assumptions about who had power inaccurate</div>
+    </div>
+
+    <div class="card">
+      <div><span class="ans-pill">35 NO</span> 尼安德特画是最早？</div>
+      <div class="ans-line">Even earlier… Homo erectus may also have made art → 与“最早”矛盾</div>
+    </div>
+    <div class="card">
+      <div><span class="ans-pill">36 NG</span> 贝壳雕刻很罕见？</div>
+      <div class="ans-line">只举例 shells，无 rare/common 评价</div>
+    </div>
+    <div class="card">
+      <div><span class="ans-pill">37 NG</span> 考察方法不传统？</div>
+      <div class="ans-line">文说 release / journal 不传统，未说 examine methods</div>
+    </div>
+    <div class="card">
+      <div><span class="ans-pill">38 YES</span> 蚀刻年代不清？</div>
+      <div class="ans-line">have yet to be firmly dated ＋ more evidence… dating of the etchings</div>
+    </div>
+    <div class="card">
+      <div><span class="ans-pill">39 YES</span> 宣传加剧争议？</div>
+      <div class="ans-line">dispute… heightened by the way the results were released…</div>
+    </div>
+    <div class="card">
+      <div><span class="ans-pill">40 NO</span> 脑大小是关键因素？</div>
+      <div class="ans-line">small brains are a distraction… internal wiring… despite their small brains</div>
+    </div>
+
+    <h2>三、答案速查</h2>
+    <div class="answers">
+      <div>27 A</div><div>28 A</div><div>29 D</div><div>30 A</div>
+      <div>31 E</div><div>32 F</div><div>33 D</div><div>34 B</div>
+      <div>35 NO</div><div>36 NG</div><div>37 NG</div><div>38 YES</div>
+      <div>39 YES</div><div>40 NO</div>
+    </div>
+
+    <h2>四、做题口诀</h2>
+    <div class="flow">MCQ：先定段落功能 → 抓作者动作词（pinpointing / suggest）→ 回段找同义
+句尾匹配：专名扫描（Kalambo / high-altitude / June 2023 / Iberian）→ 对改写
+Y/N/NG：盯作者态度词（I think / seems / distraction）
+　　　偷换考点最常见：examine ≠ release；加 rare；把 distraction 说成 key factor</div>
+
+    <footer>配合学生讲义使用 · 打印勾选背景图形以保留标注色</footer>
+  </main>
+</body>
+</html>
