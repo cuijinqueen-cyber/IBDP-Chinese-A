@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>剑桥雅思21 · Academic Test 4｜听力与阅读教案</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+:root {
+  --ink: #12262f;
+  --ink-soft: #2a4550;
+  --paper: #f3efe6;
+  --panel: rgba(255, 252, 246, 0.88);
+  --line: rgba(18, 38, 47, 0.12);
+  --teal: #0f6b6b;
+  --teal-deep: #0a4f55;
+  --amber: #c9782a;
+  --amber-soft: #f0d2a8;
+  --mist: #d9e7e4;
+  --shadow: 0 18px 50px rgba(10, 40, 48, 0.12);
+  --radius: 18px;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Manrope", "PingFang SC", "Noto Sans SC", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #cfe8e2 0%, transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, #f3d9b8 0%, transparent 45%),
+    linear-gradient(180deg, #eef4f1 0%, var(--paper) 40%, #e7efe9 100%);
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+.bg-glow {
+  position: fixed;
+  inset: auto -10% 10% auto;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(15, 107, 107, 0.16), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: drift 12s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-40px, -30px, 0); }
+}
+
+.hero,
+main,
+.footer {
+  position: relative;
+  z-index: 1;
+  width: min(1080px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.hero {
+  padding: 4.5rem 0 2.2rem;
+  animation: rise 0.8s ease both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+.brand {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--teal-deep);
+  line-height: 1.15;
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  max-width: 14ch;
+}
+
+.lede {
+  margin: 1.1rem 0 0;
+  max-width: 54ch;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.4rem;
+}
+
+.hero-meta span {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.55);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--teal-deep);
+}
+
+.hero-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.8rem;
+}
+
+.hero-nav a {
+  text-decoration: none;
+  color: var(--paper);
+  background: var(--ink);
+  padding: 0.65rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.hero-nav a:hover,
+.hero-nav a:focus-visible {
+  background: var(--teal);
+  transform: translateY(-2px);
+}
+
+.panel {
+  margin: 1.4rem 0 2rem;
+  padding: 1.5rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+  animation: rise 0.7s ease both;
+  animation-delay: 0.08s;
+}
+
+.panel h2 {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  letter-spacing: -0.02em;
+}
+
+.section-head p {
+  margin: -0.3rem 0 1.2rem;
+  color: var(--ink-soft);
+}
+
+.grid-2,
+.grid-3 {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.card {
+  padding: 1.15rem 1.2rem;
+  background: linear-gradient(180deg, #fffdf8, #f7f1e6);
+  border: 1px solid var(--line);
+}
+
+.card h3 {
+  margin: 0 0 0.7rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+
+.card ul,
+.card ol,
+.lesson-body ol,
+.lesson-body ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.card li + li,
+.lesson-body li + li {
+  margin-top: 0.35rem;
+}
+
+.timeline {
+  list-style: none;
+  padding-left: 0;
+}
+
+.timeline li {
+  padding: 0.55rem 0.7rem;
+  border-left: 3px solid var(--amber);
+  background: rgba(201, 120, 42, 0.08);
+}
+
+.timeline li + li {
+  margin-top: 0.45rem;
+}
+
+.wrap {
+  overflow-x: auto;
+  margin-top: 1.2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 680px;
+  font-size: 0.92rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.7rem 0.65rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--teal-deep);
+  background: rgba(15, 107, 107, 0.08);
+}
+
+tr:hover td {
+  background: rgba(15, 107, 107, 0.04);
+}
+
+.lesson {
+  margin: 0.9rem 0;
+  border: 1px solid var(--line);
+  background: #fffdf9;
+  overflow: hidden;
+}
+
+.lesson summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 1.1rem;
+  font-weight: 700;
+  font-size: 1.02rem;
+  background: linear-gradient(90deg, rgba(15, 107, 107, 0.1), transparent);
+}
+
+.lesson summary::-webkit-details-marker {
+  display: none;
+}
+
+.lesson summary::after {
+  content: "+";
+  margin-left: auto;
+  font-size: 1.3rem;
+  color: var(--teal);
+  transition: transform 0.2s ease;
+}
+
+.lesson[open] summary::after {
+  content: "–";
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.55rem;
+  background: var(--ink);
+  color: #f4efe5;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.lesson-body {
+  padding: 0 1.1rem 1.2rem;
+  border-top: 1px solid var(--line);
+}
+
+.lesson-body h4 {
+  margin: 1rem 0 0.45rem;
+  font-size: 0.95rem;
+  color: var(--teal-deep);
+}
+
+.lesson-body p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.answer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.6rem;
+}
+
+.ans {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.7rem 0.8rem;
+  background: rgba(15, 107, 107, 0.06);
+  border-left: 3px solid var(--teal);
+}
+
+.ans b {
+  font-size: 0.95rem;
+}
+
+.ans span {
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+
+.tip,
+.vocab {
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  background: linear-gradient(120deg, rgba(201, 120, 42, 0.14), rgba(15, 107, 107, 0.08));
+  border: 1px solid rgba(201, 120, 42, 0.28);
+}
+
+.vocab p {
+  margin: 0.35rem 0 0;
+}
+
+.key-list p {
+  display: grid;
+  grid-template-columns: 4.2rem 1fr;
+  gap: 0.6rem;
+  margin: 0.45rem 0;
+  font-size: 0.92rem;
+}
+
+.key-list span {
+  font-weight: 700;
+  color: var(--teal-deep);
+}
+
+.scorecard {
+  margin-top: 1rem;
+}
+
+.score-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.score-row p {
+  margin: 0.35rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.fineprint {
+  margin: 0.9rem 0 0;
+  color: #5d7278;
+  font-size: 0.82rem;
+}
+
+.footer {
+  padding: 1.5rem 0 3rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.top-btn {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 5;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: none;
+  background: var(--ink);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.top-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.top-btn:hover {
+  transform: translateY(-2px);
+  background: var(--teal);
+}
+
+@media (max-width: 860px) {
+  .grid-2,
+  .grid-3,
+  .answer-grid,
+  .score-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding-top: 3rem;
+  }
+
+  .hero h1 {
+    max-width: none;
+  }
+
+  .panel {
+    padding: 1.15rem;
+  }
+
+  .key-list p {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .bg-glow,
+  .hero,
+  .panel {
+    animation: none;
+  }
+}
+
+</style>
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <header class="hero">
+    <p class="brand">Cambridge IELTS 21 · Academic</p>
+    <h1>Test 4 听力与阅读教案</h1>
+    <p class="lede">面向课堂与自学的完整拆解：场景定位、题型策略、答案精讲、课堂活动与课后练习。</p>
+    <div class="hero-meta">
+      <span>建议课时 90–120 分钟</span>
+      <span>听力 40 题 + 阅读 40 题</span>
+      <span>目标分 6.5–7.5</span>
+    </div>
+    <nav class="hero-nav" aria-label="章节导航">
+      <a href="#overview">总览</a>
+      <a href="#listening">听力</a>
+      <a href="#reading">阅读</a>
+      <a href="#answers">答案速查</a>
+      <a href="#practice">练习安排</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="overview" class="panel">
+      <h2>一、课程总览</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>学习目标</h3>
+          <ul>
+            <li>掌握 Test 4 听力四段核心场景与干扰项识别</li>
+            <li>熟练处理多选、长选项配对与 Part 4 笔记填空</li>
+            <li>理清阅读三篇的定位顺序与判断逻辑（T/F/NG、Y/N/NG）</li>
+            <li>能独立复盘错因：同替、干扰、词性与作者态度</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>建议课堂流程</h3>
+          <ol class="timeline">
+            <li><strong>0–10′</strong> 导入：题型地图 + 本套难点预告</li>
+            <li><strong>10–55′</strong> 听力：限时模考 → 精讲 Part 2/3</li>
+            <li><strong>55–105′</strong> 阅读：P1 保分 → P2/P3 精读策略</li>
+            <li><strong>105–120′</strong> 答案核对 + 作业布置</li>
+          </ol>
+        </article>
+      </div>
+
+      <div class="map-table wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>模块</th>
+              <th>主题</th>
+              <th>题型</th>
+              <th>课堂重点</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>L Part 1</td>
+              <td>Broadbeach 购物调查</td>
+              <td>表格填空</td>
+              <td>拼写、纠正信息、ONE WORD</td>
+            </tr>
+            <tr>
+              <td>L Part 2</td>
+              <td>商业展览与演讲嘉宾</td>
+              <td>多选 + 配对</td>
+              <td>两年信息对比、话题匹配</td>
+            </tr>
+            <tr>
+              <td>L Part 3</td>
+              <td>未来住房课堂展示</td>
+              <td>单选 + 观点配对</td>
+              <td>双方共识、意见区分</td>
+            </tr>
+            <tr>
+              <td>L Part 4</td>
+              <td>音乐疗法与术后康复</td>
+              <td>笔记填空</td>
+              <td>研究结论链条、同义替换</td>
+            </tr>
+            <tr>
+              <td>R Passage 1</td>
+              <td>肯尼亚水葫芦与沼气</td>
+              <td>判断 + 流程 + 笔记</td>
+              <td>事实判断、流程图顺序</td>
+            </tr>
+            <tr>
+              <td>R Passage 2</td>
+              <td>印度多语言教育</td>
+              <td>选词摘要 + Y/N/NG + 单选</td>
+              <td>作者主张 vs 研究结果</td>
+            </tr>
+            <tr>
+              <td>R Passage 3</td>
+              <td>《地球仪制作者》书评</td>
+              <td>摘要 + Y/N/NG + 单选</td>
+              <td>书评语气、段落功能</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="listening" class="panel">
+      <div class="section-head">
+        <h2>二、听力教案</h2>
+        <p>先整套限时（约 30 分钟听力 + 转写），再按 Part 精讲。课堂优先深挖 Part 2 / Part 3。</p>
+      </div>
+
+      <details class="lesson" open>
+        <summary>
+          <span class="tag">Part 1 · Q1–10</span>
+          Survey about shopping in Broadbeach
+        </summary>
+        <div class="lesson-body">
+          <div class="grid-3">
+            <div>
+              <h4>场景定位</h4>
+              <p>街头调查员询问 Martyn Leigh 的购物行程与对市中心/郊区商场的看法。典型生活填空。</p>
+            </div>
+            <div>
+              <h4>题型要求</h4>
+              <p>Complete the form · <strong>ONE WORD ONLY</strong>。人名拼写、交通工具、目的与态度词是得分点。</p>
+            </div>
+            <div>
+              <h4>教学步骤（12′）</h4>
+              <ol>
+                <li>预读表格栏目，预测词性</li>
+                <li>提醒：先报 bus 再纠正为 motorbike</li>
+                <li>核对拼写：Leigh / hairdresser / cinema</li>
+              </ol>
+            </div>
+          </div>
+
+          <h4>答案与精讲</h4>
+          <div class="answer-grid">
+            <div class="ans"><b>1 Leigh</b><span>姓氏拼写：L-E-I-G-H，勿写成 Lee</span></div>
+            <div class="ans"><b>2 motorbike</b><span>干扰：normally catch the bus → 今天是 motorbike</span></div>
+            <div class="ans"><b>3 hairdresser</b><span>已完成行程：去理发，为面试准备</span></div>
+            <div class="ans"><b>4 suit</b><span>接下来要买面试西装</span></div>
+            <div class="ans"><b>5 laptop</b><span>去取修好的笔记本</span></div>
+            <div class="ans"><b>6 Monday</b><span>偏好周一购物，因人少；非周六</span></div>
+            <div class="ans"><b>7 coffee</b><span>嫌 coffee shops 太多</span></div>
+            <div class="ans"><b>8 books</b><span>希望多些书店</span></div>
+            <div class="ans"><b>9 plants</b><span>最喜欢商场的植物，不是玻璃顶</span></div>
+            <div class="ans"><b>10 cinema</b><span>认为新电影院没必要</span></div>
+          </div>
+
+          <div class="tip">
+            <strong>课堂活动：</strong>两人一组，一人念干扰句（bus / Saturday / glass roof），另一人说出最终答案词。强化“听完整再落笔”。
+          </div>
+        </div>
+      </details>
+
+      <details class="lesson">
+        <summary>
+          <span class="tag">Part 2 · Q11–20</span>
+          Annual business exhibition
+        </summary>
+        <div class="lesson-body">
+          <div class="grid-3">
+            <div>
+              <h4>场景定位</h4>
+              <p>播客介绍年度商业展：展商反馈、折扣信息、六位主题演讲人。</p>
+            </div>
+            <div>
+              <h4>题型结构</h4>
+              <ul>
+                <li>Q11–12 / Q13–14：Choose TWO</li>
+                <li>Q15–20：演讲主题配对（A–G 选六）</li>
+              </ul>
+            </div>
+            <div>
+              <h4>教学步骤（18′）</h4>
+              <ol>
+                <li>先标清“去年 / 前年 / 希望明年”</li>
+                <li>多选练“双答案并行记录”</li>
+                <li>配对先翻译选项差异再听</li>
+              </ol>
+            </div>
+          </div>
+
+          <h4>答案与精讲</h4>
+          <div class="answer-grid">
+            <div class="ans"><b>11–12 C, E</b><span>去年推广区域：Breakout area + Business Connections Zone（Business Village 是前年）</span></div>
+            <div class="ans"><b>13–14 A, B</b><span>折扣事实：参展公司成员可用；可用于 food and clothing</span></div>
+            <div class="ans"><b>15 C</b><span>Jim Clowrie：意外快速扩张（76 家餐厅）</span></div>
+            <div class="ans"><b>16 G</b><span>David France：商业成功 + 慈善捐赠</span></div>
+            <div class="ans"><b>17 D</b><span>Oliver Stanton：多国经商经历与文化差异</span></div>
+            <div class="ans"><b>18 A</b><span>Francesca：帮助求职 / jobs fair</span></div>
+            <div class="ans"><b>19 F</b><span>Salman Khan：随市场变化调整公司方向</span></div>
+            <div class="ans"><b>20 B</b><span>Annie Craven：处理个人生活障碍，不只商业</span></div>
+          </div>
+
+          <div class="tip">
+            <strong>易错点：</strong>把 “first year / last year / hoping” 时间线听混。板书三列时间轴再对答案。
+          </div>
+        </div>
+      </details>
+
+      <details class="lesson">
+        <summary>
+          <span class="tag">Part 3 · Q21–30</span>
+          Presentation on houses of the future
+        </summary>
+        <div class="lesson-body">
+          <div class="grid-3">
+            <div>
+              <h4>场景定位</h4>
+              <p>Mia 与 Leo 讨论学期联合展示：选题、城市住房供给、七项未来住宅设计评价。</p>
+            </div>
+            <div>
+              <h4>题型结构</h4>
+              <ul>
+                <li>Q21–23：单选（共识/决定）</li>
+                <li>Q24–30：观点配对 A–I</li>
+              </ul>
+            </div>
+            <div>
+              <h4>教学步骤（20′）</h4>
+              <ol>
+                <li>先找“双方都同意”的句子</li>
+                <li>配对选项按态度分类：利/弊/有条件</li>
+                <li>听完每项设计立即匹配字母</li>
+              </ol>
+            </div>
+          </div>
+
+          <h4>答案与精讲</h4>
+          <div class="answer-grid">
+            <div class="ans"><b>21 B</b><span>双方担心的是要找具体案例支撑，不是截止日期</span></div>
+            <div class="ans"><b>22 A</b><span>最终选题：intergenerational / family groups living together</span></div>
+            <div class="ans"><b>23 B</b><span>同意用高层公寓解决城市住房需求（building up）</span></div>
+            <div class="ans"><b>24 B</b><span>屋顶花园：对城市高层住户尤其有益</span></div>
+            <div class="ans"><b>25 E</b><span>共享办公：跨专业聊天激发创意</span></div>
+            <div class="ans"><b>26 I</b><span>可移动墙：适合家庭成员增减后的空间调整</span></div>
+            <div class="ans"><b>27 A</b><span>智能镜子：可能造成不必要焦虑</span></div>
+            <div class="ans"><b>28 D</b><span>带充电桩车棚：鼓励骑行，环境友好</span></div>
+            <div class="ans"><b>29 H</b><span>限制汽车：利于儿童家庭，但不利行动不便者</span></div>
+            <div class="ans"><b>30 G</b><span>公共菜园：退休者可共同参与项目</span></div>
+          </div>
+
+          <div class="tip">
+            <strong>课堂活动：</strong>把 A–I 选项做成纸条，播放设计讨论段，学生举牌抢答对应字母。
+          </div>
+        </div>
+      </details>
+
+      <details class="lesson">
+        <summary>
+          <span class="tag">Part 4 · Q31–40</span>
+          Music therapy for surgical patients
+        </summary>
+        <div class="lesson-body">
+          <div class="grid-3">
+            <div>
+              <h4>场景定位</h4>
+              <p>学术讲座：音乐对术后康复的研究综述——试验、播放方式、焦虑/用药、机制与后续研究。</p>
+            </div>
+            <div>
+              <h4>题型要求</h4>
+              <p>Notes completion · <strong>ONE WORD ONLY</strong>。答案多为研究术语的常见词形式。</p>
+            </div>
+            <div>
+              <h4>教学步骤（15′）</h4>
+              <ol>
+                <li>按 Background / Research / Conclusion 三段预读</li>
+                <li>空前空后画箭头，预测词性</li>
+                <li>强调：专业背景可跳过，盯答案槽</li>
+              </ol>
+            </div>
+          </div>
+
+          <h4>答案与精讲</h4>
+          <div class="answer-grid">
+            <div class="ans"><b>31 routine</b><span>手术打乱日常 routine</span></div>
+            <div class="ans"><b>32 trials</b><span>约 100 项 trials / 7000 名患者</span></div>
+            <div class="ans"><b>33 calming</b><span>音乐共同特点：calming quality</span></div>
+            <div class="ans"><b>34 pillows</b><span>多用 music pillows 播放</span></div>
+            <div class="ans"><b>35 anxiety</b><span>报告无焦虑或仅轻微焦虑</span></div>
+            <div class="ans"><b>36 medication</b><span>用药更少（pain medication）</span></div>
+            <div class="ans"><b>37 awake</b><span>清醒时效果更好</span></div>
+            <div class="ans"><b>38 distraction</b><span>机制：distraction（分心）</span></div>
+            <div class="ans"><b>39 nature</b><span>可用自然声音替代音乐</span></div>
+            <div class="ans"><b>40 volume</b><span>下一步研究最佳音量</span></div>
+          </div>
+
+          <div class="vocab">
+            <h4>本段高频同替</h4>
+            <p><em>discomfort</em> → pain / uncomfortable · <em>length of stay</em> → shorter hospital stay · <em>medication</em> → drugs / pain relief · <em>distraction</em> → take mind off problems</p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section id="reading" class="panel">
+      <div class="section-head">
+        <h2>三、阅读教案</h2>
+        <p>建议用时分配：Passage 1（16′）→ Passage 2（20′）→ Passage 3（22′）→ 检查（2′）。</p>
+      </div>
+
+      <details class="lesson" open>
+        <summary>
+          <span class="tag">Passage 1 · Q1–13</span>
+          Water hyacinth in Kenya
+        </summary>
+        <div class="lesson-body">
+          <div class="grid-3">
+            <div>
+              <h4>文章主线</h4>
+              <p>水葫芦如何成为生态灾难 → 伐木做饭的健康代价 → 用其与牛粪制沼气 → 惠及村庄妇女，但设备价格过高。</p>
+            </div>
+            <div>
+              <h4>题型组合</h4>
+              <ul>
+                <li>Q1–7 TRUE / FALSE / NOT GIVEN</li>
+                <li>Q8–10 流程图填空</li>
+                <li>Q11–13 笔记填空</li>
+              </ul>
+            </div>
+            <div>
+              <h4>教学步骤（20′）</h4>
+              <ol>
+                <li>扫读首尾段建立因果链</li>
+                <li>判断题按顺序定位</li>
+                <li>流程图回原文 digester 段精读</li>
+              </ol>
+            </div>
+          </div>
+
+          <h4>答案与精讲</h4>
+          <div class="answer-grid">
+            <div class="ans"><b>1 TRUE</b><span>比利时殖民者因观赏价值引入东非</span></div>
+            <div class="ans"><b>2 FALSE</b><span>经 Kagera 河流入维多利亚湖，非渔民带去</span></div>
+            <div class="ans"><b>3 TRUE</b><span>船只难以穿过厚密水葫芦</span></div>
+            <div class="ans"><b>4 NOT GIVEN</b><span>未提化学物质影响鱼数量</span></div>
+            <div class="ans"><b>5 NOT GIVEN</b><span>未比较木炭与木柴谁更有害</span></div>
+            <div class="ans"><b>6 FALSE</b><span>村民曾大量捞出并堆放岸边，并非无法清除</span></div>
+            <div class="ans"><b>7 TRUE</b><span>1980s 已开始研究作生物燃料</span></div>
+            <div class="ans"><b>8 cow dung</b><span>与牛粪混合入 digester</span></div>
+            <div class="ans"><b>9 fermentation (process)</b><span>等待发酵完成</span></div>
+            <div class="ans"><b>10 pipes</b><span>用管道输送到各家</span></div>
+            <div class="ans"><b>11 time</b><span>少花时间捡柴</span></div>
+            <div class="ans"><b>12 money</b><span>可做其他事赚钱</span></div>
+            <div class="ans"><b>13 price</b><span>设备价格约 $750，多数村庄负担不起</span></div>
+          </div>
+
+          <div class="tip">
+            <strong>判断口诀：</strong>原文明确相反 → FALSE；原文未比较/未提及关键点 → NOT GIVEN；勿把“有困难”脑补成“不可能”。
+          </div>
+        </div>
+      </details>
+
+      <details class="lesson">
+        <summary>
+          <span class="tag">Passage 2 · Q14–26</span>
+          Multilingualism & India’s poorest schoolchildren
+        </summary>
+        <div class="lesson-body">
+          <div class="grid-3">
+            <div>
+              <h4>文章主线</h4>
+              <p>德里多语言环境 → 为何印度多语儿童未获得欧洲式优势 → 教学媒介语（英语）与贫困 → 贫民窟儿童意外表现不差。</p>
+            </div>
+            <div>
+              <h4>题型组合</h4>
+              <ul>
+                <li>Q14–19 选词摘要（A–J）</li>
+                <li>Q20–23 YES / NO / NOT GIVEN</li>
+                <li>Q24–26 单选</li>
+              </ul>
+            </div>
+            <div>
+              <h4>教学步骤（22′）</h4>
+              <ol>
+                <li>摘要先排除明显不符选项</li>
+                <li>Y/N/NG 盯“作者/研究者主张”</li>
+                <li>单选题回对应段落读功能句</li>
+              </ol>
+            </div>
+          </div>
+
+          <h4>答案与精讲</h4>
+          <div class="answer-grid">
+            <div class="ans"><b>14 I</b><span>dense population（拥挤喧闹的德里）</span></div>
+            <div class="ans"><b>15 J</b><span>new immigrants（新迁入者）</span></div>
+            <div class="ans"><b>16 H</b><span>nearby district（附近地区）</span></div>
+            <div class="ans"><b>17 B</b><span>employment opportunities（更好工作）</span></div>
+            <div class="ans"><b>18 E</b><span>primary objective（研究首要目标）</span></div>
+            <div class="ans"><b>19 F</b><span>similar advantages（欧洲多语儿童那种优势）</span></div>
+            <div class="ans"><b>20 NO</b><span>读写与算术都差，并非读写更好</span></div>
+            <div class="ans"><b>21 NOT GIVEN</b><span>未提劝说女生参加研究有困难</span></div>
+            <div class="ans"><b>22 YES</b><span>团队想知道表现差是否与陌生教学语言有关</span></div>
+            <div class="ans"><b>23 NO</b><span>他们打算继续考察教学方法等变量，并非放弃</span></div>
+            <div class="ans"><b>24 C</b><span>贫困儿童若用英语授课可能更不利</span></div>
+            <div class="ans"><b>25 D</b><span>“that ship has sailed”= 彻底取消英语教学已太晚</span></div>
+            <div class="ans"><b>26 D</b><span>意外发现：贫民窟儿童读写算不比其他城市贫困儿童差</span></div>
+          </div>
+
+          <div class="tip">
+            <strong>短语精讲：</strong><em>that ship has sailed</em> = 覆水难收 / 为时已晚。课堂可再举 2 个英语习语在阅读中的功能题。
+          </div>
+        </div>
+      </details>
+
+      <details class="lesson">
+        <summary>
+          <span class="tag">Passage 3 · Q27–40</span>
+          The Globemakers（书评）
+        </summary>
+        <div class="lesson-body">
+          <div class="grid-3">
+            <div>
+              <h4>文章主线</h4>
+              <p>Peter Bellerby 想给父亲买地球仪作礼物 → 买不到只好自己学做 → 历史中的地球仪制作者 → 手工艺传承与书籍评价。</p>
+            </div>
+            <div>
+              <h4>题型组合</h4>
+              <ul>
+                <li>Q27–32 选词摘要</li>
+                <li>Q33–36 YES / NO / NOT GIVEN</li>
+                <li>Q37–40 单选</li>
+              </ul>
+            </div>
+            <div>
+              <h4>教学步骤（22′）</h4>
+              <ol>
+                <li>先读首尾段把握书评态度</li>
+                <li>摘要按叙事时间线填</li>
+                <li>单选关注“评论者在评价什么”</li>
+              </ol>
+            </div>
+          </div>
+
+          <h4>答案与精讲</h4>
+          <div class="answer-grid">
+            <div class="ans"><b>27 G</b><span>challenging task（出乎意料地艰难）</span></div>
+            <div class="ans"><b>28 J</b><span>numerous problems（需克服诸多问题）</span></div>
+            <div class="ans"><b>29 I</b><span>internet purchase 行不通</span></div>
+            <div class="ans"><b>30 C</b><span>只有劣质/劣等品牌（inferior makes）</span></div>
+            <div class="ans"><b>31 A</b><span>本为 educational use</span></div>
+            <div class="ans"><b>32 E</b><span>找不到具备 necessary skills 的人</span></div>
+            <div class="ans"><b>33 NO</b><span>古人地理知识贫乏的假设并不正确</span></div>
+            <div class="ans"><b>34 NOT GIVEN</b><span>未提 Plato 因此受批评</span></div>
+            <div class="ans"><b>35 NOT GIVEN</b><span>未评价 Crates 地球仪是否精确</span></div>
+            <div class="ans"><b>36 YES</b><span>他原以为不难找到做工好的地球仪</span></div>
+            <div class="ans"><b>37 B</b><span>贴 gores 时发现意外问题</span></div>
+            <div class="ans"><b>38 C</b><span>提及历代制作者是因 Bellerby 与他们各有共通点</span></div>
+            <div class="ans"><b>39 D</b><span>他遗憾许多制球技艺失传</span></div>
+            <div class="ans"><b>40 A</b><span>书并未教你如何做成一门赚钱生意</span></div>
+          </div>
+
+          <div class="tip">
+            <strong>书评题提醒：</strong>区分“书中人物做法”与“评论者评价”。Q40 考的是 reviewer 对书的总体评价，不是地球仪本身。
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section id="answers" class="panel">
+      <h2>四、答案速查表</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>Listening</h3>
+          <div class="key-list">
+            <p><span>1–10</span> Leigh · motorbike · hairdresser · suit · laptop · Monday · coffee · books · plants · cinema</p>
+            <p><span>11–14</span> C/E · C/E · A/B · A/B</p>
+            <p><span>15–20</span> C · G · D · A · F · B</p>
+            <p><span>21–30</span> B · A · B · B · E · I · A · D · H · G</p>
+            <p><span>31–40</span> routine · trials · calming · pillows · anxiety · medication · awake · distraction · nature · volume</p>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Reading</h3>
+          <div class="key-list">
+            <p><span>1–7</span> T · F · T · NG · NG · F · T</p>
+            <p><span>8–13</span> cow dung · fermentation (process) · pipes · time · money · price</p>
+            <p><span>14–19</span> I · J · H · B · E · F</p>
+            <p><span>20–26</span> NO · NG · YES · NO · C · D · D</p>
+            <p><span>27–40</span> G · J · I · C · A · E · NO · NG · NG · YES · B · C · D · A</p>
+          </div>
+        </article>
+      </div>
+      <p class="fineprint">答案依据剑桥官方答案体系整理；拼写接受英美变体（如 behaviour/behavior）。课堂以纸质官方答案册最终核对为准。</p>
+    </section>
+
+    <section id="practice" class="panel">
+      <h2>五、课堂活动与课后作业</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>课堂可直接用</h3>
+          <ul>
+            <li><strong>干扰雷达（听力 P1）：</strong>列出所有被否定信息，对照最终答案</li>
+            <li><strong>时间轴板书（听力 P2）：</strong>前年 / 去年 / 计划明年三列</li>
+            <li><strong>态度分类（听力 P3）：</strong>把 A–I 分成利、弊、有条件三类再听</li>
+            <li><strong>NG 法庭（阅读）：</strong>学生必须指出“原文缺了哪一环”才能判 NG</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>课后 48 小时任务</h3>
+          <ol>
+            <li>听力错题精听：每题写出原句 + 同替</li>
+            <li>阅读 P2/P3 各用中文写 5 句段落大意</li>
+            <li>整理本套主题词汇：shopping / exhibition / housing / surgery · ecology / education / craft</li>
+            <li>限时重做：只做错题对应题型（25 分钟）</li>
+          </ol>
+        </article>
+      </div>
+
+      <article class="card scorecard">
+        <h3>自评记分建议</h3>
+        <div class="score-row">
+          <div><strong>听力</strong><p>32+ ≈ 7.0 · 30+ ≈ 6.5 · 23+ ≈ 6.0</p></div>
+          <div><strong>阅读</strong><p>30+ ≈ 7.0 · 27+ ≈ 6.5 · 23+ ≈ 6.0</p></div>
+          <div><strong>本套攻坚</strong><p>听力多选/配对 · 阅读 Y/N/NG 与书评单选</p></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>剑桥雅思 21 Academic · Test 4 教案页 · 供教学与自学使用</p>
+    <p class="fineprint">题目文本版权归 Cambridge University Press & Assessment 所有；本页为教学拆解与策略讲解。</p>
+  </footer>
+
+  <button class="top-btn" id="toTop" aria-label="回到顶部">↑</button>
+  <script>
+(() => {
+  const topBtn = document.getElementById("toTop");
+
+  const onScroll = () => {
+    if (!topBtn) return;
+    topBtn.classList.toggle("show", window.scrollY > 480);
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  topBtn?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  // Reveal panels gently as they enter the viewport
+  const panels = document.querySelectorAll(".panel, .lesson");
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.transition = "opacity 0.45s ease, transform 0.45s ease";
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "none";
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08 }
+    );
+
+    panels.forEach((el, i) => {
+      if (i === 0) return;
+      el.style.opacity = "0";
+      el.style.transform = "translateY(12px)";
+      io.observe(el);
+    });
+  }
+})();
+
+</script>
+</body>
+</html>
