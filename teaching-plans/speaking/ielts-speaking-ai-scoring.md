@@ -18,14 +18,15 @@ Student re-speaks the SAME question once
 ```
 
 **Preferred tool:** [`html/ai-scoring.html`](./html/ai-scoring.html)  
-Click **Speak** → talk → silence/stop → scores appear automatically.
+Click **Speak** → student talks with **no time limit** → student presses **Stop** when finished → scores appear automatically.
 
 **Time budget**
-- Speak + auto-score: **under 1 minute per answer** for Part 1/3  
+- Speaking length: controlled by the student (no auto cut-off)  
+- Score appears only after Stop  
 - Student re-speak: **1–2 minutes**  
 - Do **not** over-correct every sentence.
 
-**Browser note:** Voice input uses the Web Speech API (best on **Chrome / Edge**). Allow microphone access.
+**Browser note:** Voice input uses the Web Speech API (best on **Chrome / Edge**). Allow microphone access. Recognition restarts automatically if the browser pauses mid-answer, until the student presses Stop.
 ---
 
 ## 2. Scoring Scale (IELTS-aligned, 6.0–8.0)

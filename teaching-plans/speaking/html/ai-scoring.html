@@ -121,7 +121,7 @@ audio { width: 100%; margin-top: 10px; }
 <body>
 <div class="wrap">
   <h1>Voice in → Auto score</h1>
-  <p class="sub">点击麦克风开始说；说完自动停止转写并立刻打分 + Top 3 建议。</p>
+  <p class="sub">点击 Speak 开始说，不限时；学生说完后自己点 Stop，才会结束并自动打分。</p>
 
   <div id="compat" class="warn" style="display:none"></div>
 
@@ -151,12 +151,12 @@ audio { width: 100%; margin-top: 10px; }
   </div>
 
   <div class="card voice-panel">
-    <p class="status" id="status">Ready — click the mic and speak</p>
+    <p class="status" id="status">Ready — click Speak, then click Stop when you finish</p>
     <button type="button" class="mic-btn" id="micBtn" aria-label="Start speaking">Speak</button>
     <div class="timer" id="timer">00:00</div>
     <div class="live" id="live"><span class="muted">Live transcript will appear here…</span></div>
     <audio id="player" controls style="display:none"></audio>
-    <p class="muted" style="margin-top:10px">Auto-score turns on when you stop. Chrome / Edge recommended.</p>
+    <p class="muted" style="margin-top:10px">No time limit. Recording continues until you press <strong>Stop</strong>. Then it scores automatically. Chrome / Edge recommended.</p>
   </div>
 
   <div class="card">
@@ -286,6 +286,7 @@ const compat = document.getElementById('compat');
 
 let recognition = null;
 let recognizing = false;
+let userWantsListening = false; // stays true until student presses Stop
 let finalTranscript = '';
 let autoScoreOnEnd = true;
 let startedAt = 0;
@@ -293,8 +294,6 @@ let timerId = null;
 let mediaRecorder = null;
 let mediaStream = null;
 let audioChunks = [];
-let silenceWatch = null;
-let lastSpeechAt = 0;
 
 if (!SpeechRecognition) {
   compat.style.display = 'block';
@@ -514,12 +513,13 @@ function setupRecognition() {
     recognizing = true;
     micBtn.classList.add('recording');
     micBtn.textContent = 'Stop';
-    setStatus('Listening… speak now', true);
-    liveEl.innerHTML = '<span class="muted">Listening…</span>';
+    setStatus('Listening… no time limit — press Stop when you finish', true);
+    if (!liveEl.textContent.trim() || liveEl.textContent.includes('Live transcript') || liveEl.textContent.includes('Listening')) {
+      liveEl.innerHTML = '<span class="muted">Listening…</span>';
+    }
   };
 
   recognition.onresult = (event) => {
-    lastSpeechAt = Date.now();
     let interim = '';
     for (let i = event.resultIndex; i < event.results.length; i++) {
       const piece = event.results[i][0].transcript;
@@ -534,7 +534,11 @@ function setupRecognition() {
   recognition.onerror = (event) => {
     console.warn('speech error', event.error);
     if (event.error === 'not-allowed') {
+      userWantsListening = false;
       setStatus('Microphone blocked. Allow mic access and try again.');
+    } else if (event.error === 'no-speech') {
+      // Keep listening until student presses Stop — do not treat silence as finish.
+      setStatus('Still listening… press Stop when you finish', true);
     } else if (event.error !== 'aborted') {
       setStatus(`Speech error: ${event.error}`);
     }
@@ -542,15 +546,31 @@ function setupRecognition() {
 
   recognition.onend = () => {
     recognizing = false;
+    // Browser may end recognition early; restart until the student presses Stop.
+    if (userWantsListening) {
+      setStatus('Still listening… press Stop when you finish', true);
+      try {
+        recognition.lang = document.getElementById('lang').value;
+        recognition.start();
+      } catch (_) {
+        setTimeout(() => {
+          if (!userWantsListening) return;
+          try { recognition.start(); } catch (e2) {
+            setStatus('Recognition paused. Click Speak to continue, or Stop to score.');
+          }
+        }, 200);
+      }
+      return;
+    }
+
     micBtn.classList.remove('recording');
     micBtn.textContent = 'Speak';
     stopTimer();
     stopAudioCapture();
-    clearInterval(silenceWatch);
     const text = transcriptEl.value.trim() || finalTranscript.trim();
     transcriptEl.value = text;
     if (text && autoScoreOnEnd) {
-      setStatus('Speech ended — scoring…');
+      setStatus('Finished — scoring…');
       renderResult({ fromVoice: true });
     } else if (!text) {
       setStatus('No speech captured. Try again in Chrome/Edge.');
@@ -566,7 +586,7 @@ async function startSpeaking() {
   transcriptEl.value = '';
   document.getElementById('outputCard').style.display = 'none';
   autoScoreOnEnd = true;
-  lastSpeechAt = Date.now();
+  userWantsListening = true;
   setupRecognition();
   recognition.lang = document.getElementById('lang').value;
   await startAudioCapture();
@@ -574,25 +594,15 @@ async function startSpeaking() {
   try {
     recognition.start();
   } catch (err) {
+    userWantsListening = false;
     setStatus('Could not start recognition. Refresh and allow microphone.');
-    return;
   }
-
-  // Auto-stop after ~2.2s of silence (useful for Part 1/3). Part 2 users can press Stop.
-  clearInterval(silenceWatch);
-  silenceWatch = setInterval(() => {
-    if (!recognizing) return;
-    const part = document.getElementById('part').value;
-    const silenceLimit = part === 'part2' ? 5000 : 2200;
-    if (Date.now() - lastSpeechAt > silenceLimit && (transcriptEl.value.trim() || finalTranscript.trim())) {
-      stopSpeaking();
-    }
-  }, 300);
 }
 
 function stopSpeaking() {
+  // Only the student ends the turn.
+  userWantsListening = false;
   autoScoreOnEnd = true;
-  clearInterval(silenceWatch);
   if (recognition && recognizing) {
     try { recognition.stop(); } catch (_) {}
   } else {
@@ -601,6 +611,7 @@ function stopSpeaking() {
     micBtn.classList.remove('recording');
     micBtn.textContent = 'Speak';
     if (transcriptEl.value.trim()) renderResult({ fromVoice: true });
+    else setStatus('Stopped');
   }
 }
 
@@ -643,7 +654,7 @@ document.getElementById('clearBtn').addEventListener('click', () => {
   document.getElementById('outputCard').style.display = 'none';
   player.style.display = 'none';
   timerEl.textContent = '00:00';
-  setStatus('Ready — click the mic and speak');
+  setStatus('Ready — click Speak, then click Stop when you finish');
 });
 </script>
 </body>
