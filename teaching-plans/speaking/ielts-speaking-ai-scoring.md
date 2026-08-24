@@ -6,20 +6,26 @@
 ## 1. Workflow (standard)
 
 ```
-Student speaks → Record audio → (Optional) transcribe
+Student speaks into mic (web tool)
         ↓
-AI / tutor scores 4 criteria
+Live speech-to-text transcript
         ↓
-Give Top 3 suggestions only
+Auto score 4 criteria on stop
         ↓
-Student re-records the SAME question once
+Top 3 suggestions + optional audio playback
+        ↓
+Student re-speaks the SAME question once
 ```
 
+**Preferred tool:** [`html/ai-scoring.html`](./html/ai-scoring.html)  
+Click **Speak** → talk → silence/stop → scores appear automatically.
+
 **Time budget**
-- Score + suggestions: **2–3 minutes**
-- Student re-record: **1–2 minutes**
+- Speak + auto-score: **under 1 minute per answer** for Part 1/3  
+- Student re-speak: **1–2 minutes**  
 - Do **not** over-correct every sentence.
 
+**Browser note:** Voice input uses the Web Speech API (best on **Chrome / Edge**). Allow microphone access.
 ---
 
 ## 2. Scoring Scale (IELTS-aligned, 6.0–8.0)

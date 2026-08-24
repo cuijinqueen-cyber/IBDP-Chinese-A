@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IELTS Speaking AI Score & Suggestions</title>
+<title>IELTS Speaking — Voice In → Auto Score</title>
 <style>
 :root {
   --ink: #1f1a17;
@@ -11,7 +11,8 @@
   --accent: #0f5c4c;
   --card: #fffdf9;
   --line: #ddd4c8;
-  --warn: #8a4b2d;
+  --danger: #9b2c2c;
+  --rec: #b33b3b;
 }
 * { box-sizing: border-box; }
 body {
@@ -24,8 +25,8 @@ body {
   line-height: 1.55;
 }
 .wrap { max-width: 920px; margin: 0 auto; padding: 24px 18px 64px; }
-h1 { color: var(--accent); margin: 0 0 6px; font-size: 1.55rem; }
-.sub { color: var(--muted); margin: 0 0 22px; }
+h1 { color: var(--accent); margin: 0 0 6px; font-size: 1.5rem; }
+.sub { color: var(--muted); margin: 0 0 18px; }
 .card {
   background: var(--card);
   border: 1px solid var(--line);
@@ -43,8 +44,45 @@ input, select, textarea {
   background: #fff;
   color: var(--ink);
 }
-textarea { min-height: 140px; resize: vertical; }
+textarea { min-height: 120px; resize: vertical; }
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.voice-panel {
+  text-align: center;
+  padding: 22px 16px 18px;
+  background: linear-gradient(180deg, #f7faf7, #fffdf9);
+}
+.status {
+  min-height: 1.4em;
+  color: var(--muted);
+  margin: 0 0 14px;
+  font-size: .98rem;
+}
+.status.hot { color: var(--rec); font-weight: 700; }
+.mic-btn {
+  width: 120px; height: 120px; border-radius: 50%;
+  border: 0; cursor: pointer; color: #fff;
+  background: var(--accent);
+  font-size: 1rem; font-weight: 700;
+  box-shadow: 0 10px 24px rgba(15,92,76,.25);
+  transition: transform .15s ease, background .15s ease;
+}
+.mic-btn:hover { transform: scale(1.03); }
+.mic-btn.recording {
+  background: var(--rec);
+  animation: pulse 1.2s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(179,59,59,.45); }
+  70% { box-shadow: 0 0 0 18px rgba(179,59,59,0); }
+  100% { box-shadow: 0 0 0 0 rgba(179,59,59,0); }
+}
+.timer { margin-top: 10px; font-variant-numeric: tabular-nums; color: var(--accent); font-weight: 700; }
+.live {
+  margin-top: 14px; text-align: left;
+  background: #f4efe7; border-radius: 12px; padding: 12px;
+  min-height: 64px; color: var(--ink);
+}
+.live .interim { color: var(--muted); }
 .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 8px; }
 .check {
   display: flex; gap: 8px; align-items: flex-start;
@@ -52,7 +90,7 @@ textarea { min-height: 140px; resize: vertical; }
 }
 .check input { width: auto; margin-top: 3px; }
 .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-button {
+button.action {
   border: 0; border-radius: 999px; padding: .65rem 1rem;
   background: var(--accent); color: #fff; font: inherit; cursor: pointer;
 }
@@ -67,20 +105,25 @@ button.ghost { background: transparent; color: var(--accent); border: 1px solid 
 }
 .score-box b { display: block; font-size: 1.35rem; color: var(--accent); }
 .muted { color: var(--muted); font-size: .92rem; }
-.prompt-box {
-  background: #1f1a17; color: #f7f4ef; border-radius: 12px;
-  padding: 12px; font-family: ui-monospace, Menlo, Consolas, monospace;
-  font-size: .86rem; white-space: pre-wrap;
+details { margin-top: 8px; }
+summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+audio { width: 100%; margin-top: 10px; }
+.warn {
+  background: #f8ebe3; color: var(--warn, #8a4b2d);
+  border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; font-size: .92rem;
 }
 @media (max-width: 720px) {
   .row, .checks, .scores { grid-template-columns: 1fr; }
+  .mic-btn { width: 108px; height: 108px; }
 }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>After Speaking → AI Score & Suggestions</h1>
-  <p class="sub">学生说完后：粘贴转写/笔记 → 勾选问题 → 生成分数与 Top 3 建议。也可一键复制给大模型精评。</p>
+  <h1>Voice in → Auto score</h1>
+  <p class="sub">点击麦克风开始说；说完自动停止转写并立刻打分 + Top 3 建议。</p>
+
+  <div id="compat" class="warn" style="display:none"></div>
 
   <div class="card">
     <div class="row">
@@ -93,10 +136,11 @@ button.ghost { background: transparent; color: var(--accent); border: 1px solid 
         </select>
       </div>
       <div>
-        <label for="target">Target band</label>
-        <select id="target">
-          <option>7.0</option>
-          <option selected>7.5</option>
+        <label for="lang">Speech language</label>
+        <select id="lang">
+          <option value="en-US" selected>English (US)</option>
+          <option value="en-GB">English (UK)</option>
+          <option value="en-AU">English (AU)</option>
         </select>
       </div>
     </div>
@@ -104,23 +148,31 @@ button.ghost { background: transparent; color: var(--accent); border: 1px solid 
       <label for="question">Question / cue card</label>
       <input id="question" placeholder="e.g. Has technology improved education?">
     </div>
-    <div style="margin-top:12px">
-      <label for="transcript">Student answer (transcript or detailed notes)</label>
-      <textarea id="transcript" placeholder="Paste what the student said..."></textarea>
-    </div>
+  </div>
+
+  <div class="card voice-panel">
+    <p class="status" id="status">Ready — click the mic and speak</p>
+    <button type="button" class="mic-btn" id="micBtn" aria-label="Start speaking">Speak</button>
+    <div class="timer" id="timer">00:00</div>
+    <div class="live" id="live"><span class="muted">Live transcript will appear here…</span></div>
+    <audio id="player" controls style="display:none"></audio>
+    <p class="muted" style="margin-top:10px">Auto-score turns on when you stop. Chrome / Edge recommended.</p>
   </div>
 
   <div class="card">
-    <label>Observed issues (tick after listening)</label>
-    <div class="checks" id="issues"></div>
-    <p class="muted">Pronunciation: if you only have text, leave pronunciation issues unticked or mark “uncertain”.</p>
-    <div class="check"><input type="checkbox" id="pronUncertain" checked> Pronunciation uncertain (text-only)</div>
+    <label for="transcript">Transcript (editable if recognition misses words)</label>
+    <textarea id="transcript" placeholder="Filled automatically from voice input…"></textarea>
+    <details>
+      <summary>Optional: tick extra issues you heard</summary>
+      <div class="checks" id="issues"></div>
+    </details>
   </div>
 
   <div class="btns">
-    <button type="button" id="scoreBtn">Score & give suggestions</button>
-    <button type="button" class="secondary" id="promptBtn">Copy AI prompt</button>
-    <button type="button" class="ghost" id="clearBtn">Clear</button>
+    <button type="button" class="action" id="scoreBtn">Score now</button>
+    <button type="button" class="action secondary" id="promptBtn">Copy AI prompt</button>
+    <button type="button" class="action ghost" id="clearBtn">Clear</button>
+    <a class="action ghost" href="index.html" style="text-decoration:none;display:inline-block">Back to plan</a>
   </div>
 
   <div class="card" id="outputCard" style="display:none; margin-top:14px">
@@ -223,41 +275,106 @@ ISSUE_DEFS.forEach(item => {
   issueBox.appendChild(div);
 });
 
-function roundHalf(n) {
-  return Math.round(n * 2) / 2;
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const micBtn = document.getElementById('micBtn');
+const statusEl = document.getElementById('status');
+const liveEl = document.getElementById('live');
+const transcriptEl = document.getElementById('transcript');
+const timerEl = document.getElementById('timer');
+const player = document.getElementById('player');
+const compat = document.getElementById('compat');
+
+let recognition = null;
+let recognizing = false;
+let finalTranscript = '';
+let autoScoreOnEnd = true;
+let startedAt = 0;
+let timerId = null;
+let mediaRecorder = null;
+let mediaStream = null;
+let audioChunks = [];
+let silenceWatch = null;
+let lastSpeechAt = 0;
+
+if (!SpeechRecognition) {
+  compat.style.display = 'block';
+  compat.textContent = 'This browser has no Web Speech API. Please use Chrome or Edge for voice input. You can still paste a transcript and click Score now.';
+  micBtn.disabled = true;
+  micBtn.style.opacity = .5;
 }
 
-function clamp(n, min, max) {
-  return Math.max(min, Math.min(max, n));
+function setStatus(text, hot = false) {
+  statusEl.textContent = text;
+  statusEl.classList.toggle('hot', hot);
+}
+
+function formatTime(ms) {
+  const s = Math.floor(ms / 1000);
+  const mm = String(Math.floor(s / 60)).padStart(2, '0');
+  const ss = String(s % 60).padStart(2, '0');
+  return `${mm}:${ss}`;
+}
+
+function startTimer() {
+  startedAt = Date.now();
+  timerEl.textContent = '00:00';
+  clearInterval(timerId);
+  timerId = setInterval(() => {
+    timerEl.textContent = formatTime(Date.now() - startedAt);
+  }, 250);
+}
+
+function stopTimer() {
+  clearInterval(timerId);
+  timerId = null;
 }
 
 function selectedIssues() {
   return [...document.querySelectorAll('#issues input:checked')].map(el => el.value);
 }
 
+function roundHalf(n) { return Math.round(n * 2) / 2; }
+function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
 function estimateScores(part, issues, transcript) {
   const base = { fc: 7.0, lr: 7.0, gra: 7.0, pron: 7.0 };
   const weights = { fc: 0, lr: 0, gra: 0, pron: 0 };
+  const issueSet = [...issues];
+
   ISSUE_DEFS.forEach(def => {
-    if (issues.includes(def.id)) weights[def.cat] += def.weight;
+    if (issueSet.includes(def.id)) weights[def.cat] += def.weight;
   });
 
-  // length heuristic
   const words = (transcript || '').trim().split(/\s+/).filter(Boolean).length;
+  const durationSec = startedAt ? Math.max(1, Math.round((Date.now() - startedAt) / 1000)) : 0;
+
   if (part === 'part1' && words > 0 && words < 25) {
     weights.fc += 0.8;
-    issues.push('short');
+    if (!issueSet.includes('short')) issueSet.push('short');
   }
   if (part === 'part3' && words > 0 && words < 45) {
     weights.fc += 1.0;
-    if (!issues.includes('short')) issues.push('short');
+    if (!issueSet.includes('short')) issueSet.push('short');
   }
   if (part === 'part2' && words > 0 && words < 120) {
     weights.fc += 0.8;
-    if (!issues.includes('short')) issues.push('short');
+    if (!issueSet.includes('short')) issueSet.push('short');
   }
 
-  // quick grammar text cues
+  // speaking-rate / pause heuristic from recording length vs words
+  if (durationSec >= 8 && words > 0) {
+    const wpm = (words / durationSec) * 60;
+    if (wpm < 70) {
+      weights.fc += 0.5;
+      weights.pron += 0.2;
+      if (!issueSet.includes('pause')) issueSet.push('pause');
+    }
+    if (wpm > 190) {
+      weights.pron += 0.5;
+      if (!issueSet.includes('unclear')) issueSet.push('unclear');
+    }
+  }
+
   const lower = (transcript || '').toLowerCase();
   const grammarCues = [
     /i very like/, /in my [a-z ]+ have/, /it depend\b/, /i am agree/, /there have/,
@@ -265,7 +382,18 @@ function estimateScores(part, issues, transcript) {
   ];
   if (grammarCues.some(r => r.test(lower))) {
     weights.gra += 0.8;
-    if (!issues.includes('basicGrammar')) issues.push('basicGrammar');
+    if (!issueSet.includes('basicGrammar')) issueSet.push('basicGrammar');
+  }
+  if (/\b(nice|good|interesting)\b/.test(lower)) {
+    const count = (lower.match(/\b(nice|good|interesting)\b/g) || []).length;
+    if (count >= 2) {
+      weights.lr += 0.6;
+      if (!issueSet.includes('repeat')) issueSet.push('repeat');
+    }
+  }
+  if (!/\b(because|if|although|while|which|that)\b/.test(lower) && words > 40) {
+    weights.gra += 0.4;
+    if (!issueSet.includes('noComplex')) issueSet.push('noComplex');
   }
 
   const scores = {};
@@ -273,14 +401,8 @@ function estimateScores(part, issues, transcript) {
     const penalty = Math.min(1.8, weights[k] * 0.55);
     scores[k] = roundHalf(clamp(base[k] - penalty, 5.5, 8.0));
   }
-
-  if (document.getElementById('pronUncertain').checked) {
-    // keep pron near overall text performance, mark uncertain later
-    scores.pron = roundHalf(clamp((scores.fc + scores.lr + scores.gra) / 3, 6.0, 7.5));
-  }
-
   const overall = roundHalf(clamp((scores.fc + scores.lr + scores.gra + scores.pron) / 4, 5.5, 8.0));
-  return { scores, overall, issues: [...new Set(issues)] };
+  return { scores, overall, issues: [...new Set(issueSet)], words, durationSec };
 }
 
 function topSuggestions(issues) {
@@ -306,34 +428,34 @@ function partTip(part) {
   return 'Part 3 focus: IDEA frame; 40–60 seconds; opinion + why + example.';
 }
 
-function renderResult() {
+function renderResult({ fromVoice = false } = {}) {
   const part = document.getElementById('part').value;
   const question = document.getElementById('question').value.trim() || '(no question provided)';
-  const transcript = document.getElementById('transcript').value.trim();
+  const transcript = transcriptEl.value.trim();
   const issues = selectedIssues();
-  if (!transcript && issues.length === 0) {
-    alert('Please paste a transcript and/or tick observed issues.');
+  if (!transcript) {
+    setStatus('No transcript yet — speak first or paste text.');
     return;
   }
 
-  const { scores, overall, issues: finalIssues } = estimateScores(part, issues, transcript);
+  const { scores, overall, issues: finalIssues, words, durationSec } = estimateScores(part, issues, transcript);
   const tips = topSuggestions(finalIssues);
-  const uncertain = document.getElementById('pronUncertain').checked;
 
-  const boxes = document.getElementById('scoreBoxes');
-  boxes.innerHTML = `
+  document.getElementById('scoreBoxes').innerHTML = `
     <div class="score-box"><span>FC</span><b>${scores.fc}</b></div>
     <div class="score-box"><span>LR</span><b>${scores.lr}</b></div>
     <div class="score-box"><span>GRA</span><b>${scores.gra}</b></div>
-    <div class="score-box"><span>Pron${uncertain ? '*' : ''}</span><b>${scores.pron}</b></div>
+    <div class="score-box"><span>Pron</span><b>${scores.pron}</b></div>
     <div class="score-box"><span>Overall</span><b>${overall}</b></div>
   `;
 
   let text = '';
+  text += `Mode: ${fromVoice ? 'Voice input (auto-scored)' : 'Manual score'}\n`;
   text += `Task: ${part.toUpperCase()}\nQuestion: ${question}\n`;
-  text += `Target: Band ${document.getElementById('target').value}\n\n`;
+  text += `Length: ${words} words` + (durationSec ? ` · ~${durationSec}s` : '') + `\n\n`;
   text += `Estimated overall: ${overall}\n`;
-  text += `FC ${scores.fc} | LR ${scores.lr} | GRA ${scores.gra} | Pron ${scores.pron}${uncertain ? ' (uncertain without audio)' : ''}\n\n`;
+  text += `FC ${scores.fc} | LR ${scores.lr} | GRA ${scores.gra} | Pron ${scores.pron}\n`;
+  text += `Note: Pronunciation is estimated from delivery cues + transcript; verify with the audio playback.\n\n`;
   text += `${partTip(part)}\n\n`;
   text += `Top 3 suggestions:\n`;
   tips.forEach((t, i) => {
@@ -341,61 +463,187 @@ function renderResult() {
     text += `   Why: ${t.why}\n`;
     text += `   Try: ${t.better}\n\n`;
   });
-  text += `Next step: Re-record the SAME question focusing only on suggestion #1.\n`;
-  text += `Then compare the two recordings for 30 seconds.`;
+  text += `Next step: Re-speak the SAME question focusing only on suggestion #1.`;
 
   document.getElementById('result').textContent = text;
   document.getElementById('outputCard').style.display = 'block';
+  setStatus(`Scored · Overall ${overall}`);
 }
 
-function buildPrompt() {
-  const partLabel = {
-    part1: 'Part 1',
-    part2: 'Part 2',
-    part3: 'Part 3'
-  }[document.getElementById('part').value];
-  const question = document.getElementById('question').value.trim() || '[question]';
-  const transcript = document.getElementById('transcript').value.trim() || '[transcript]';
-  const issues = selectedIssues().map(id => ISSUE_DEFS.find(x => x.id === id)?.label).filter(Boolean);
+async function startAudioCapture() {
+  audioChunks = [];
+  player.style.display = 'none';
+  player.removeAttribute('src');
+  try {
+    mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(mediaStream);
+    mediaRecorder.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) audioChunks.push(e.data);
+    };
+    mediaRecorder.onstop = () => {
+      if (!audioChunks.length) return;
+      const blob = new Blob(audioChunks, { type: audioChunks[0].type || 'audio/webm' });
+      player.src = URL.createObjectURL(blob);
+      player.style.display = 'block';
+    };
+    mediaRecorder.start();
+  } catch (err) {
+    console.warn(err);
+    setStatus('Microphone permission needed for recording playback (speech recognition may still work).');
+  }
+}
 
-  return `You are an IELTS Speaking examiner-coach.
-Student target: Band ${document.getElementById('target').value} (current level around 6.5).
+function stopAudioCapture() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    try { mediaRecorder.stop(); } catch (_) {}
+  }
+  if (mediaStream) {
+    mediaStream.getTracks().forEach(t => t.stop());
+    mediaStream = null;
+  }
+}
+
+function setupRecognition() {
+  recognition = new SpeechRecognition();
+  recognition.lang = document.getElementById('lang').value;
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.maxAlternatives = 1;
+
+  recognition.onstart = () => {
+    recognizing = true;
+    micBtn.classList.add('recording');
+    micBtn.textContent = 'Stop';
+    setStatus('Listening… speak now', true);
+    liveEl.innerHTML = '<span class="muted">Listening…</span>';
+  };
+
+  recognition.onresult = (event) => {
+    lastSpeechAt = Date.now();
+    let interim = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const piece = event.results[i][0].transcript;
+      if (event.results[i].isFinal) finalTranscript += piece + ' ';
+      else interim += piece;
+    }
+    const cleanFinal = finalTranscript.replace(/\s+/g, ' ').trim();
+    liveEl.innerHTML = `${cleanFinal}${interim ? ` <span class="interim">${interim}</span>` : ''}` || '<span class="muted">Listening…</span>';
+    transcriptEl.value = `${cleanFinal}${interim ? ' ' + interim : ''}`.trim();
+  };
+
+  recognition.onerror = (event) => {
+    console.warn('speech error', event.error);
+    if (event.error === 'not-allowed') {
+      setStatus('Microphone blocked. Allow mic access and try again.');
+    } else if (event.error !== 'aborted') {
+      setStatus(`Speech error: ${event.error}`);
+    }
+  };
+
+  recognition.onend = () => {
+    recognizing = false;
+    micBtn.classList.remove('recording');
+    micBtn.textContent = 'Speak';
+    stopTimer();
+    stopAudioCapture();
+    clearInterval(silenceWatch);
+    const text = transcriptEl.value.trim() || finalTranscript.trim();
+    transcriptEl.value = text;
+    if (text && autoScoreOnEnd) {
+      setStatus('Speech ended — scoring…');
+      renderResult({ fromVoice: true });
+    } else if (!text) {
+      setStatus('No speech captured. Try again in Chrome/Edge.');
+    } else {
+      setStatus('Stopped');
+    }
+  };
+}
+
+async function startSpeaking() {
+  if (!SpeechRecognition) return;
+  finalTranscript = '';
+  transcriptEl.value = '';
+  document.getElementById('outputCard').style.display = 'none';
+  autoScoreOnEnd = true;
+  lastSpeechAt = Date.now();
+  setupRecognition();
+  recognition.lang = document.getElementById('lang').value;
+  await startAudioCapture();
+  startTimer();
+  try {
+    recognition.start();
+  } catch (err) {
+    setStatus('Could not start recognition. Refresh and allow microphone.');
+    return;
+  }
+
+  // Auto-stop after ~2.2s of silence (useful for Part 1/3). Part 2 users can press Stop.
+  clearInterval(silenceWatch);
+  silenceWatch = setInterval(() => {
+    if (!recognizing) return;
+    const part = document.getElementById('part').value;
+    const silenceLimit = part === 'part2' ? 5000 : 2200;
+    if (Date.now() - lastSpeechAt > silenceLimit && (transcriptEl.value.trim() || finalTranscript.trim())) {
+      stopSpeaking();
+    }
+  }, 300);
+}
+
+function stopSpeaking() {
+  autoScoreOnEnd = true;
+  clearInterval(silenceWatch);
+  if (recognition && recognizing) {
+    try { recognition.stop(); } catch (_) {}
+  } else {
+    stopTimer();
+    stopAudioCapture();
+    micBtn.classList.remove('recording');
+    micBtn.textContent = 'Speak';
+    if (transcriptEl.value.trim()) renderResult({ fromVoice: true });
+  }
+}
+
+micBtn.addEventListener('click', () => {
+  if (recognizing) stopSpeaking();
+  else startSpeaking();
+});
+
+document.getElementById('scoreBtn').addEventListener('click', () => renderResult({ fromVoice: false }));
+document.getElementById('promptBtn').addEventListener('click', async () => {
+  const partLabel = { part1: 'Part 1', part2: 'Part 2', part3: 'Part 3' }[document.getElementById('part').value];
+  const question = document.getElementById('question').value.trim() || '[question]';
+  const transcript = transcriptEl.value.trim() || '[transcript]';
+  const prompt = `You are an IELTS Speaking examiner-coach.
+Student target: Band 7.0–7.5 (current level around 6.5).
 
 Task type: ${partLabel}
 Question: ${question}
-Observed issues from teacher (optional): ${issues.length ? issues.join('; ') : 'none provided'}
-Student answer (transcript):
+Student answer (from voice transcript):
 """
 ${transcript}
 """
 
-Do the following:
-1) Score Fluency & Coherence, Lexical Resource, Grammatical Range & Accuracy, Pronunciation (if audio is unavailable, estimate Pronunciation cautiously and say so). Use 0.5 bands.
-2) Give an overall band.
-3) List Top 3 suggestions only, each with: Issue / Why it caps the score / A better reusable version (1–2 sentences).
-4) Provide one upgraded model answer at Band 7 level (appropriate length for the part).
-5) Keep feedback concise and practical. No long theory.`;
-}
-
-document.getElementById('scoreBtn').addEventListener('click', renderResult);
-document.getElementById('promptBtn').addEventListener('click', async () => {
-  const prompt = buildPrompt();
+Score FC / LR / GRA / Pronunciation in 0.5 bands, give overall band, Top 3 suggestions (Issue / Why / Better version), and one Band 7 model answer. Keep it concise.`;
   try {
     await navigator.clipboard.writeText(prompt);
-    alert('AI prompt copied. Paste it into ChatGPT / Claude / Cursor.');
-  } catch (e) {
-    const pre = document.createElement('div');
-    pre.className = 'card';
-    pre.innerHTML = `<label>AI Prompt</label><div class="prompt-box"></div>`;
-    pre.querySelector('.prompt-box').textContent = prompt;
-    document.querySelector('.wrap').appendChild(pre);
+    setStatus('AI prompt copied');
+  } catch (_) {
+    alert(prompt);
   }
 });
+
 document.getElementById('clearBtn').addEventListener('click', () => {
+  if (recognizing) stopSpeaking();
+  finalTranscript = '';
+  transcriptEl.value = '';
+  liveEl.innerHTML = '<span class="muted">Live transcript will appear here…</span>';
   document.getElementById('question').value = '';
-  document.getElementById('transcript').value = '';
   document.querySelectorAll('#issues input').forEach(el => el.checked = false);
   document.getElementById('outputCard').style.display = 'none';
+  player.style.display = 'none';
+  timerEl.textContent = '00:00';
+  setStatus('Ready — click the mic and speak');
 });
 </script>
 </body>
