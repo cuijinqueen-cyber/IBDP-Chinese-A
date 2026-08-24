@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS Speaking AI Score & Suggestions</title>
+<style>
+:root {
+  --ink: #1f1a17;
+  --muted: #5c534c;
+  --accent: #0f5c4c;
+  --card: #fffdf9;
+  --line: #ddd4c8;
+  --warn: #8a4b2d;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", "Noto Serif SC", serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, #efe6d8, transparent 40%),
+    linear-gradient(180deg, #f7f4ef, #f3eee6);
+  line-height: 1.55;
+}
+.wrap { max-width: 920px; margin: 0 auto; padding: 24px 18px 64px; }
+h1 { color: var(--accent); margin: 0 0 6px; font-size: 1.55rem; }
+.sub { color: var(--muted); margin: 0 0 22px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+label { display: block; font-weight: 600; margin: 0 0 6px; color: var(--accent); }
+input, select, textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+  background: #fff;
+  color: var(--ink);
+}
+textarea { min-height: 140px; resize: vertical; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 8px; }
+.check {
+  display: flex; gap: 8px; align-items: flex-start;
+  background: #f4efe7; border-radius: 10px; padding: 8px 10px; font-size: .95rem;
+}
+.check input { width: auto; margin-top: 3px; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+button {
+  border: 0; border-radius: 999px; padding: .65rem 1rem;
+  background: var(--accent); color: #fff; font: inherit; cursor: pointer;
+}
+button.secondary { background: #4a4038; }
+button.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+#result { white-space: pre-wrap; }
+.scores {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 12px 0;
+}
+.score-box {
+  background: #e9efe9; border-radius: 12px; padding: 10px; text-align: center;
+}
+.score-box b { display: block; font-size: 1.35rem; color: var(--accent); }
+.muted { color: var(--muted); font-size: .92rem; }
+.prompt-box {
+  background: #1f1a17; color: #f7f4ef; border-radius: 12px;
+  padding: 12px; font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: .86rem; white-space: pre-wrap;
+}
+@media (max-width: 720px) {
+  .row, .checks, .scores { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>After Speaking → AI Score & Suggestions</h1>
+  <p class="sub">学生说完后：粘贴转写/笔记 → 勾选问题 → 生成分数与 Top 3 建议。也可一键复制给大模型精评。</p>
+
+  <div class="card">
+    <div class="row">
+      <div>
+        <label for="part">Task type</label>
+        <select id="part">
+          <option value="part1">Part 1</option>
+          <option value="part2">Part 2</option>
+          <option value="part3" selected>Part 3</option>
+        </select>
+      </div>
+      <div>
+        <label for="target">Target band</label>
+        <select id="target">
+          <option>7.0</option>
+          <option selected>7.5</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <label for="question">Question / cue card</label>
+      <input id="question" placeholder="e.g. Has technology improved education?">
+    </div>
+    <div style="margin-top:12px">
+      <label for="transcript">Student answer (transcript or detailed notes)</label>
+      <textarea id="transcript" placeholder="Paste what the student said..."></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <label>Observed issues (tick after listening)</label>
+    <div class="checks" id="issues"></div>
+    <p class="muted">Pronunciation: if you only have text, leave pronunciation issues unticked or mark “uncertain”.</p>
+    <div class="check"><input type="checkbox" id="pronUncertain" checked> Pronunciation uncertain (text-only)</div>
+  </div>
+
+  <div class="btns">
+    <button type="button" id="scoreBtn">Score & give suggestions</button>
+    <button type="button" class="secondary" id="promptBtn">Copy AI prompt</button>
+    <button type="button" class="ghost" id="clearBtn">Clear</button>
+  </div>
+
+  <div class="card" id="outputCard" style="display:none; margin-top:14px">
+    <label>Result</label>
+    <div class="scores" id="scoreBoxes"></div>
+    <div id="result"></div>
+  </div>
+</div>
+
+<script>
+const ISSUE_DEFS = [
+  { id: 'short', label: 'Answer too short / under-developed', cat: 'fc', weight: 1.0 },
+  { id: 'pause', label: 'Long silent pauses / frequent hesitation', cat: 'fc', weight: 0.8 },
+  { id: 'structure', label: 'Weak structure (no clear reason/example)', cat: 'fc', weight: 0.8 },
+  { id: 'memorised', label: 'Sounds memorised / unnatural script', cat: 'fc', weight: 0.5 },
+  { id: 'repeat', label: 'Repeats nice/good/interesting or limited vocab', cat: 'lr', weight: 0.9 },
+  { id: 'paraphrase', label: 'Cannot paraphrase / topic words missing', cat: 'lr', weight: 0.8 },
+  { id: 'awkward', label: 'Awkward word choice / L1 translation', cat: 'lr', weight: 0.6 },
+  { id: 'basicGrammar', label: 'Basic grammar errors (agree, there is/are, very like)', cat: 'gra', weight: 1.0 },
+  { id: 'tense', label: 'Tense / agreement slips', cat: 'gra', weight: 0.7 },
+  { id: 'noComplex', label: 'Almost no complex sentences', cat: 'gra', weight: 0.6 },
+  { id: 'unclear', label: 'Listener strain / mumbled / too fast', cat: 'pron', weight: 0.9 },
+  { id: 'endings', label: 'Word endings cut off (asked/changed)', cat: 'pron', weight: 0.6 },
+  { id: 'flat', label: 'Flat stress / intonation', cat: 'pron', weight: 0.5 },
+];
+
+const SUGGESTIONS = {
+  short: {
+    issue: 'Answer too short',
+    why: 'Limits Fluency & Coherence and Task development.',
+    better: 'Use a 3-beat answer: direct view → reason → example. Aim for 3–4 sentences (Part 1) or 40–60 seconds (Part 3).'
+  },
+  pause: {
+    issue: 'Long pauses',
+    why: 'Creates strain and lowers Fluency.',
+    better: 'Use a repair phrase: “What I mean is…” / “Let me think for a second…” then continue.'
+  },
+  structure: {
+    issue: 'Weak structure',
+    why: 'Ideas feel listed, not developed.',
+    better: 'For Part 3 use IDEA: Insight → Detail → Example → Alternative.'
+  },
+  memorised: {
+    issue: 'Memorised delivery',
+    why: 'Sounds unnatural and risks losing coherence if interrupted.',
+    better: 'Speak from 4 bullet notes only; change one personal detail each time.'
+  },
+  repeat: {
+    issue: 'Limited vocabulary',
+    why: 'Repeating nice/good caps Lexical Resource around 6.0–6.5.',
+    better: 'Replace weak adjectives with precise ones (rewarding, flexible, monotonous, well-connected).'
+  },
+  paraphrase: {
+    issue: 'Weak paraphrase / missing topic lexis',
+    why: 'Hard to show flexibility under Part 3 pressure.',
+    better: 'Pre-load 6 collocations before the topic (e.g. digital distraction, career prospects).'
+  },
+  awkward: {
+    issue: 'Awkward wording',
+    why: 'Word choice sounds translated and less natural.',
+    better: 'Prefer short natural chunks: “It depends on…” / “A key reason is…”'
+  },
+  basicGrammar: {
+    issue: 'Basic grammar errors',
+    why: 'Frequent slips stop GRA from reaching 7.',
+    better: 'Fix high-frequency forms: really like; there is/are; it depends; I agree.'
+  },
+  tense: {
+    issue: 'Tense/agreement slips',
+    why: 'Especially costly in Part 2 stories.',
+    better: 'Slow the story spine and mark past forms before speaking.'
+  },
+  noComplex: {
+    issue: 'No complex sentences',
+    why: 'Range looks limited even if accurate.',
+    better: 'Add one because/if/although sentence in every longer answer.'
+  },
+  unclear: {
+    issue: 'Clarity problems',
+    why: 'Pronunciation strain lowers communicative quality.',
+    better: 'Slow 10% and speak in sense groups; prioritise clarity over speed.'
+  },
+  endings: {
+    issue: 'Missing word endings',
+    why: 'Past forms and plurals become unclear.',
+    better: 'Over-articulate endings in the re-record: asked, changed, friends.'
+  },
+  flat: {
+    issue: 'Flat intonation',
+    why: 'Meaning and emphasis are harder to follow.',
+    better: 'Stress content words and use a falling tone at the end of each idea.'
+  }
+};
+
+const issueBox = document.getElementById('issues');
+ISSUE_DEFS.forEach(item => {
+  const div = document.createElement('label');
+  div.className = 'check';
+  div.innerHTML = `<input type="checkbox" value="${item.id}" data-cat="${item.cat}" data-weight="${item.weight}"> <span>${item.label}</span>`;
+  issueBox.appendChild(div);
+});
+
+function roundHalf(n) {
+  return Math.round(n * 2) / 2;
+}
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function selectedIssues() {
+  return [...document.querySelectorAll('#issues input:checked')].map(el => el.value);
+}
+
+function estimateScores(part, issues, transcript) {
+  const base = { fc: 7.0, lr: 7.0, gra: 7.0, pron: 7.0 };
+  const weights = { fc: 0, lr: 0, gra: 0, pron: 0 };
+  ISSUE_DEFS.forEach(def => {
+    if (issues.includes(def.id)) weights[def.cat] += def.weight;
+  });
+
+  // length heuristic
+  const words = (transcript || '').trim().split(/\s+/).filter(Boolean).length;
+  if (part === 'part1' && words > 0 && words < 25) {
+    weights.fc += 0.8;
+    issues.push('short');
+  }
+  if (part === 'part3' && words > 0 && words < 45) {
+    weights.fc += 1.0;
+    if (!issues.includes('short')) issues.push('short');
+  }
+  if (part === 'part2' && words > 0 && words < 120) {
+    weights.fc += 0.8;
+    if (!issues.includes('short')) issues.push('short');
+  }
+
+  // quick grammar text cues
+  const lower = (transcript || '').toLowerCase();
+  const grammarCues = [
+    /i very like/, /in my [a-z ]+ have/, /it depend\b/, /i am agree/, /there have/,
+    /\bhe don't\b/, /\bshe don't\b/
+  ];
+  if (grammarCues.some(r => r.test(lower))) {
+    weights.gra += 0.8;
+    if (!issues.includes('basicGrammar')) issues.push('basicGrammar');
+  }
+
+  const scores = {};
+  for (const k of Object.keys(base)) {
+    const penalty = Math.min(1.8, weights[k] * 0.55);
+    scores[k] = roundHalf(clamp(base[k] - penalty, 5.5, 8.0));
+  }
+
+  if (document.getElementById('pronUncertain').checked) {
+    // keep pron near overall text performance, mark uncertain later
+    scores.pron = roundHalf(clamp((scores.fc + scores.lr + scores.gra) / 3, 6.0, 7.5));
+  }
+
+  const overall = roundHalf(clamp((scores.fc + scores.lr + scores.gra + scores.pron) / 4, 5.5, 8.0));
+  return { scores, overall, issues: [...new Set(issues)] };
+}
+
+function topSuggestions(issues) {
+  const order = ['short','structure','pause','basicGrammar','tense','repeat','paraphrase','noComplex','unclear','endings','flat','awkward','memorised'];
+  const picked = [];
+  for (const id of order) {
+    if (issues.includes(id) && SUGGESTIONS[id]) picked.push(SUGGESTIONS[id]);
+    if (picked.length === 3) break;
+  }
+  while (picked.length < 3) {
+    picked.push({
+      issue: 'Push toward Band 7 development',
+      why: 'Even solid answers need clearer extension for 7.0–7.5.',
+      better: 'Add one precise example and one complex sentence (because/if/although).'
+    });
+  }
+  return picked.slice(0, 3);
+}
+
+function partTip(part) {
+  if (part === 'part1') return 'Part 1 focus: 2–4 sentences; answer → reason → example.';
+  if (part === 'part2') return 'Part 2 focus: cover all bullets; speak 1:40–2:00; end with reflection.';
+  return 'Part 3 focus: IDEA frame; 40–60 seconds; opinion + why + example.';
+}
+
+function renderResult() {
+  const part = document.getElementById('part').value;
+  const question = document.getElementById('question').value.trim() || '(no question provided)';
+  const transcript = document.getElementById('transcript').value.trim();
+  const issues = selectedIssues();
+  if (!transcript && issues.length === 0) {
+    alert('Please paste a transcript and/or tick observed issues.');
+    return;
+  }
+
+  const { scores, overall, issues: finalIssues } = estimateScores(part, issues, transcript);
+  const tips = topSuggestions(finalIssues);
+  const uncertain = document.getElementById('pronUncertain').checked;
+
+  const boxes = document.getElementById('scoreBoxes');
+  boxes.innerHTML = `
+    <div class="score-box"><span>FC</span><b>${scores.fc}</b></div>
+    <div class="score-box"><span>LR</span><b>${scores.lr}</b></div>
+    <div class="score-box"><span>GRA</span><b>${scores.gra}</b></div>
+    <div class="score-box"><span>Pron${uncertain ? '*' : ''}</span><b>${scores.pron}</b></div>
+    <div class="score-box"><span>Overall</span><b>${overall}</b></div>
+  `;
+
+  let text = '';
+  text += `Task: ${part.toUpperCase()}\nQuestion: ${question}\n`;
+  text += `Target: Band ${document.getElementById('target').value}\n\n`;
+  text += `Estimated overall: ${overall}\n`;
+  text += `FC ${scores.fc} | LR ${scores.lr} | GRA ${scores.gra} | Pron ${scores.pron}${uncertain ? ' (uncertain without audio)' : ''}\n\n`;
+  text += `${partTip(part)}\n\n`;
+  text += `Top 3 suggestions:\n`;
+  tips.forEach((t, i) => {
+    text += `${i + 1}) ${t.issue}\n`;
+    text += `   Why: ${t.why}\n`;
+    text += `   Try: ${t.better}\n\n`;
+  });
+  text += `Next step: Re-record the SAME question focusing only on suggestion #1.\n`;
+  text += `Then compare the two recordings for 30 seconds.`;
+
+  document.getElementById('result').textContent = text;
+  document.getElementById('outputCard').style.display = 'block';
+}
+
+function buildPrompt() {
+  const partLabel = {
+    part1: 'Part 1',
+    part2: 'Part 2',
+    part3: 'Part 3'
+  }[document.getElementById('part').value];
+  const question = document.getElementById('question').value.trim() || '[question]';
+  const transcript = document.getElementById('transcript').value.trim() || '[transcript]';
+  const issues = selectedIssues().map(id => ISSUE_DEFS.find(x => x.id === id)?.label).filter(Boolean);
+
+  return `You are an IELTS Speaking examiner-coach.
+Student target: Band ${document.getElementById('target').value} (current level around 6.5).
+
+Task type: ${partLabel}
+Question: ${question}
+Observed issues from teacher (optional): ${issues.length ? issues.join('; ') : 'none provided'}
+Student answer (transcript):
+"""
+${transcript}
+"""
+
+Do the following:
+1) Score Fluency & Coherence, Lexical Resource, Grammatical Range & Accuracy, Pronunciation (if audio is unavailable, estimate Pronunciation cautiously and say so). Use 0.5 bands.
+2) Give an overall band.
+3) List Top 3 suggestions only, each with: Issue / Why it caps the score / A better reusable version (1–2 sentences).
+4) Provide one upgraded model answer at Band 7 level (appropriate length for the part).
+5) Keep feedback concise and practical. No long theory.`;
+}
+
+document.getElementById('scoreBtn').addEventListener('click', renderResult);
+document.getElementById('promptBtn').addEventListener('click', async () => {
+  const prompt = buildPrompt();
+  try {
+    await navigator.clipboard.writeText(prompt);
+    alert('AI prompt copied. Paste it into ChatGPT / Claude / Cursor.');
+  } catch (e) {
+    const pre = document.createElement('div');
+    pre.className = 'card';
+    pre.innerHTML = `<label>AI Prompt</label><div class="prompt-box"></div>`;
+    pre.querySelector('.prompt-box').textContent = prompt;
+    document.querySelector('.wrap').appendChild(pre);
+  }
+});
+document.getElementById('clearBtn').addEventListener('click', () => {
+  document.getElementById('question').value = '';
+  document.getElementById('transcript').value = '';
+  document.querySelectorAll('#issues input').forEach(el => el.checked = false);
+  document.getElementById('outputCard').style.display = 'none';
+});
+</script>
+</body>
+</html>

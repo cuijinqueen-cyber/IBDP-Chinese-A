@@ -30,6 +30,17 @@
 3. Accurate complex grammar under pressure (GRA)  
 4. Stress, chunking, and ending intonation (Pron)
 
+### After every speaking turn: AI score + suggestions
+Standard loop for class and homework:
+
+1. Student speaks (always record)  
+2. **AI / tutor scores** 4 criteria (0.5 bands)  
+3. Give **Top 3 suggestions only**  
+4. Student **re-records the same question once**
+
+Full protocol + prompt: [`ielts-speaking-ai-scoring.md`](./ielts-speaking-ai-scoring.md)  
+Interactive tool: [`html/ai-scoring.html`](./html/ai-scoring.html)
+
 ---
 
 ## 2. Materials / Topic Bank (Exam-style)
@@ -98,11 +109,13 @@ Avoid one-sentence answers; avoid memorised mini-essays.
    - [ ] Repeated words  
    - [ ] Long silent pauses  
    - [ ] Unclear word endings
-4. **Teacher profile (rest of lesson)**  
-   Band estimate + **Top 3 actions only**.
+4. **Teacher / AI profile (rest of lesson)**  
+   Use the AI Score Card on the full mock: 4 criteria + **Top 3 actions only**.  
+   Save scores as the baseline for Lesson 8 comparison.
 
 **Homework**
 - Re-answer 5 Part 1 questions from the mock (record on phone).  
+- Run each recording through AI scoring (or tutor scoring) → Top 3 suggestions → one re-record.  
 - Start **Speaking Upgrade Log**: *Weak answer → Better answer → Useful phrase*.
 
 ---
@@ -122,13 +135,16 @@ Avoid one-sentence answers; avoid memorised mini-essays.
 3. **Paraphrase hotseat (20 min)**  
    Replace repeated *nice / good / interesting / convenient* with topic-specific words.
 4. **Mini Part 1 mock (20 min)**  
-   Record 4–5 minutes; quick feedback.
-5. **Wrap (5 min)**
+   Record 4–5 minutes; **AI/tutor scores FC + LR immediately** and gives Top 3 suggestions.
+5. **Re-record loop (inside the 20 min)**  
+   Student re-answers the weakest 2 questions only.
+6. **Wrap (5 min)**
 
 **In-class exercises:** A1 extender bank · A2 replace weak adjectives · A3 fill the frame · A4 fluency repair  
 
 **Homework**
 - Record 10 Part 1 answers (max 25 seconds each).  
+- AI score each answer (or sample 5) → suggestions → re-record bottom 3.  
 - A5 linking for speech.
 
 ---
@@ -339,9 +355,9 @@ Keep max **3 upgrades per day** so it stays usable.
 
 | Day | Task | Time |
 |---|---|---|
-| After lesson | Re-record 1 weak answer from class | 15–20 min |
-| Mid-week | Part 1 set (8–10 Qs) **or** 1 Part 2 | 15–20 min |
-| Day before next lesson | Part 3 set (6 Qs) with IDEA frame | 20 min |
+| After lesson | Re-record 1 weak answer from class **after AI/tutor score** | 15–20 min |
+| Mid-week | Part 1 set (8–10 Qs) **or** 1 Part 2 + AI Top 3 suggestions | 20–25 min |
+| Day before next lesson | Part 3 set (6 Qs) with IDEA frame + score card | 25 min |
 | Daily | Upgrade Log (1–2 entries) + 5-min shadowing | 10 min |
 
 ### Exercise Pack Index
@@ -354,8 +370,11 @@ Keep max **3 upgrades per day** so it stays usable.
 | **D** | Spoken grammar accuracy |
 | **E** | Pronunciation / stress / chunking |
 | **F** | Daily 10-minute drills |
+| **AI** | Post-speaking score card, prompt, suggestion bank |
 
-Full worksheets: [`ielts-speaking-exercises.md`](./ielts-speaking-exercises.md)
+Full worksheets: [`ielts-speaking-exercises.md`](./ielts-speaking-exercises.md)  
+AI scoring protocol: [`ielts-speaking-ai-scoring.md`](./ielts-speaking-ai-scoring.md)  
+Interactive scorer: [`html/ai-scoring.html`](./html/ai-scoring.html)
 
 ---
 

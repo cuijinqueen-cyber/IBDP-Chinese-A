@@ -10,11 +10,11 @@
 body { margin:0; font-family:"Iowan Old Style","Palatino Linotype",Palatino,"Songti SC","Noto Serif SC",serif; color:var(--ink);
 background:radial-gradient(circle at top left,#efe6d8,transparent 40%),linear-gradient(180deg,#f7f4ef,#f3eee6); line-height:1.65; }
 .top { position:sticky; top:0; z-index:10; backdrop-filter:blur(8px); background:rgba(247,244,239,.92); border-bottom:1px solid var(--line); }
-.top-inner { max-width:920px; margin:0 auto; padding:14px 20px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-.top h1 { margin:0; flex:1 1 auto; font-size:1.1rem; color:var(--accent); }
-.btn { border:0; cursor:pointer; background:#4a4038; color:#fff; padding:.45rem .85rem; border-radius:999px; font-size:.92rem; }
+.top-inner { max-width:960px; margin:0 auto; padding:14px 20px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.top h1 { margin:0; flex:1 1 auto; font-size:1.05rem; color:var(--accent); }
+.btn { border:0; cursor:pointer; background:#4a4038; color:#fff; padding:.45rem .85rem; border-radius:999px; font-size:.9rem; text-decoration:none; display:inline-block; }
 .btn.active,.btn:hover { background:var(--accent); }
-.wrap { max-width:920px; margin:0 auto; padding:24px 20px 64px; }
+.wrap { max-width:960px; margin:0 auto; padding:24px 20px 64px; }
 .panel { display:none; } .panel.active { display:block; }
 h1,h2,h3,h4 { color:var(--accent); line-height:1.3; }
 h2 { margin-top:2rem; border-bottom:1px solid var(--line); padding-bottom:.35rem; }
@@ -26,7 +26,8 @@ th,td { border:1px solid var(--line); padding:.55rem .65rem; text-align:left; ve
 th { background:#e9efe9; }
 blockquote { margin:1rem 0; padding:.6rem 1rem; border-left:4px solid var(--accent); background:#efece6; color:var(--muted); }
 a { color:var(--accent); } hr { border:none; border-top:1px solid var(--line); margin:1.5rem 0; }
-@media (max-width:640px) { .top h1 { font-size:1rem; width:100%; } table { display:block; overflow-x:auto; } }
+.banner { background:#e9efe9; border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:18px; }
+@media (max-width:640px) { .top h1 { font-size:.95rem; width:100%; } table { display:block; overflow-x:auto; } }
 </style>
 </head>
 <body>
@@ -34,9 +35,13 @@ a { color:var(--accent); } hr { border:none; border-top:1px solid var(--line); m
 <h1>IELTS Speaking 6.5 → 7/7.5</h1>
 <button class="btn active" type="button" data-target="plan">教学计划</button>
 <button class="btn" type="button" data-target="exercises">练习题</button>
+<button class="btn" type="button" data-target="ai">AI评分建议</button>
+<a class="btn" href="ai-scoring.html">打开评分工具</a>
 </div></div>
 <div class="wrap">
-<section id="plan" class="panel active"><h1>IELTS Speaking Teaching Plan  </h1>
+<section id="plan" class="panel active">
+<div class="banner">学生说完后：用 <a href="ai-scoring.html"><strong>AI评分工具</strong></a> 打分并给出 Top 3 建议，然后重录同一题。</div>
+<h1>IELTS Speaking Teaching Plan  </h1>
 <p><strong>Student level:</strong> Band 6.5  </p>
 <p><strong>Target:</strong> Band 7.0–7.5  </p>
 <p><strong>Focus:</strong> Speaking Part 1 · Part 2 · Part 3</p>
@@ -63,6 +68,16 @@ a { color:var(--accent); } hr { border:none; border-top:1px solid var(--line); m
 <li>Accurate complex grammar under pressure (GRA)  </li>
 <li>Stress, chunking, and ending intonation (Pron)</li>
 </ol>
+<h3>After every speaking turn: AI score + suggestions</h3>
+<p>Standard loop for class and homework:</p>
+<ol>
+<li>Student speaks (always record)  </li>
+<li><strong>AI / tutor scores</strong> 4 criteria (0.5 bands)  </li>
+<li>Give <strong>Top 3 suggestions only</strong>  </li>
+<li>Student <strong>re-records the same question once</strong></li>
+</ol>
+<p>Full protocol + prompt: <a href="./ielts-speaking-ai-scoring.md"><code>ielts-speaking-ai-scoring.md</code></a>  </p>
+<p>Interactive tool: <a href="./html/ai-scoring.html"><code>html/ai-scoring.html</code></a></p>
 <hr>
 <h2>2. Materials / Topic Bank (Exam-style)</h2>
 <table><thead><tr><th>Part</th><th>Core topic sets used in this course</th></tr></thead><tbody>
@@ -127,12 +142,14 @@ a { color:var(--accent); } hr { border:none; border-top:1px solid var(--line); m
 <li>Unclear word endings</li>
 </ul>
 <ol>
-<li><strong>Teacher profile (rest of lesson)</strong>  </li>
+<li><strong>Teacher / AI profile (rest of lesson)</strong>  </li>
 </ol>
-<p>   Band estimate + <strong>Top 3 actions only</strong>.</p>
+<p>   Use the AI Score Card on the full mock: 4 criteria + <strong>Top 3 actions only</strong>.  </p>
+<p>   Save scores as the baseline for Lesson 8 comparison.</p>
 <p><strong>Homework</strong></p>
 <ul>
 <li>Re-answer 5 Part 1 questions from the mock (record on phone).  </li>
+<li>Run each recording through AI scoring (or tutor scoring) → Top 3 suggestions → one re-record.  </li>
 <li>Start <strong>Speaking Upgrade Log</strong>: <em>Weak answer → Better answer → Useful phrase</em>.</li>
 </ul>
 <hr>
@@ -158,7 +175,11 @@ a { color:var(--accent); } hr { border:none; border-top:1px solid var(--line); m
 <ol>
 <li><strong>Mini Part 1 mock (20 min)</strong>  </li>
 </ol>
-<p>   Record 4–5 minutes; quick feedback.</p>
+<p>   Record 4–5 minutes; <strong>AI/tutor scores FC + LR immediately</strong> and gives Top 3 suggestions.</p>
+<ol>
+<li><strong>Re-record loop (inside the 20 min)</strong>  </li>
+</ol>
+<p>   Student re-answers the weakest 2 questions only.</p>
 <ol>
 <li><strong>Wrap (5 min)</strong></li>
 </ol>
@@ -166,6 +187,7 @@ a { color:var(--accent); } hr { border:none; border-top:1px solid var(--line); m
 <p><strong>Homework</strong></p>
 <ul>
 <li>Record 10 Part 1 answers (max 25 seconds each).  </li>
+<li>AI score each answer (or sample 5) → suggestions → re-record bottom 3.  </li>
 <li>A5 linking for speech.</li>
 </ul>
 <hr>
@@ -374,9 +396,9 @@ a { color:var(--accent); } hr { border:none; border-top:1px solid var(--line); m
 <hr>
 <h2>9. Homework Rhythm</h2>
 <table><thead><tr><th>Day</th><th>Task</th><th>Time</th></tr></thead><tbody>
-<tr><td>After lesson</td><td>Re-record 1 weak answer from class</td><td>15–20 min</td></tr>
-<tr><td>Mid-week</td><td>Part 1 set (8–10 Qs) <strong>or</strong> 1 Part 2</td><td>15–20 min</td></tr>
-<tr><td>Day before next lesson</td><td>Part 3 set (6 Qs) with IDEA frame</td><td>20 min</td></tr>
+<tr><td>After lesson</td><td>Re-record 1 weak answer from class <strong>after AI/tutor score</strong></td><td>15–20 min</td></tr>
+<tr><td>Mid-week</td><td>Part 1 set (8–10 Qs) <strong>or</strong> 1 Part 2 + AI Top 3 suggestions</td><td>20–25 min</td></tr>
+<tr><td>Day before next lesson</td><td>Part 3 set (6 Qs) with IDEA frame + score card</td><td>25 min</td></tr>
 <tr><td>Daily</td><td>Upgrade Log (1–2 entries) + 5-min shadowing</td><td>10 min</td></tr>
 </tbody></table>
 <h3>Exercise Pack Index</h3>
@@ -387,8 +409,11 @@ a { color:var(--accent); } hr { border:none; border-top:1px solid var(--line); m
 <tr><td><strong>D</strong></td><td>Spoken grammar accuracy</td></tr>
 <tr><td><strong>E</strong></td><td>Pronunciation / stress / chunking</td></tr>
 <tr><td><strong>F</strong></td><td>Daily 10-minute drills</td></tr>
+<tr><td><strong>AI</strong></td><td>Post-speaking score card, prompt, suggestion bank</td></tr>
 </tbody></table>
-<p>Full worksheets: <a href="./ielts-speaking-exercises.md"><code>ielts-speaking-exercises.md</code></a></p>
+<p>Full worksheets: <a href="./ielts-speaking-exercises.md"><code>ielts-speaking-exercises.md</code></a>  </p>
+<p>AI scoring protocol: <a href="./ielts-speaking-ai-scoring.md"><code>ielts-speaking-ai-scoring.md</code></a>  </p>
+<p>Interactive scorer: <a href="./html/ai-scoring.html"><code>html/ai-scoring.html</code></a></p>
 <hr>
 <h2>10. Progress Gates</h2>
 <table><thead><tr><th>After Lesson</th><th>Gate</th></tr></thead><tbody>
@@ -414,7 +439,8 @@ a { color:var(--accent); } hr { border:none; border-top:1px solid var(--line); m
 <li>Aim for <strong>stable Band 7 habits</strong>, not one perfect recording.</li>
 </ol>
 <hr>
-<p><em>One-to-one IELTS Speaking plan for candidates moving from 6.5 to 7/7.5 across Parts 1–3.</em></p></section>
+<p><em>One-to-one IELTS Speaking plan for candidates moving from 6.5 to 7/7.5 across Parts 1–3.</em></p>
+</section>
 <section id="exercises" class="panel"><h1>IELTS Speaking Exercise Pack  </h1>
 <p><strong>Level:</strong> Band 6.5 → 7.0–7.5  </p>
 <p><strong>Parts:</strong> 1 · 2 · 3  </p>
@@ -806,13 +832,232 @@ a { color:var(--accent); } hr { border:none; border-top:1px solid var(--line); m
 <li><strong>Upgrade transfer</strong> (did new language appear?)</li>
 </ol>
 <p>If language is good but answers stay short, set a “minimum 3 sentences” rule for one week.</p></section>
+<section id="ai" class="panel">
+<div class="banner"><a href="ai-scoring.html"><strong>点这里打开可交互评分页</strong></a>（粘贴转写 → 勾选问题 → 生成分数与建议 / 复制给大模型）</div>
+<h1>AI Speaking Score &amp; Suggestion Protocol  </h1>
+<p><strong>Use after every student speaking turn</strong> (class practice, homework recording, or mock test)</p>
+<hr>
+<h2>1. Workflow (standard)</h2>
+<pre><code>
+Student speaks → Record audio → (Optional) transcribe
+
+        ↓
+
+AI / tutor scores 4 criteria
+
+        ↓
+
+Give Top 3 suggestions only
+
+        ↓
+
+Student re-records the SAME question once
+
+</code></pre>
+<p><strong>Time budget</strong></p>
+<ul>
+<li>Score + suggestions: <strong>2–3 minutes</strong></li>
+<li>Student re-record: <strong>1–2 minutes</strong></li>
+<li>Do <strong>not</strong> over-correct every sentence.</li>
+</ul>
+<hr>
+<h2>2. Scoring Scale (IELTS-aligned, 6.0–8.0)</h2>
+<p>Score each criterion in <strong>0.5 steps</strong>. Overall ≈ average of 4 (round sensibly).</p>
+<table><thead><tr><th>Band</th><th>Fluency &amp; Coherence</th><th>Lexical Resource</th><th>Grammar</th><th>Pronunciation</th></tr></thead><tbody>
+<tr><td><strong>6.0</strong></td><td>Keeps going with effort; some repetition; linking limited</td><td>Adequate for familiar topics; paraphrase limited</td><td>Mix of forms; frequent errors</td><td>Generally understandable; limited control</td></tr>
+<tr><td><strong>6.5</strong></td><td>Longer answers possible; hesitation on harder Qs</td><td>Enough range; some awkward word choice</td><td>Complex attempts with errors</td><td>Clear enough; stress/intonation uneven</td></tr>
+<tr><td><strong>7.0</strong></td><td>Speaks at length with natural pauses; organised</td><td>Flexible vocab; some less common items</td><td>Frequent error-free sentences</td><td>Clear throughout; uses features to help meaning</td></tr>
+<tr><td><strong>7.5</strong></td><td>Flexible, coherent, little strain</td><td>Precise paraphrase; collocations natural</td><td>Controlled complex structures</td><td>Sustained clarity; effective chunking</td></tr>
+<tr><td><strong>8.0</strong></td><td>Fluent, well-structured development</td><td>Wide resource, natural precision</td><td>Rare errors</td><td>Easy to understand throughout</td></tr>
+</tbody></table>
+<hr>
+<h2>3. Quick Score Card (fill after speaking)</h2>
+<p><strong>Task:</strong> □ Part 1  □ Part 2  □ Part 3  </p>
+<p><strong>Question / cue:</strong> _________________________________</p>
+<table><thead><tr><th>Criterion</th><th>Score</th><th>Evidence (1 short note)</th></tr></thead><tbody>
+<tr><td>Fluency &amp; Coherence</td><td>__ / 9</td><td></td></tr>
+<tr><td>Lexical Resource</td><td>__ / 9</td><td></td></tr>
+<tr><td>Grammatical Range &amp; Accuracy</td><td>__ / 9</td><td></td></tr>
+<tr><td>Pronunciation</td><td>__ / 9</td><td></td></tr>
+<tr><td><strong>Overall</strong></td><td><strong>__ / 9</strong></td><td></td></tr>
+</tbody></table>
+<p><strong>Top 3 suggestions (must be actionable)</strong></p>
+<ol>
+<li>_________________________________</li>
+<li>_________________________________</li>
+<li>_________________________________</li>
+</ol>
+<p><strong>Re-record focus for next attempt:</strong> _________________</p>
+<hr>
+<h2>4. AI Prompt (copy-paste)</h2>
+<p>Use with ChatGPT / Claude / Cursor after the student speaks.  </p>
+<p>Paste the <strong>transcript</strong> (or detailed notes) + task type.</p>
+<pre><code>
+You are an IELTS Speaking examiner-coach.
+
+Student target: Band 7.0–7.5 (current level around 6.5).
+
+
+
+Task type: [Part 1 / Part 2 / Part 3]
+
+Question: [paste question]
+
+Student answer (transcript):
+
+&quot;&quot;&quot;
+
+[paste transcript]
+
+&quot;&quot;&quot;
+
+
+
+Do the following:
+
+1) Score Fluency &amp; Coherence, Lexical Resource, Grammatical Range &amp; Accuracy, Pronunciation (estimate Pronunciation from transcript clues + note uncertainty). Use 0.5 bands.
+
+2) Give an overall band.
+
+3) List Top 3 suggestions only, each with:
+
+   - Issue
+
+   - Why it caps the score
+
+   - A better version (1–2 sentences the student can reuse)
+
+4) Provide one upgraded model answer at Band 7 level (same length as required by the part).
+
+5) Keep feedback concise and practical. No long theory.
+
+</code></pre>
+<h3>Optional audio note</h3>
+<p>If only audio is available and no transcript:</p>
+<pre><code>
+Listen to / consider this speaking performance on IELTS [Part X].
+
+Focus on pauses, repair, vocabulary flexibility, grammar accuracy, and clarity.
+
+Then score and give Top 3 suggestions as specified above.
+
+</code></pre>
+<hr>
+<h2>5. Suggestion Bank (by weakness)</h2>
+<h3>Fluency &amp; Coherence</h3>
+<table><thead><tr><th>Issue</th><th>Suggestion to give student</th></tr></thead><tbody>
+<tr><td>Answers too short</td><td>Use 3-beat: answer → reason → example</td></tr>
+<tr><td>Long silent pauses</td><td>Use repair: <em>What I mean is… / Let me think for a second…</em></td></tr>
+<tr><td>Jumping / no structure (P3)</td><td>Use IDEA: Insight → Detail → Example → Alternative</td></tr>
+<tr><td>Memorised script feel</td><td>Change one detail each time; speak from bullets only</td></tr>
+<tr><td>Overuse <em>and / because</em></td><td>Add <em>also / but / so / for example / looking back</em></td></tr>
+</tbody></table>
+<h3>Lexical Resource</h3>
+<table><thead><tr><th>Issue</th><th>Suggestion</th></tr></thead><tbody>
+<tr><td>Repeats <em>nice / good / interesting</em></td><td>Replace with precise adjectives (see Exercise A2)</td></tr>
+<tr><td>Cannot paraphrase</td><td>Practise C5 ladder: important → significant / essential</td></tr>
+<tr><td>Topic words missing</td><td>Pre-load 6 collocations before the mock</td></tr>
+<tr><td>Awkward translation</td><td>Prefer short natural phrases over direct L1 transfer</td></tr>
+</tbody></table>
+<h3>Grammar</h3>
+<table><thead><tr><th>Issue</th><th>Suggestion</th></tr></thead><tbody>
+<tr><td><em>I very like / In my city have</em></td><td>Drill D2 fixes daily; re-say corrected line aloud</td></tr>
+<tr><td>Tense slips in Part 2</td><td>Mark past forms before speaking; slow the story spine</td></tr>
+<tr><td>No complex sentences</td><td>Add one <em>because / if / although</em> sentence per answer</td></tr>
+<tr><td>Agreement errors (<em>it depend</em>)</td><td>End-check: he/she/it + verb</td></tr>
+</tbody></table>
+<h3>Pronunciation</h3>
+<table><thead><tr><th>Issue</th><th>Suggestion</th></tr></thead><tbody>
+<tr><td>Flat delivery</td><td>Stress content words; fall at the end of ideas</td></tr>
+<tr><td>Word endings cut (<em>asked / changed</em>)</td><td>Over-articulate endings in re-record</td></tr>
+<tr><td>Too fast / mumbled</td><td>Chunk into sense groups (<code> / </code>)</td></tr>
+<tr><td>Listener strain</td><td>Slow 10%; prioritise clarity over speed</td></tr>
+</tbody></table>
+<hr>
+<h2>6. Part-specific scoring focus</h2>
+<h3>Part 1</h3>
+<ul>
+<li>Length 2–4 sentences?  </li>
+<li>Direct answer first?  </li>
+<li>One reason + one detail?  </li>
+</ul>
+<p><strong>Common 6.5 cap:</strong> too short OR too memorised.</p>
+<h3>Part 2</h3>
+<ul>
+<li>Covers all bullets?  </li>
+<li>Speaks 1:40–2:00?  </li>
+<li>Clear ending / reflection?  </li>
+</ul>
+<p><strong>Common 6.5 cap:</strong> runs out of ideas at 1:00; sudden stop.</p>
+<h3>Part 3</h3>
+<ul>
+<li>Opinion clear?  </li>
+<li>Developed explanation (not one line)?  </li>
+<li>Example or comparison?  </li>
+</ul>
+<p><strong>Common 6.5 cap:</strong> freezes; gives Part-1-length answers.</p>
+<hr>
+<h2>7. Feedback script (teacher / AI voice)</h2>
+<p>Keep it short and fixed:</p>
+<blockquote>
+<p>“Overall around <strong>X.X</strong>.</p>
+<p>Strength: _________.</p>
+<p>Top 3 fixes:</p>
+<p>1) _________</p>
+<p>2) _________</p>
+<p>3) _________</p>
+<p>Now re-record the same question focusing only on #1.”</p>
+</blockquote>
+<hr>
+<h2>8. Student reflection (30 seconds)</h2>
+<p>After hearing AI/teacher feedback:</p>
+<ul>
+<li>I understand my overall band  </li>
+<li>I know my Top 3 fixes  </li>
+<li>I re-recorded once  </li>
+<li>I copied 1 upgraded sentence into Upgrade Log  </li>
+</ul>
+<hr>
+<h2>9. Where this fits in the 8-lesson plan</h2>
+<table><thead><tr><th>Lesson</th><th>AI scoring moment</th></tr></thead><tbody>
+<tr><td>1</td><td>Full diagnostic → full 4-criterion score card</td></tr>
+<tr><td>2</td><td>After Part 1 mini-mock → FC + LR focus</td></tr>
+<tr><td>3–4</td><td>After each Part 2 → timing + story coherence</td></tr>
+<tr><td>5</td><td>After Part 3 set → IDEA development score</td></tr>
+<tr><td>6</td><td>Grammar-focused scoring on weak topic</td></tr>
+<tr><td>7</td><td>Pronunciation-focused scoring</td></tr>
+<tr><td>8</td><td>Final mock → full score + 2-week plan</td></tr>
+</tbody></table>
+<p><strong>Homework rule:</strong> every recording submitted must come back with <strong>AI/teacher scores + Top 3 suggestions + one re-record</strong>.</p>
+<hr>
+<h2>10. Sample scored feedback (model)</h2>
+<p><strong>Task:</strong> Part 3 — <em>Has technology improved education?</em>  </p>
+<p><strong>Student extract:</strong> <em>Yes I think so. Technology is good. Students can learn online. But some students play phone. So it depend.</em></p>
+<table><thead><tr><th>Criterion</th><th>Score</th><th>Note</th></tr></thead><tbody>
+<tr><td>FC</td><td>6.0</td><td>Short; limited development</td></tr>
+<tr><td>LR</td><td>6.0</td><td><em>good</em> repeated; thin topic lexis</td></tr>
+<tr><td>GRA</td><td>6.0</td><td><em>it depend</em></td></tr>
+<tr><td>Pron</td><td>6.5</td><td>(assume clear)</td></tr>
+<tr><td><strong>Overall</strong></td><td><strong>6.0–6.5</strong></td><td></td></tr>
+</tbody></table>
+<p><strong>Top 3 suggestions</strong></p>
+<ol>
+<li>Extend with IDEA: opinion + why + example + balance.  </li>
+<li>Replace <em>good</em> → <em>flexible / accessible</em>; add <em>digital distraction</em>.  </li>
+<li>Fix <em>it depends</em>; add one <em>although</em> sentence.</li>
+</ol>
+<p><strong>Upgraded model</strong></p>
+<blockquote>
+<p>To some extent, yes. Technology makes learning more flexible because students can review recorded lessons after class. For example, working students can catch up in the evening. Although phones can be distracting, overall technology helps if schools guide students to use it properly.</p>
+</blockquote>
+</section>
 </div>
 <script>
-const buttons=document.querySelectorAll('.btn[data-target]');
+const buttons=document.querySelectorAll('button.btn[data-target]');
 const panels=document.querySelectorAll('.panel');
 function show(id){panels.forEach(p=>p.classList.toggle('active',p.id===id));buttons.forEach(b=>b.classList.toggle('active',b.dataset.target===id));history.replaceState(null,'','#'+id);window.scrollTo({top:0,behavior:'smooth'});}
 buttons.forEach(b=>b.addEventListener('click',()=>show(b.dataset.target)));
 const initial=location.hash.replace('#','');
-if(initial==='exercises'||initial==='plan') show(initial);
+if(['exercises','plan','ai'].includes(initial)) show(initial);
 </script>
 </body></html>
