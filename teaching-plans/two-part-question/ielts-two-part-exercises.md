@@ -472,6 +472,75 @@ Complete:
 
 ---
 
+# H. Extra Past-Exam Analysis Drills
+
+## H1. Split race (10 min)
+
+Label Q1/Q2 for these old-exam styles:
+
+1. Job satisfaction: factors + how realistic for all?  
+2. Home ownership important: why + positive/negative?  
+3. Plastic replaces glass: why + positive/negative?  
+4. Work from home: why + effects on individuals/society?  
+5. Museum entrance fees: why charge + should they be free?
+
+### Answers — H1
+1. factors + evaluation  
+2. reasons + opinion  
+3. reasons + opinion  
+4. reasons + effects  
+5. reasons + should  
+
+---
+
+## H2. Trap match (8 min)
+
+Match the exam to the typical 6.5 trap.
+
+| Exam | Trap |
+|---|---|
+| 1. Happiness | a. Writes only “I love paper books”, ignores why people predict print will die |
+| 2. Print→online | b. Gives lifestyle tips only; skips why happiness is hard to define |
+| 3. WFH effects | c. Turns Q2 into “government should…”, though asked for effects |
+| 4. Foreign films | d. Cultural rant with no clear should/should-not/conditional |
+| 5. Job satisfaction | e. Says everyone can be satisfied; ignores “for all workers” |
+
+### Answers — H2
+1-b · 2-a · 3-c · 4-d · 5-e  
+
+---
+
+## H3. Opening sentences for different Q2 types (12 min)
+
+Write BP2 first sentence only:
+
+1. Positive/negative (social media)  
+2. Should (local films)  
+3. Effects (WFH)  
+4. How realistic (job satisfaction for all)  
+5. Solutions (ageing population)
+
+### Model — H3
+1. Overall, I would argue that this is largely a negative development because…  
+2. In my view, governments should support local films, but only when…  
+3. This trend affects individuals and society in two main ways.  
+4. It is not realistic to expect full job satisfaction for all workers, although…  
+5. These problems can be addressed if individuals… and governments…
+
+---
+
+## H4. Mini analysis sheet (15 min)
+
+Pick **Exam 7 (home ownership)** or **Exam 2 (job satisfaction)** and complete:
+
+- Q1 type / Q2 type:  
+- 2 ideas for Q1:  
+- 2 ideas for Q2:  
+- Biggest trap:  
+- One Band 7 sentence for Q2:
+
+---
+
 # Teacher Marking Shortcuts
 
 1. **Both questions answered?**  
@@ -479,3 +548,5 @@ Complete:
 3. **Q2 task type correct?**  
 
 If language is strong but Q2 is thin, set a rule: **Q2 ≥ 110 words** for one week.
+
+For past-exam homework, also mark: **Trap avoided? Yes/No** (from analysis file).

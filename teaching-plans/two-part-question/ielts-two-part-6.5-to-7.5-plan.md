@@ -7,24 +7,74 @@
 
 ## 1. 真题材料（Authentic-style prompts）
 
-| 编号 | 真题风格 | 题目 | 课堂角色 |
+**完整真题库 + 逐题分析：** [`ielts-two-part-past-exams-analysis.md`](./ielts-two-part-past-exams-analysis.md)（14 道历年/剑桥风格题）
+
+### 课堂主线 3 题（精写）
+
+| 编号 | 来源风格 | 题目 | 课堂角色 |
 |---|---|---|---|
-| **真题 A** | Cambridge 高频 | *In many countries, people are now living longer than ever before. Some people say an ageing population creates problems for governments. Other people think there are benefits for society. What are the advantages and disadvantages of an ageing population for society?* *(若课堂只用纯 two-part，改用下方标准双问)* | — |
-| **真题 A（主用）** | Cambridge IELTS 风格 | *In many countries, people are living longer than ever before. What problems does this cause for individuals and society? What can individuals and governments do to deal with these problems?* | 诊断 + 精修主线 |
-| **真题 B** | Cambridge IELTS 风格 | *Nowadays the way many people interact with each other has changed because of technology. In what ways has technology affected the types of relationships people make? Has this become a positive or negative development?* | 迁移：说明 + 评价 |
-| **真题 C** | 高频变体 | *Many people prefer to watch foreign films rather than locally produced films. Why is this? Should governments give financial support to local film industries?* | 限时模考：原因 + 观点 |
+| **真题 A** | Cambridge 高频 | *In many countries, people are living longer than ever before. What problems does this cause for individuals and society? What can individuals and governments do to deal with these problems?* | 诊断 + 精修主线 |
+| **真题 B** | Cambridge 风格 | *Nowadays the way many people interact with each other has changed because of technology. In what ways has technology affected the types of relationships people make? Has this become a positive or negative development?* | 迁移：ways + 评价 |
+| **真题 C** | Cambridge 11 风格 | *Many people prefer to watch foreign films rather than locally produced films. Why is this? Should governments give financial support to local film industries?* | 限时：reasons + should |
+
+### 加练真题（分析课 / 作业轮换）
+
+| # | 来源 | 双问结构 | 分析重点 |
+|---|---|---|---|
+| 1 | C4 风格 | Happiness: Why hard to define? + What factors? | 抽象题不写鸡汤 |
+| 2 | Cambridge 7 | Job satisfaction: factors + How realistic for all? | Q2 评价题 |
+| 5 | C14 风格 | Advertising: Why so much? + Positive/negative? | 商业机制 |
+| 6 | C15 风格 | Print→online: Why think so? + Positive/negative? | 答“为何有人认为” |
+| 7 | Cambridge 16 | Owning vs renting: Why? + Positive/negative? | 社会后果 |
+| 8 | C17 风格 | Plastic packaging: Why? + Positive/negative? | 环境评价 |
+| 9 | C18 风格 | Social media: Why? + Positive/negative? | 避免只会骂沉迷 |
+| 10 | C8 风格 | Weight/fitness: causes + measures | 对接 cause-solution |
+| 12 | 高频 | Too many choices: Why? + Positive/negative? | 全球化原因 |
+| 13 | 高频 | Work from home: Why? + Effects? | Q2=effects 勿写成 should |
+| 14 | 高频 | Museums fees: Why charge? + Should free? | 条件政策 |
+
+**Five recurring patterns（背熟）**
+1. Reasons + Positive/Negative  
+2. Reasons + Should  
+3. Problems/Causes + Solutions  
+4. Factors + Evaluation (*How realistic?*)  
+5. Reasons + Effects  
 
 **题型识别关键词**
-- 两个直接问题（常为不同任务）：*Why…? / What problems…? / What are the effects…?*  
-- 第二问常是：*Do the advantages…? / Is this positive or negative? / What can be done…? / Should…?*  
-- 必须 **两个问题都充分回答**，不能偏废。
+- *Why…? / What problems…? / In what ways…? / What factors…?*  
+- *Is this positive or negative? / Should…? / What can be done…? / How realistic…?*  
+- 必须 **两个问题都充分回答**
 
-**Two-part 常见组合**
-1. Causes / Reasons + Solutions  
-2. Problems / Effects + Solutions  
-3. Reasons + Opinion (positive/negative or should…)  
-4. Effects + Opinion  
-5. Reasons + Measures / Recommendation  
+### 1.1 审题 90 秒标准动作
+
+| Step | 问自己 | 产出 |
+|---|---|---|
+| 1 | 背景话题？ | 引言改写 |
+| 2 | Q1 类型？ | reasons / problems / effects / ways / factors |
+| 3 | Q2 类型？ | solutions / pos-neg / should / realistic / effects |
+| 4 | 是否双对象？ | individuals **and** society 等 |
+| 5 | 两问是否同类？ | 不同类则不混段 |
+| 6 | 结论收什么？ | Q1 一句 + Q2 一句 |
+
+**真题 A 深拆：** Q1 problems（个人+社会）→ Q2 solutions（个人+政府）。忌只写养老金或空泛 “government should help”。  
+**真题 B 深拆：** Q1=关系形态变化；Q2=必须总体积极/消极。忌骑墙。  
+**真题 C 深拆：** Q1=产业原因；Q2=条件性 should。忌文化抒情无立场。
+
+### 1.2 Band 7 计划板（可投影）
+
+**Ageing：** BP1 医疗/养老压力；BP2 健康习惯 + 社区养老/养老金改革。  
+**Technology：** BP1 远距离关系/弱连接/面对面减少；BP2 明确总体评价。  
+**Films：** BP1 预算营销语言；BP2 有限资助保文化、看质量。
+
+### 1.3 6.5 vs 7.0 对照
+
+| 点 | 6.5 | 7.0–7.5 |
+|---|---|---|
+| 覆盖 | 第二问偏短 | 两问充分 |
+| 分段 | 混写 | 一问一段 |
+| 第二问 | 任务写错 | 严格匹配 |
+| 评价题 | 有好有坏 | 有总体立场 |
+| 例子 | 空泛 | 有机制短例 |
 
 ---
 
@@ -82,14 +132,19 @@
 
 | Lesson | 焦点 | 真题 | 练习 |
 |---|---|---|---|
-| 1 | 诊断 + 拆题 | 真题 A（长寿问题） | Error Log |
-| 2 | Two-part 架构与均衡 | 真题 A | **A1–A4** |
-| 3 | Q1 深挖（problems/reasons） | 真题 A | **B1–B3** |
-| 4 | Q2 深挖（solutions / opinion） | 真题 A | **B4–B5** + **D1–D2** |
-| 5 | 词汇语法冲 7 | 学生稿件 | **D3–D6** + **E1** |
-| 6 | 迁移：科技与人际关系 | 真题 B | **C1–C4** |
-| 7 | 限时：外国电影 vs 本土电影 | 真题 C | **E2–E3** |
-| 8 | 终测 + 反馈 | 新 dual-question | **F** 每日训练 |
+| 1 | 诊断 + 拆题 | 真题 A（长寿） | Error Log + 分析文件 Exam 11 |
+| 2 | Two-part 架构与均衡 | A + 拆题赛（Exams 2/7/13） | **A1–A4** |
+| 3 | Q1 深挖 | A；对照 Exam 10 health | **B1–B3** |
+| 4 | Q2 深挖 | A；加练 Exam 4 should 开句 | **B4–B5** + **D1–D2** |
+| 5 | 词汇语法冲 7 | 学生稿 + Exam 2 realistic | **D3–D6** + **E1** |
+| 6 | 迁移评价题 | 真题 B；加练 Exams 7/9 | **C1–C4** |
+| 7 | 限时政策题 | 真题 C；加练 Exam 14 | **E2–E3** |
+| 8 | 终测 | 从真题库抽新题（5/6/8/12/13） | **F** + 分析复盘 |
+
+### 每周加练（课外 40–50 min）
+- 1 篇全文（从 past-exams 库选）  
+- 2 篇只写 **Planning Sheet + 两段主题句**（不写全文）  
+- 1 次：用分析文件里的 Trap analysis 对照自己的偏题点  
 
 ---
 
@@ -142,10 +197,12 @@
 5. 收束（10 min）
 
 **课堂练习：** A1 题型识别 · A2 均衡检查 · A3 连接词 · A4 写 Q1 段  
+**加练（10 min）：** 从分析库抽 Exam 2 / 7 / 13，只做 Q1/Q2 类型标注 + 主题句。
 
 **作业**
 - 真题 A 全文（强调 Q2 不少于 Q1 的 80% 字数）。  
-- A5 第二问任务匹配。
+- A5 第二问任务匹配。  
+- 阅读 [`ielts-two-part-past-exams-analysis.md`](./ielts-two-part-past-exams-analysis.md) 中 Exam 2 与 Exam 11 的 Trap analysis。
 
 ---
 
@@ -363,7 +420,8 @@
 | **E** | 6.5→7 段落升级 |
 | **F** | 每日 10 分钟 |
 
-详见：[`ielts-two-part-exercises.md`](./ielts-two-part-exercises.md)
+详见：[`ielts-two-part-exercises.md`](./ielts-two-part-exercises.md)  
+真题精析库：[`ielts-two-part-past-exams-analysis.md`](./ielts-two-part-past-exams-analysis.md)
 
 ---
 
