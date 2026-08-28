@@ -221,3 +221,11 @@ After hearing AI/teacher feedback:
 
 **Upgraded model**
 > To some extent, yes. Technology makes learning more flexible because students can review recorded lessons after class. For example, working students can catch up in the evening. Although phones can be distracting, overall technology helps if schools guide students to use it properly.
+
+---
+
+## Update — content-aware local scorer
+- Scores now start near 6.5 and move with transcript evidence (length, reason/example markers, lexical diversity, grammar hits, topic overlap, speech rate).
+- Top 3 tips quote the student’s own wording / metrics (not fixed templates only).
+- Recognition: `maxAlternatives=3`, confidence average, alternative-chip corrections, default `en-GB`, noise-suppressed mic.
+- Reminder: browser ASR is imperfect — edit Transcript before trusting the band.
