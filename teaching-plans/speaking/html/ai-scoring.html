@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS Speaking — Voice In → Auto Score</title>
+<style>
+:root {
+  --ink: #1f1a17;
+  --muted: #5c534c;
+  --accent: #0f5c4c;
+  --card: #fffdf9;
+  --line: #ddd4c8;
+  --rec: #b33b3b;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", "Noto Serif SC", serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, #efe6d8, transparent 40%),
+    linear-gradient(180deg, #f7f4ef, #f3eee6);
+  line-height: 1.55;
+}
+.wrap { max-width: 920px; margin: 0 auto; padding: 24px 18px 64px; }
+h1 { color: var(--accent); margin: 0 0 6px; font-size: 1.5rem; }
+.sub { color: var(--muted); margin: 0 0 18px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+label { display: block; font-weight: 600; margin: 0 0 6px; color: var(--accent); }
+input, select, textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+  background: #fff;
+  color: var(--ink);
+}
+textarea { min-height: 130px; resize: vertical; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.voice-panel {
+  text-align: center;
+  padding: 22px 16px 18px;
+  background: linear-gradient(180deg, #f7faf7, #fffdf9);
+}
+.status {
+  min-height: 1.4em;
+  color: var(--muted);
+  margin: 0 0 14px;
+  font-size: .98rem;
+}
+.status.hot { color: var(--rec); font-weight: 700; }
+.mic-btn {
+  width: 120px; height: 120px; border-radius: 50%;
+  border: 0; cursor: pointer; color: #fff;
+  background: var(--accent);
+  font-size: 1rem; font-weight: 700;
+  box-shadow: 0 10px 24px rgba(15,92,76,.25);
+  transition: transform .15s ease, background .15s ease;
+}
+.mic-btn:hover { transform: scale(1.03); }
+.mic-btn.recording {
+  background: var(--rec);
+  animation: pulse 1.2s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(179,59,59,.45); }
+  70% { box-shadow: 0 0 0 18px rgba(179,59,59,0); }
+  100% { box-shadow: 0 0 0 0 rgba(179,59,59,0); }
+}
+.timer { margin-top: 10px; font-variant-numeric: tabular-nums; color: var(--accent); font-weight: 700; }
+.live {
+  margin-top: 14px; text-align: left;
+  background: #f4efe7; border-radius: 12px; padding: 12px;
+  min-height: 64px; color: var(--ink);
+}
+.live .interim { color: var(--muted); }
+.meta-row {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 10px;
+}
+.pill {
+  background: #e9efe9; color: var(--accent); border-radius: 999px;
+  padding: .25rem .7rem; font-size: .85rem;
+}
+.checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 8px; }
+.check {
+  display: flex; gap: 8px; align-items: flex-start;
+  background: #f4efe7; border-radius: 10px; padding: 8px 10px; font-size: .95rem;
+}
+.check input { width: auto; margin-top: 3px; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+button.action {
+  border: 0; border-radius: 999px; padding: .65rem 1rem;
+  background: var(--accent); color: #fff; font: inherit; cursor: pointer;
+}
+button.secondary { background: #4a4038; }
+button.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+#result { white-space: pre-wrap; }
+.scores {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 12px 0;
+}
+.score-box {
+  background: #e9efe9; border-radius: 12px; padding: 10px; text-align: center;
+}
+.score-box b { display: block; font-size: 1.35rem; color: var(--accent); }
+.muted { color: var(--muted); font-size: .92rem; }
+details { margin-top: 8px; }
+summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+audio { width: 100%; margin-top: 10px; }
+.warn {
+  background: #f8ebe3; color: #8a4b2d;
+  border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; font-size: .92rem;
+}
+.evidence {
+  background: #f4efe7; border-left: 4px solid var(--accent);
+  padding: 8px 10px; margin: 8px 0; border-radius: 0 8px 8px 0;
+  font-size: .95rem;
+}
+@media (max-width: 720px) {
+  .row, .checks, .scores { grid-template-columns: 1fr; }
+  .mic-btn { width: 108px; height: 108px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Voice in → Auto score</h1>
+  <p class="sub">按你的实际转写内容打分：分数与点评会随答案变化。说完点 Stop；若识别有误，可先改 Transcript 再 Score。</p>
+
+  <div id="compat" class="warn" style="display:none"></div>
+
+  <div class="card">
+    <div class="row">
+      <div>
+        <label for="part">Task type</label>
+        <select id="part">
+          <option value="part1">Part 1</option>
+          <option value="part2">Part 2</option>
+          <option value="part3" selected>Part 3</option>
+        </select>
+      </div>
+      <div>
+        <label for="lang">Speech language</label>
+        <select id="lang">
+          <option value="en-GB" selected>English (UK) — IELTS 更贴近</option>
+          <option value="en-US">English (US)</option>
+          <option value="en-AU">English (AU)</option>
+          <option value="en-IN">English (India)</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <label for="question">Question / cue card（填写后会检查是否跑题）</label>
+      <input id="question" placeholder="e.g. Has technology improved education?">
+    </div>
+  </div>
+
+  <div class="card voice-panel">
+    <p class="status" id="status">Ready — click Speak，说完再点 Stop</p>
+    <button type="button" class="mic-btn" id="micBtn" aria-label="Start speaking">Speak</button>
+    <div class="timer" id="timer">00:00</div>
+    <div class="meta-row">
+      <span class="pill" id="confPill">识别信心：—</span>
+      <span class="pill" id="altPill">备选词：关</span>
+    </div>
+    <div class="live" id="live"><span class="muted">Live transcript will appear here…</span></div>
+    <audio id="player" controls style="display:none"></audio>
+    <p class="muted" style="margin-top:10px">建议 Chrome/Edge · 安静环境 · 语速稳定。识别不准时，<strong>直接改下面 Transcript</strong> 再点 Score now。</p>
+  </div>
+
+  <div class="card">
+    <label for="transcript">Transcript（可编辑；评分以这里的文字为准）</label>
+    <textarea id="transcript" placeholder="Filled automatically from voice input…"></textarea>
+    <div id="altBox" class="muted" style="margin-top:8px"></div>
+    <details>
+      <summary>Optional: tick extra issues you heard（发音问题建议手点）</summary>
+      <div class="checks" id="issues"></div>
+    </details>
+  </div>
+
+  <div class="btns">
+    <button type="button" class="action" id="scoreBtn">Score now</button>
+    <button type="button" class="action secondary" id="promptBtn">Copy AI prompt</button>
+    <button type="button" class="action ghost" id="clearBtn">Clear</button>
+    <a class="action ghost" href="index.html" style="text-decoration:none;display:inline-block">Back to plan</a>
+  </div>
+
+  <div class="card" id="outputCard" style="display:none; margin-top:14px">
+    <label>Result（基于本次转写的个性化点评）</label>
+    <div class="scores" id="scoreBoxes"></div>
+    <div id="result"></div>
+  </div>
+</div>
+
+<script>
+const ISSUE_DEFS = [
+  { id: 'short', label: 'Answer too short / under-developed', cat: 'fc', weight: 1.0 },
+  { id: 'pause', label: 'Long silent pauses / frequent hesitation', cat: 'fc', weight: 0.8 },
+  { id: 'structure', label: 'Weak structure (no clear reason/example)', cat: 'fc', weight: 0.8 },
+  { id: 'offTopic', label: 'Partly off-topic / ignores the question', cat: 'fc', weight: 1.0 },
+  { id: 'memorised', label: 'Sounds memorised / unnatural script', cat: 'fc', weight: 0.5 },
+  { id: 'repeat', label: 'Repeats nice/good/interesting or limited vocab', cat: 'lr', weight: 0.9 },
+  { id: 'paraphrase', label: 'Cannot paraphrase / topic words missing', cat: 'lr', weight: 0.8 },
+  { id: 'awkward', label: 'Awkward word choice / L1 translation', cat: 'lr', weight: 0.6 },
+  { id: 'basicGrammar', label: 'Basic grammar errors (agree, there is/are, very like)', cat: 'gra', weight: 1.0 },
+  { id: 'tense', label: 'Tense / agreement slips', cat: 'gra', weight: 0.7 },
+  { id: 'noComplex', label: 'Almost no complex sentences', cat: 'gra', weight: 0.6 },
+  { id: 'unclear', label: 'Listener strain / mumbled / too fast', cat: 'pron', weight: 0.9 },
+  { id: 'endings', label: 'Word endings cut off (asked/changed)', cat: 'pron', weight: 0.6 },
+  { id: 'flat', label: 'Flat stress / intonation', cat: 'pron', weight: 0.5 },
+];
+
+const STOP = new Set(('a an the and or but so to of in on at for with from by as is are was were be been being i you he she it we they my your his her their this that these those there here very just really also then than too can could will would should may might about into over after before'.split(' ')));
+
+const TOPIC_LEX = {
+  education: ['school','student','teacher','learn','learning','study','university','curriculum','classroom','homework','exam','literacy'],
+  technology: ['tech','technology','digital','online','internet','phone','app','ai','computer','screen','software','device'],
+  environment: ['environment','pollution','climate','carbon','recycle','energy','green','sustainable','waste','emission'],
+  work: ['job','work','career','office','salary','employ','company','colleague','boss','remote','commute'],
+  health: ['health','hospital','doctor','exercise','diet','mental','stress','fitness','sleep','medicine'],
+  city: ['city','urban','traffic','housing','transport','neighbour','community','pollution','rent'],
+  culture: ['culture','tradition','festival','art','music','museum','heritage','language'],
+  media: ['media','news','social','influencer','advert','tv','video','platform']
+};
+
+const issueBox = document.getElementById('issues');
+ISSUE_DEFS.forEach(item => {
+  const div = document.createElement('label');
+  div.className = 'check';
+  div.innerHTML = `<input type="checkbox" value="${item.id}" data-cat="${item.cat}" data-weight="${item.weight}"> <span>${item.label}</span>`;
+  issueBox.appendChild(div);
+});
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const micBtn = document.getElementById('micBtn');
+const statusEl = document.getElementById('status');
+const liveEl = document.getElementById('live');
+const transcriptEl = document.getElementById('transcript');
+const timerEl = document.getElementById('timer');
+const player = document.getElementById('player');
+const compat = document.getElementById('compat');
+const confPill = document.getElementById('confPill');
+const altPill = document.getElementById('altPill');
+const altBox = document.getElementById('altBox');
+
+let recognition = null;
+let recognizing = false;
+let userWantsListening = false;
+let finalTranscript = '';
+let autoScoreOnEnd = true;
+let startedAt = 0;
+let endedAt = 0;
+let timerId = null;
+let mediaRecorder = null;
+let mediaStream = null;
+let audioChunks = [];
+let confidenceSum = 0;
+let confidenceCount = 0;
+let altHits = []; // {from, to, conf}
+
+if (!SpeechRecognition) {
+  compat.style.display = 'block';
+  compat.textContent = '当前浏览器无 Web Speech API。请用 Chrome / Edge 做语音输入；也可粘贴转写后点 Score now。';
+  micBtn.disabled = true;
+  micBtn.style.opacity = .5;
+} else {
+  compat.style.display = 'block';
+  compat.textContent = '提示：浏览器语音识别在嘈杂环境或口音较重时会漏词。评分只看 Transcript——说完务必校对一遍再打分。';
+}
+
+function setStatus(text, hot = false) {
+  statusEl.textContent = text;
+  statusEl.classList.toggle('hot', hot);
+}
+
+function formatTime(ms) {
+  const s = Math.floor(ms / 1000);
+  const mm = String(Math.floor(s / 60)).padStart(2, '0');
+  const ss = String(s % 60).padStart(2, '0');
+  return `${mm}:${ss}`;
+}
+
+function startTimer() {
+  startedAt = Date.now();
+  endedAt = 0;
+  timerEl.textContent = '00:00';
+  clearInterval(timerId);
+  timerId = setInterval(() => {
+    timerEl.textContent = formatTime(Date.now() - startedAt);
+  }, 250);
+}
+
+function stopTimer() {
+  clearInterval(timerId);
+  timerId = null;
+  if (startedAt) endedAt = Date.now();
+}
+
+function selectedIssues() {
+  return [...document.querySelectorAll('#issues input:checked')].map(el => el.value);
+}
+
+function roundHalf(n) { return Math.round(n * 2) / 2; }
+function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
+function tokenize(text) {
+  return (text || '').toLowerCase().match(/[a-z']+/g) || [];
+}
+
+function quoteSnippet(text, max = 72) {
+  const t = (text || '').replace(/\s+/g, ' ').trim();
+  if (!t) return '';
+  return t.length <= max ? `“${t}”` : `“${t.slice(0, max).trim()}…”`;
+}
+
+function lexicalDiversity(tokens) {
+  if (!tokens.length) return 0;
+  const content = tokens.filter(t => !STOP.has(t) && t.length > 2);
+  if (!content.length) return 0;
+  return new Set(content).size / content.length;
+}
+
+function topRepeated(tokens, minCount = 3) {
+  const freq = {};
+  tokens.forEach(t => {
+    if (STOP.has(t) || t.length < 3) return;
+    freq[t] = (freq[t] || 0) + 1;
+  });
+  return Object.entries(freq)
+    .filter(([, c]) => c >= minCount)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 4);
+}
+
+function detectGrammarHits(lower) {
+  const patterns = [
+    { re: /\bi very like\b/, note: 'i very like → I really like' },
+    { re: /\bi am agree\b/, note: 'i am agree → I agree' },
+    { re: /\bit depend\b/, note: 'it depend → it depends' },
+    { re: /\bthere have\b/, note: 'there have → there is/are' },
+    { re: /\bin my [a-z ]{0,20}have\b/, note: 'in my… have → … has / there is' },
+    { re: /\b(he|she) don't\b/, note: "he/she don't → doesn't" },
+    { re: /\bmore better\b/, note: 'more better → better' },
+    { re: /\bvery much like\b/, note: 'prefer: I really like / I like … a lot' },
+    { re: /\bpeople is\b/, note: 'people is → people are' },
+    { re: /\binformation are\b/, note: 'information are → information is' },
+  ];
+  return patterns.filter(p => p.re.test(lower)).map(p => p.note);
+}
+
+function topicOverlap(question, tokens) {
+  const q = (question || '').toLowerCase();
+  if (!q || q.includes('(no question')) return { score: null, matched: [], themes: [] };
+  const themes = [];
+  const matched = new Set();
+  for (const [theme, words] of Object.entries(TOPIC_LEX)) {
+    if (words.some(w => q.includes(w)) || q.split(/\W+/).some(w => words.includes(w))) {
+      themes.push(theme);
+      words.forEach(w => { if (tokens.includes(w)) matched.add(w); });
+    }
+  }
+  // also match content words from question itself
+  const qTokens = tokenize(q).filter(t => !STOP.has(t) && t.length > 3);
+  qTokens.forEach(t => { if (tokens.includes(t)) matched.add(t); });
+  const need = Math.max(2, Math.min(5, qTokens.length));
+  const score = matched.size / need;
+  return { score, matched: [...matched], themes, qTokens };
+}
+
+function analyzeTranscript(part, question, transcript, durationSec, manualIssues) {
+  const text = (transcript || '').replace(/\s+/g, ' ').trim();
+  const lower = text.toLowerCase();
+  const tokens = tokenize(text);
+  const words = tokens.length;
+  const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(Boolean);
+  const issueSet = new Set(manualIssues || []);
+  const findings = []; // {id, cat, severity, evidence, tip}
+  const grammarHits = detectGrammarHits(lower);
+  const repeats = topRepeated(tokens, part === 'part1' ? 2 : 3);
+  const diversity = lexicalDiversity(tokens);
+  const hasReason = /\b(because|since|as|the reason|that's why|due to)\b/i.test(text);
+  const hasExample = /\b(for example|for instance|such as|like when|one time|in my experience)\b/i.test(text);
+  const complexMarkers = (lower.match(/\b(because|although|though|while|whereas|if|unless|which|that|who|when|after|before)\b/g) || []).length;
+  const discourse = (lower.match(/\b(firstly|secondly|however|on the other hand|in contrast|overall|to some extent|it depends)\b/g) || []).length;
+  const fillers = (lower.match(/\b(um+|uh+|er+|you know|kind of|sort of)\b/g) || []).length;
+  const weakAdj = (lower.match(/\b(nice|good|interesting|bad|things?)\b/g) || []).length;
+  const topic = topicOverlap(question, tokens);
+
+  function addFinding(id, cat, severity, evidence, tip) {
+    issueSet.add(id);
+    findings.push({ id, cat, severity, evidence, tip });
+  }
+
+  // length / development
+  const minWords = part === 'part1' ? 28 : part === 'part2' ? 140 : 55;
+  const idealWords = part === 'part1' ? 55 : part === 'part2' ? 220 : 100;
+  if (words > 0 && words < minWords) {
+    addFinding('short', 'fc', 1.2,
+      `本次约 ${words} 词（${part} 建议至少 ~${minWords} 词）`,
+      part === 'part2'
+        ? '按 cue card 四条各说 2–3 句，收尾加一句感受。'
+        : '用三拍结构：直接回答 → 原因 → 具体例子。');
+  } else if (words >= minWords && words < idealWords * 0.7 && !hasExample) {
+    addFinding('structure', 'fc', 0.7,
+      `长度尚可（${words} 词），但缺少例子标记（for example / in my experience）`,
+      '在现有观点后加一句：For example, when I…');
+  }
+
+  if (words >= 25 && !hasReason) {
+    addFinding('structure', 'fc', 0.8,
+      `未检测到 because / the reason 等因果衔接：${quoteSnippet(sentences[0] || text)}`,
+      '第一句表态后立刻接：because… / The main reason is…');
+  }
+
+  if (words >= 40 && !hasExample && part !== 'part1') {
+    addFinding('structure', 'fc', 0.6,
+      '较长回答里没有具体例子',
+      'Part 3 用 IDEA：观点 → 细节 → 例子 → 另一角度。');
+  }
+
+  if (topic.score !== null && words >= 20) {
+    if (topic.score < 0.35) {
+      addFinding('offTopic', 'fc', 1.1,
+        `问题关键词很少出现（命中：${topic.matched.slice(0,5).join(', ') || '无'}）`,
+        `先用问题里的词复述题干，再给观点。题干词如：${topic.qTokens.slice(0,6).join(', ')}`);
+    } else if (topic.matched.length) {
+      findings.push({
+        id: 'topicOk', cat: 'fc', severity: -0.15,
+        evidence: `话题词有回扣：${topic.matched.slice(0,6).join(', ')}`,
+        tip: ''
+      });
+    }
+  }
+
+  // lexical
+  if (weakAdj >= 2 || repeats.length) {
+    const repStr = repeats.map(([w,c]) => `${w}×${c}`).join(', ');
+    const weakStr = weakAdj ? `弱形容词 nice/good/interesting/bad 约 ${weakAdj} 次` : '';
+    addFinding('repeat', 'lr', Math.min(1.3, 0.4 + weakAdj * 0.15 + repeats.length * 0.2),
+      [repStr && `高频重复：${repStr}`, weakStr].filter(Boolean).join('；') || '词汇偏窄',
+      repeats[0]
+        ? `少说 “${repeats[0][0]}”，换成更准的词（例如 rewarding / flexible / limited / practical）。`
+        : '把 good/nice 换成具体评价词，并点出对象。');
+  }
+
+  if (diversity > 0 && diversity < 0.42 && words > 35) {
+    addFinding('paraphrase', 'lr', 0.7,
+      `实词多样性偏低（TTR≈${diversity.toFixed(2)}）`,
+      '同一意思换一种说法：important → crucial / play a key role。');
+  } else if (diversity >= 0.55 && words > 40) {
+    findings.push({ id: 'lexOk', cat: 'lr', severity: -0.2, evidence: `词汇多样性较好（TTR≈${diversity.toFixed(2)}）`, tip: '' });
+  }
+
+  if (/\b(make me feel|let me can|open the eyes|touching my heart)\b/i.test(lower)) {
+    addFinding('awkward', 'lr', 0.7,
+      `疑似直译表达：${quoteSnippet(text.match(/\b(make me feel|let me can|open the eyes|touching my heart)[^.?!]*/i)?.[0] || text)}`,
+      '改用自然块：It allows me to… / It broadened my view…');
+  }
+
+  // grammar
+  if (grammarHits.length) {
+    addFinding('basicGrammar', 'gra', Math.min(1.4, 0.5 + grammarHits.length * 0.35),
+      `检测到：${grammarHits.slice(0,3).join('；')}`,
+      `优先改第一处：${grammarHits[0]}`);
+  }
+
+  if (/\b(yesterday|last\s+\w+|ago)\b/i.test(text) && /\b(go|see|meet|buy|is|are)\b/i.test(lower) && !/\b(went|saw|met|bought|was|were)\b/i.test(lower) && part === 'part2') {
+    addFinding('tense', 'gra', 0.8,
+      'Part 2 有过去时间线索，但过去式迹象不足',
+      '故事主线统一用过去时：went / saw / decided / felt。');
+  }
+
+  if (words > 40 && complexMarkers < 2) {
+    addFinding('noComplex', 'gra', 0.7,
+      `复杂句标记很少（because/if/although/which 等仅 ${complexMarkers} 次）`,
+      '至少加一句：… because … / Although …, I still …');
+  } else if (complexMarkers >= 3) {
+    findings.push({ id: 'complexOk', cat: 'gra', severity: -0.2, evidence: `已有 ${complexMarkers} 处从句/逻辑连接`, tip: '' });
+  }
+
+  // fluency proxies from timing + fillers
+  if (durationSec >= 6 && words > 0) {
+    const wpm = (words / durationSec) * 60;
+    if (wpm < 75) {
+      addFinding('pause', 'fc', 0.7,
+        `语速约 ${Math.round(wpm)} wpm（偏慢，可能停顿偏多）`,
+        '用填补语衔接：What I mean is… / Let me give an example…');
+    } else if (wpm > 185) {
+      addFinding('unclear', 'pron', 0.7,
+        `语速约 ${Math.round(wpm)} wpm（偏快，易含糊）`,
+        '放慢约 10%，按意群停顿。');
+    } else {
+      findings.push({ id: 'rateOk', cat: 'fc', severity: -0.1, evidence: `语速约 ${Math.round(wpm)} wpm，较自然`, tip: '' });
+    }
+  }
+
+  if (fillers >= 4) {
+    addFinding('pause', 'fc', 0.5,
+      `填充语较多（um/you know 等约 ${fillers} 次）`,
+      '把 um 换成短暂停顿或 “Well,” 后继续观点。');
+  }
+
+  if (discourse >= 2) {
+    findings.push({ id: 'discOk', cat: 'fc', severity: -0.15, evidence: `有语篇标记（however / firstly 等 ${discourse} 处）`, tip: '' });
+  }
+
+  // memorised heuristic: very long + almost no personal markers
+  if (words > 90 && !/\b(i|my|me)\b/i.test(text)) {
+    addFinding('memorised', 'fc', 0.5,
+      '较长回答几乎无个人视角（I/my）',
+      '加入一个真实细节：时间、地点或具体人物。');
+  }
+
+  return {
+    text, lower, tokens, words, sentences, findings, issueSet: [...issueSet],
+    grammarHits, repeats, diversity, hasReason, hasExample, complexMarkers, topic,
+    durationSec
+  };
+}
+
+function scoreFromAnalysis(part, analysis) {
+  // Start near mid-6s; boost for strengths, cut for issues — more realistic than always ~7
+  const scores = { fc: 6.5, lr: 6.5, gra: 6.5, pron: 6.5 };
+  const penalties = { fc: 0, lr: 0, gra: 0, pron: 0 };
+  const bonuses = { fc: 0, lr: 0, gra: 0, pron: 0 };
+
+  analysis.findings.forEach(f => {
+    if (f.severity > 0) penalties[f.cat] += f.severity;
+    else bonuses[f.cat] += Math.abs(f.severity);
+  });
+
+  // length bonus toward development
+  const ideal = part === 'part1' ? 55 : part === 'part2' ? 220 : 95;
+  if (analysis.words >= ideal) bonuses.fc += 0.25;
+  if (analysis.hasReason && analysis.hasExample) bonuses.fc += 0.25;
+  if (analysis.diversity >= 0.5) bonuses.lr += 0.2;
+  if (analysis.complexMarkers >= 3) bonuses.gra += 0.2;
+
+  // pronunciation: browser cannot truly score; keep modest movement from delivery cues + manual ticks
+  ISSUE_DEFS.filter(d => d.cat === 'pron').forEach(d => {
+    if (analysis.issueSet.includes(d.id) && !analysis.findings.some(f => f.id === d.id && f.severity > 0)) {
+      penalties.pron += d.weight;
+    }
+  });
+
+  for (const k of Object.keys(scores)) {
+    const raw = scores[k] + Math.min(0.8, bonuses[k]) - Math.min(2.0, penalties[k] * 0.55);
+    scores[k] = roundHalf(clamp(raw, 5.0, 8.0));
+  }
+
+  // slight mutual influence: very weak FC caps overall feel
+  const overall = roundHalf(clamp((scores.fc + scores.lr + scores.gra + scores.pron) / 4, 5.0, 8.0));
+  return { scores, overall, penalties, bonuses };
+}
+
+function buildPersonalizedTips(part, question, analysis, scores) {
+  const tips = [];
+  const negatives = analysis.findings
+    .filter(f => f.severity > 0)
+    .sort((a, b) => b.severity - a.severity);
+
+  const seen = new Set();
+  for (const f of negatives) {
+    if (seen.has(f.id)) continue;
+    seen.add(f.id);
+    tips.push({
+      title: labelFor(f.id),
+      evidence: f.evidence,
+      try: f.tip || defaultTip(f.id, part),
+      band: scores[f.cat]
+    });
+    if (tips.length === 3) break;
+  }
+
+  // always include at least one rewrite based on their first sentence
+  const first = analysis.sentences[0] || analysis.text.slice(0, 80);
+  if (tips.length < 3) {
+    tips.push({
+      title: '把第一句升级到 Band 7 开口',
+      evidence: `你现在的开头：${quoteSnippet(first)}`,
+      try: upgradeOpening(first, question, part),
+      band: scores.fc
+    });
+  }
+
+  while (tips.length < 3) {
+    tips.push({
+      title: '增加可听见的具体性',
+      evidence: `当前 ${analysis.words} 词；例子标记：${analysis.hasExample ? '有' : '无'}`,
+      try: '补一句带细节的例子（时间/人物/结果），避免只说抽象好处。',
+      band: scores.fc
+    });
+  }
+
+  return tips.slice(0, 3);
+}
+
+function labelFor(id) {
+  const hit = ISSUE_DEFS.find(x => x.id === id);
+  return hit ? hit.label : id;
+}
+
+function defaultTip(id, part) {
+  const map = {
+    short: '先答问题，再用 because + for example 各扩一句。',
+    structure: part === 'part3' ? '套 IDEA：观点-细节-例子-另一面。' : '回答 → 原因 → 例子。',
+    pause: '用 “What I mean is…” 填补停顿。',
+    offTopic: '首句复述题干关键词再表态。',
+    repeat: '替换高频弱词，换精准形容词/名词搭配。',
+    basicGrammar: '先改高频基础错误，再追求复杂句。',
+    noComplex: '每段至少一句 because/if/although。',
+    unclear: '放慢并咬清词尾。'
+  };
+  return map[id] || '针对这一问题重录同一题，只改这一处。';
+}
+
+function upgradeOpening(first, question, part) {
+  const q = (question || '').trim();
+  if (part === 'part3') {
+    return q
+      ? `可试：To some extent, yes — ${q.replace(/\?$/, '').toLowerCase()} depends on how it’s used. For example,…`
+      : '可试：To some extent, yes. The key reason is… For example,…';
+  }
+  if (part === 'part2') {
+    return '可试：I’d like to talk about… I chose this because… Then explain when/where.';
+  }
+  return `可试：Well, I’d say… because… For example,…（改写你的：${quoteSnippet(first, 48)}）`;
+}
+
+function partTip(part) {
+  if (part === 'part1') return 'Part 1：2–4 句；回答→原因→例子。';
+  if (part === 'part2') return 'Part 2：覆盖 bullet；说满约 1:40–2:00；结尾反思。';
+  return 'Part 3：IDEA；约 40–60 秒；观点+原因+例子。';
+}
+
+function strengthsBlurb(analysis) {
+  const goods = analysis.findings.filter(f => f.severity < 0).map(f => f.evidence);
+  if (!goods.length) {
+    if (analysis.words >= 40) return `完成度：已说出 ${analysis.words} 词，具备可改写的内容基础。`;
+    return '先保证把观点说完整，再追求 7 分语言。';
+  }
+  return goods.slice(0, 3).join('；');
+}
+
+function renderResult({ fromVoice = false } = {}) {
+  const part = document.getElementById('part').value;
+  const question = document.getElementById('question').value.trim() || '(no question provided)';
+  const transcript = transcriptEl.value.trim();
+  if (!transcript) {
+    setStatus('还没有转写——请先说，或粘贴文字。');
+    return;
+  }
+
+  const durationSec = startedAt
+    ? Math.max(1, Math.round(((endedAt || Date.now()) - startedAt) / 1000))
+    : 0;
+
+  const analysis = analyzeTranscript(part, question, transcript, durationSec, selectedIssues());
+  const { scores, overall } = scoreFromAnalysis(part, analysis);
+  const tips = buildPersonalizedTips(part, question, analysis, scores);
+  const avgConf = confidenceCount ? confidenceSum / confidenceCount : null;
+
+  document.getElementById('scoreBoxes').innerHTML = `
+    <div class="score-box"><span>FC</span><b>${scores.fc}</b></div>
+    <div class="score-box"><span>LR</span><b>${scores.lr}</b></div>
+    <div class="score-box"><span>GRA</span><b>${scores.gra}</b></div>
+    <div class="score-box"><span>Pron</span><b>${scores.pron}</b></div>
+    <div class="score-box"><span>Overall</span><b>${overall}</b></div>
+  `;
+
+  let html = '';
+  html += `<p><strong>Mode:</strong> ${fromVoice ? 'Voice（自动评分）' : '手动评分'} · <strong>${part.toUpperCase()}</strong><br>`;
+  html += `<strong>Question:</strong> ${escapeHtml(question)}<br>`;
+  html += `<strong>Length:</strong> ${analysis.words} words` + (durationSec ? ` · ~${durationSec}s` : '');
+  if (avgConf != null) html += ` · 识别均信心 ${(avgConf * 100).toFixed(0)}%`;
+  html += `</p>`;
+  html += `<p><strong>Estimated overall: ${overall}</strong> &nbsp; FC ${scores.fc} · LR ${scores.lr} · GRA ${scores.gra} · Pron ${scores.pron}</p>`;
+  html += `<p class="muted">Pron 仅能结合语速/清晰度线索与手点项估算；请对照录音。评分完全基于上方 Transcript——识别错了请先改字。</p>`;
+  html += `<p>${partTip(part)}</p>`;
+  html += `<p><strong>本次听到的优点</strong><br>${escapeHtml(strengthsBlurb(analysis))}</p>`;
+
+  html += `<p><strong>Top 3 个性化建议</strong>（每条都引用你的表现）</p>`;
+  tips.forEach((t, i) => {
+    html += `<div class="evidence"><strong>${i + 1}) ${escapeHtml(t.title)}</strong><br>`;
+    html += `依据：${escapeHtml(t.evidence)}<br>`;
+    html += `试试：${escapeHtml(t.try)}</div>`;
+  });
+
+  if (analysis.grammarHits.length) {
+    html += `<p><strong>语法快修</strong><br>${analysis.grammarHits.map(escapeHtml).join('<br>')}</p>`;
+  }
+
+  html += `<p><strong>下一步：</strong>同一题只改建议 #1，再录一次，对比 Overall 是否上升。</p>`;
+
+  document.getElementById('result').innerHTML = html;
+  document.getElementById('outputCard').style.display = 'block';
+  setStatus(`已评分 · Overall ${overall}（本次定制点评）`);
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+async function startAudioCapture() {
+  audioChunks = [];
+  player.style.display = 'none';
+  player.removeAttribute('src');
+  try {
+    mediaStream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true
+      }
+    });
+    mediaRecorder = new MediaRecorder(mediaStream);
+    mediaRecorder.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) audioChunks.push(e.data);
+    };
+    mediaRecorder.onstop = () => {
+      if (!audioChunks.length) return;
+      const blob = new Blob(audioChunks, { type: audioChunks[0].type || 'audio/webm' });
+      player.src = URL.createObjectURL(blob);
+      player.style.display = 'block';
+    };
+    mediaRecorder.start();
+  } catch (err) {
+    console.warn(err);
+    setStatus('需要麦克风权限才能回放录音（识别有时仍可用）。');
+  }
+}
+
+function stopAudioCapture() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    try { mediaRecorder.stop(); } catch (_) {}
+  }
+  if (mediaStream) {
+    mediaStream.getTracks().forEach(t => t.stop());
+    mediaStream = null;
+  }
+}
+
+function pickBestAlternative(result) {
+  // result is SpeechRecognitionResult
+  let best = result[0];
+  for (let i = 0; i < result.length; i++) {
+    if ((result[i].confidence || 0) > (best.confidence || 0)) best = result[i];
+  }
+  // collect near alternatives for user correction
+  if (result.length > 1) {
+    const a0 = (result[0].transcript || '').trim();
+    const a1 = (result[1].transcript || '').trim();
+    if (a0 && a1 && a0 !== a1) {
+      altHits.push({ from: a0, to: a1, conf: result[1].confidence || 0 });
+      altPill.textContent = `备选词：${Math.min(altHits.length, 9)}`;
+    }
+  }
+  return best;
+}
+
+function renderAltHints() {
+  if (!altHits.length) {
+    altBox.textContent = '';
+    return;
+  }
+  const uniq = [];
+  const seen = new Set();
+  for (const h of altHits.slice(-8)) {
+    const key = h.from + '|' + h.to;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    uniq.push(h);
+  }
+  altBox.innerHTML = '识别不确定片段（点击可替换到转写末段近似匹配）： ' + uniq.map((h, i) =>
+    `<button type="button" class="action ghost" data-alt="${i}" style="padding:.2rem .55rem;margin:2px">${escapeHtml(h.from)} → ${escapeHtml(h.to)}</button>`
+  ).join(' ');
+  altBox.querySelectorAll('button[data-alt]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const h = uniq[Number(btn.getAttribute('data-alt'))];
+      if (!h) return;
+      const cur = transcriptEl.value;
+      if (cur.includes(h.from)) transcriptEl.value = cur.replace(h.from, h.to);
+      else transcriptEl.value = (cur + ' ' + h.to).trim();
+      setStatus(`已替换：${h.from} → ${h.to}`);
+    });
+  });
+}
+
+function setupRecognition() {
+  recognition = new SpeechRecognition();
+  recognition.lang = document.getElementById('lang').value;
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.maxAlternatives = 3;
+
+  recognition.onstart = () => {
+    recognizing = true;
+    micBtn.classList.add('recording');
+    micBtn.textContent = 'Stop';
+    setStatus('Listening… 不限时，说完按 Stop', true);
+    if (!liveEl.textContent.trim() || liveEl.textContent.includes('Live transcript') || liveEl.textContent.includes('Listening')) {
+      liveEl.innerHTML = '<span class="muted">Listening…</span>';
+    }
+  };
+
+  recognition.onresult = (event) => {
+    let interim = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const res = event.results[i];
+      const best = pickBestAlternative(res);
+      const piece = best.transcript || '';
+      if (typeof best.confidence === 'number' && best.confidence > 0) {
+        confidenceSum += best.confidence;
+        confidenceCount += 1;
+        confPill.textContent = `识别信心：${Math.round((confidenceSum / confidenceCount) * 100)}%`;
+      }
+      if (res.isFinal) {
+        // smart join: avoid duplicating last fragment
+        const add = piece.trim();
+        if (add) {
+          const prev = finalTranscript.trim();
+          if (!prev.endsWith(add)) finalTranscript = (prev + ' ' + add).replace(/\s+/g, ' ').trim() + ' ';
+        }
+      } else {
+        interim += piece;
+      }
+    }
+    const cleanFinal = finalTranscript.replace(/\s+/g, ' ').trim();
+    liveEl.innerHTML = `${escapeHtml(cleanFinal)}${interim ? ` <span class="interim">${escapeHtml(interim)}</span>` : ''}` || '<span class="muted">Listening…</span>';
+    transcriptEl.value = `${cleanFinal}${interim ? ' ' + interim : ''}`.trim();
+    renderAltHints();
+  };
+
+  recognition.onerror = (event) => {
+    console.warn('speech error', event.error);
+    if (event.error === 'not-allowed') {
+      userWantsListening = false;
+      setStatus('麦克风被拦截，请允许后重试。');
+    } else if (event.error === 'no-speech') {
+      setStatus('仍在听… 说完再按 Stop', true);
+    } else if (event.error === 'network') {
+      setStatus('识别网络错误：可继续说，或改用手动粘贴转写。', true);
+    } else if (event.error !== 'aborted') {
+      setStatus(`Speech error: ${event.error}`);
+    }
+  };
+
+  recognition.onend = () => {
+    recognizing = false;
+    if (userWantsListening) {
+      setStatus('仍在听… 说完再按 Stop', true);
+      try {
+        recognition.lang = document.getElementById('lang').value;
+        recognition.start();
+      } catch (_) {
+        setTimeout(() => {
+          if (!userWantsListening) return;
+          try { recognition.start(); } catch (e2) {
+            setStatus('识别暂停。可再点 Speak，或 Stop 后手动改转写再评分。');
+          }
+        }, 250);
+      }
+      return;
+    }
+
+    micBtn.classList.remove('recording');
+    micBtn.textContent = 'Speak';
+    stopTimer();
+    stopAudioCapture();
+    const text = transcriptEl.value.trim() || finalTranscript.trim();
+    transcriptEl.value = text;
+    renderAltHints();
+    if (text && autoScoreOnEnd) {
+      setStatus('结束 — 正在按转写内容评分…');
+      renderResult({ fromVoice: true });
+    } else if (!text) {
+      setStatus('未捕获语音。请用 Chrome/Edge，靠近麦再说一次。');
+    } else {
+      setStatus('已停止');
+    }
+  };
+}
+
+async function startSpeaking() {
+  if (!SpeechRecognition) return;
+  finalTranscript = '';
+  transcriptEl.value = '';
+  altHits = [];
+  confidenceSum = 0;
+  confidenceCount = 0;
+  confPill.textContent = '识别信心：—';
+  altPill.textContent = '备选词：关';
+  altBox.textContent = '';
+  document.getElementById('outputCard').style.display = 'none';
+  autoScoreOnEnd = true;
+  userWantsListening = true;
+  setupRecognition();
+  recognition.lang = document.getElementById('lang').value;
+  await startAudioCapture();
+  startTimer();
+  try {
+    recognition.start();
+  } catch (err) {
+    userWantsListening = false;
+    setStatus('无法启动识别。请刷新并允许麦克风。');
+  }
+}
+
+function stopSpeaking() {
+  userWantsListening = false;
+  autoScoreOnEnd = true;
+  if (recognition && recognizing) {
+    try { recognition.stop(); } catch (_) {}
+  } else {
+    stopTimer();
+    stopAudioCapture();
+    micBtn.classList.remove('recording');
+    micBtn.textContent = 'Speak';
+    if (transcriptEl.value.trim()) renderResult({ fromVoice: true });
+    else setStatus('已停止');
+  }
+}
+
+micBtn.addEventListener('click', () => {
+  if (recognizing) stopSpeaking();
+  else startSpeaking();
+});
+
+document.getElementById('lang').addEventListener('change', () => {
+  if (recognition) recognition.lang = document.getElementById('lang').value;
+});
+
+document.getElementById('scoreBtn').addEventListener('click', () => renderResult({ fromVoice: false }));
+document.getElementById('promptBtn').addEventListener('click', async () => {
+  const partLabel = { part1: 'Part 1', part2: 'Part 2', part3: 'Part 3' }[document.getElementById('part').value];
+  const question = document.getElementById('question').value.trim() || '[question]';
+  const transcript = transcriptEl.value.trim() || '[transcript]';
+  const prompt = `You are an IELTS Speaking examiner-coach.
+Student target: Band 7.0–7.5 (current level around 6.5).
+
+Task type: ${partLabel}
+Question: ${question}
+Student answer (voice transcript — may contain ASR errors; judge language charitably but note unclear bits):
+"""
+${transcript}
+"""
+
+1) Score FC / LR / GRA / Pronunciation in 0.5 bands + overall.
+2) Quote 2–3 short phrases FROM the transcript as evidence for the main weaknesses.
+3) Give Top 3 suggestions in the form: Issue / Evidence quote / Better version (rewrite their sentence).
+4) One Band 7 model answer for the SAME question.
+Keep it concise and specific — do not give generic advice that could fit any student.`;
+  try {
+    await navigator.clipboard.writeText(prompt);
+    setStatus('已复制更严格的 AI 评分 Prompt');
+  } catch (_) {
+    alert(prompt);
+  }
+});
+
+document.getElementById('clearBtn').addEventListener('click', () => {
+  if (recognizing) {
+    userWantsListening = false;
+    autoScoreOnEnd = false;
+    try { recognition && recognition.stop(); } catch (_) {}
+  }
+  finalTranscript = '';
+  transcriptEl.value = '';
+  altHits = [];
+  confidenceSum = 0;
+  confidenceCount = 0;
+  liveEl.innerHTML = '<span class="muted">Live transcript will appear here…</span>';
+  altBox.textContent = '';
+  document.getElementById('question').value = '';
+  document.querySelectorAll('#issues input').forEach(el => el.checked = false);
+  document.getElementById('outputCard').style.display = 'none';
+  player.style.display = 'none';
+  timerEl.textContent = '00:00';
+  confPill.textContent = '识别信心：—';
+  altPill.textContent = '备选词：关';
+  setStatus('Ready — click Speak，说完再点 Stop');
+});
+</script>
+</body>
+</html>
