@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>雅思阅读题型做题技巧教案</title>
+<style>
+:root { --ink:#14231f; --muted:#55635e; --accent:#0d5c4d; --card:#f7fffc; --line:#cfe0d8; }
+*{box-sizing:border-box}
+body{margin:0;font-family:"Source Serif 4","Songti SC","Noto Serif SC",Georgia,serif;color:var(--ink);
+background:radial-gradient(ellipse at 0% 0%,#d9eee6,transparent 40%),linear-gradient(180deg,#f3faf6,#e8f2ec);line-height:1.7}
+.top{position:sticky;top:0;z-index:5;backdrop-filter:blur(8px);background:rgba(243,250,246,.94);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1000px;margin:0 auto;padding:12px 18px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.top h1{margin:0;flex:1;font-size:1.05rem;color:var(--accent)}
+.btn{border:0;cursor:pointer;background:#2b4039;color:#fff;padding:.42rem .8rem;border-radius:8px;font-size:.9rem}
+.btn.active,.btn:hover{background:var(--accent)}
+.wrap{max-width:1000px;margin:0 auto;padding:22px 18px 64px}
+.panel{display:none}.panel.active{display:block}
+h1,h2,h3,h4{color:var(--accent);line-height:1.3}
+h2{margin-top:1.8rem;border-bottom:1px solid var(--line);padding-bottom:.3rem}
+table{width:100%;border-collapse:collapse;margin:1rem 0;background:var(--card)}
+th,td{border:1px solid var(--line);padding:.5rem .6rem;vertical-align:top;text-align:left;font-size:.95rem}
+th{background:#dcefe7}
+blockquote{margin:1rem 0;padding:.55rem 1rem;border-left:4px solid var(--accent);background:#e5f2eb;color:var(--muted)}
+code{background:#dcefe7;padding:.1em .35em;border-radius:4px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}
+pre{background:#14231f;color:#f3faf6;padding:12px 14px;border-radius:10px;overflow:auto}
+pre code{background:transparent;color:inherit;padding:0}
+.banner{background:#dcefe7;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+hr{border:none;border-top:1px solid var(--line);margin:1.4rem 0}
+@media(max-width:640px){table{display:block;overflow-x:auto}}
+</style>
+</head>
+<body>
+<div class="top"><div class="top-inner">
+<h1>雅思阅读 · 题型技巧 + 真题精析</h1>
+<button class="btn active" type="button" data-target="plan">详细教案</button>
+<button class="btn" type="button" data-target="workbook">速练手册</button>
+</div></div>
+<div class="wrap">
+<section id="plan" class="panel active">
+<div class="banner">T/F/NG · Y/N/NG · 填空 · Headings · Matching · MCQ · 图表标注：技巧 + Saiga / DART / Rethinking / Self-esteem / Gilbert 真题解析 + 8 课序列。</div>
+<h1>雅思阅读题型做题技巧总览教案  </h1>
+<p><strong>对象：</strong> Band 6.5 → 7.0–7.5  </p>
+<p><strong>目标：</strong> 识别题型 → 套用固定流程 → 用真题练定位与排除  </p>
+<p><strong>材料来源：</strong> Cambridge 风格 Test 3（Saiga / Dar es Salaam / Rethinking the Past）+ 真经 TFNG（Self-esteem / Gilbert）</p>
+<hr>
+<h2>0. 一页题型地图</h2>
+<table><thead><tr><th>题型</th><th>核心技能</th><th>顺序性</th><th>高发失分</th></tr></thead><tbody>
+<tr><td>True/False/Not Given</td><td>证据句比对</td><td>基本有序</td><td>比较词、多写信息</td></tr>
+<tr><td>Yes/No/Not Given</td><td>作者观点比对</td><td>基本有序</td><td>把他人观点当作者观点</td></tr>
+<tr><td>Notes / Summary / Table 填空</td><td>词性预测 + 原词抄写</td><td>通常有序</td><td>自造同义词</td></tr>
+<tr><td>Sentence completion</td><td>同上</td><td>通常有序</td><td>超词数</td></tr>
+<tr><td>Short-answer</td><td>问什么答什么</td><td>通常有序</td><td>答非所问</td></tr>
+<tr><td>Multiple choice</td><td>目的/细节排除</td><td>常有序</td><td>被细节选项诱惑</td></tr>
+<tr><td>Matching headings</td><td>段落大意</td><td>无序</td><td>抓细节当主旨</td></tr>
+<tr><td>Matching information</td><td>细节定位到段</td><td>无序</td><td>扫太粗</td></tr>
+<tr><td>Matching features/names</td><td>人名/类别锚点</td><td>无序</td><td>张冠李戴</td></tr>
+<tr><td>Matching sentence endings</td><td>半句语义+语法</td><td>常有序</td><td>只看语法通顺</td></tr>
+<tr><td>Diagram / Flowchart 标注</td><td>图序=文序</td><td>有序</td><td>漏步骤</td></tr>
+</tbody></table>
+<p><strong>总原则（先教）：</strong>  </p>
+<ol><li>1. 先看题型指令（尤其 ONE WORD / NO MORE THAN TWO WORDS）。  </li><li>2. 先划题干定位词（专有名词、数字、极端词、比较词）。  </li><li>3. <strong>答案必须回到原文句子</strong>，不凭段落印象。  </li><li>4. 填空抄原文词；判断题比对逻辑，不比对“感觉像”。</li></ol>
+<hr>
+<h2>1. 通用做题流程（每课开场 10 分钟）</h2>
+<pre><code>
+① 读标题/副标题 → 预测文本类型（说明 / 问题-解决 / 论说文）
+② 扫每段首句 → 画段落地图（1 分钟）
+③ 看题型块 → 决定先做哪块（填空常优先，因有序好定位）
+④ 逐题：定位词 → 扫描 → 精读一句/两句 → 作答
+⑤ 不确定先标 ?，全篇结束后回查
+</code></pre>
+<p><strong>时间盒（Academic 60 分钟）建议</strong>  </p>
+<ul><li>Passage 1：18 分钟  </li><li>Passage 2：20 分钟  </li><li>Passage 3：22 分钟  </li><li>留 0 分钟涂卡习惯：边做边填</li></ul>
+<hr>
+<h1>第一部分：判断类</h1>
+<h2>2. TRUE / FALSE / NOT GIVEN</h2>
+<h3>做题技巧</h3>
+<ol><li>1. 圈题干中的：<strong>绝对词</strong>（all, only, evenly）、<strong>比较</strong>（more than）、<strong>数量</strong>（most）、<strong>因果</strong>（lead to）。  </li><li>2. 定位后精读，问三句：  </li></ol>
+<p>   - 同义改写？→ <strong>TRUE</strong>  </p>
+<p>   - 明确相反？→ <strong>FALSE</strong>  </p>
+<p>   - 提到话题但缺该点？→ <strong>NOT GIVEN</strong>  </p>
+<ol><li>3. FALSE 必须“原文能打脸”；NG 是“原文没说够”。</li></ol>
+<h3>必避错误</h3>
+<ul><li>❌ 用背景知识判断  </li><li>❌ 看到同一主题就选 TRUE  </li><li>❌ 把“未比较”当成 FALSE</li></ul>
+<h3>真题精析 A（Saving the saiga · Q8–13）</h3>
+<table><thead><tr><th>Q</th><th>题干关键</th><th>证据逻辑</th><th>答案</th><th>技巧点</th></tr></thead><tbody>
+<tr><td>8</td><td>numbers <strong>evenly</strong> across four countries</td><td>&gt;90% 在 Kazakhstan</td><td><strong>FALSE</strong></td><td>evenly 是杀手词</td></tr>
+<tr><td>9</td><td><strong>most of 20th century</strong> population <strong>falling</strong></td><td>20 世纪曾受保护恢复；1991 后崩盘</td><td><strong>FALSE</strong></td><td>时间范围过大要核全程</td></tr>
+<tr><td>10</td><td>protecting rhinos affected saiga</td><td>用羚羊角替代犀角 → 盗猎加剧</td><td><strong>TRUE</strong></td><td>因果链写明即 TRUE</td></tr>
+<tr><td>11</td><td>climate threatens Central Asia <strong>more than elsewhere</strong></td><td>有气候威胁，无全球比较</td><td><strong>NG</strong></td><td>比较缺失 = NG</td></tr>
+<tr><td>12</td><td>Altyn Dala benefits <strong>different animals</strong></td><td>恢复生态系统与多种物种</td><td><strong>TRUE</strong></td><td>including 多物种</td></tr>
+<tr><td>13</td><td>UN recognition → <strong>extra funding</strong></td><td>有认可，无资金信息</td><td><strong>NG</strong></td><td>多写后果 = NG</td></tr>
+</tbody></table>
+<p><strong>课堂口诀：</strong> <em>evenly / most / more than / lead to</em> 先审再找。</p>
+<hr>
+<h3>真题精析 B（William Gilbert · T/F/NG）</h3>
+<table><thead><tr><th>Q</th><th>题干</th><th>证据句要点</th><th>答案</th><th>陷阱</th></tr></thead><tbody>
+<tr><td>1</td><td>Gilbert <strong>first</strong> discovered magnetic substances</td><td>Prior to him, ancients knew lodestone</td><td><strong>FALSE</strong></td><td>first/pioneer 过度</td></tr>
+<tr><td>2</td><td><strong>Arabs invented</strong> compass</td><td>Chinese invented; spread to Arabs</td><td><strong>FALSE</strong></td><td>传播链换主语</td></tr>
+<tr><td>3</td><td>Odyssey: magnetic mountain would wreck ships</td><td>yank out iron nails and fittings</td><td><strong>TRUE</strong></td><td>后果同义改写</td></tr>
+<tr><td>4</td><td>explained compass in <em>De Magnete</em></td><td>Earth magnetic → compasses point north</td><td><strong>TRUE</strong></td><td>书名+解释齐全</td></tr>
+<tr><td>5</td><td>mistaken distinction <strong>held back</strong> science</td><td>distinction <strong>advanced</strong> science 250 years</td><td><strong>FALSE</strong></td><td>半真+错误结果</td></tr>
+<tr><td>6</td><td>Maxwell showed close relationship</td><td>two sides of the same coin</td><td><strong>TRUE</strong></td><td>隐喻=关系紧密</td></tr>
+<tr><td>7</td><td>moon orbited by magnetic force</td><td>speculated… magnetic attraction</td><td><strong>TRUE</strong></td><td>speculated 对应</td></tr>
+<tr><td>8</td><td>Galileo favoured <strong>traditional</strong> cosmology</td><td>Copernicans oppose traditional</td><td><strong>FALSE</strong></td><td>学派张冠李戴</td></tr>
+<tr><td>9</td><td>theories contradicted traditional cosmology</td><td>traditional: Earth fixed; Gilbert: Earth spins</td><td><strong>TRUE</strong></td><td>“未表态中心”不否定旋转矛盾</td></tr>
+<tr><td>10</td><td>favoured <strong>intuitive</strong> approach + experiments</td><td>sense experience + observations + experiments</td><td><strong>FALSE</strong></td><td>intuitive ≠ empirical</td></tr>
+</tbody></table>
+<hr>
+<h2>3. YES / NO / NOT GIVEN（作者观点）</h2>
+<h3>与 T/F/NG 的差别</h3>
+<ul><li>T/F/NG：事实是否一致  </li><li>Y/N/NG：是否符合 <strong>writer’s claims/views</strong></li></ul>
+<h3>做题技巧</h3>
+<ol><li>1. 分清：作者观点 vs 报告/他人观点。  </li><li>2. 态度词：inclined to, little to indicate, cast doubt, incorrectly。  </li><li>3. 题干若写 “the report asserted…”——对的是报告内容，不是作者赞同与否。</li></ol>
+<h3>真题精析（Self-esteem Myth · Y/N/NG）</h3>
+<table><thead><tr><th>Q</th><th>题干</th><th>证据要点</th><th>答案</th><th>技巧</th></tr></thead><tbody>
+<tr><td>1</td><td><strong>Governor</strong> claimed SE boosts revenue</td><td>是 <strong>Vasconcellos</strong> 提预算/税收</td><td><strong>NO</strong></td><td>换人</td></tr>
+<tr><td>2</td><td>report asserted social problems from low SE</td><td>报告原文 quoted 如此</td><td><strong>YES</strong></td><td>作者后有批评也不改“报告断言”</td></tr>
+<tr><td>3</td><td>good looking is <strong>reliable</strong> measure of SE</td><td>self-ratings often way off / boast</td><td><strong>NO</strong></td><td>可靠性被否定</td></tr>
+<tr><td>4</td><td>high SE helps better scores</td><td>modern efforts cast doubt; fails to improve academic</td><td><strong>NO</strong></td><td>相关≠帮助</td></tr>
+<tr><td>5</td><td>better students → later job success</td><td>只谈 SE–school / SE–job</td><td><strong>NG</strong></td><td>错误变量配对</td></tr>
+<tr><td>6</td><td>high SE → less likely smoke</td><td>does <strong>not deter</strong> tobacco</td><td><strong>NO</strong></td><td>漏读否定</td></tr>
+<tr><td>7</td><td>positive correlation happiness–SE</td><td>significantly happier / closely tied</td><td><strong>YES</strong></td><td>相关成立</td></tr>
+<tr><td>8</td><td>adults much happier than students</td><td>两组研究并列，无比较</td><td><strong>NG</strong></td><td>假比较</td></tr>
+<tr><td>9</td><td>low SE may cause ill-health</td><td>poor self-image risk factor for bulimia</td><td><strong>YES</strong></td><td>软表述可对应</td></tr>
+<tr><td>10</td><td>SE boosted by <strong>training course</strong></td><td>谈 boost，无 training course</td><td><strong>NG</strong></td><td>发明细节</td></tr>
+</tbody></table>
+<h3>真题精析（Rethinking the Past · Y/N/NG 35–40）</h3>
+<table><thead><tr><th>Q</th><th>逻辑</th><th>答案</th></tr></thead><tbody>
+<tr><td>35</td><td>Neanderthal art ≠ “first ever”</td><td><strong>NG</strong></td></tr>
+<tr><td>36</td><td>shell art rarity not judged</td><td><strong>NG</strong></td></tr>
+<tr><td>37</td><td>Rising Star methods unconventional</td><td><strong>YES</strong></td></tr>
+<tr><td>38</td><td>etching age uncertainty（核对印刷版）</td><td>常为 <strong>NG</strong></td></tr>
+<tr><td>39</td><td>publicity intensified controversy</td><td><strong>YES</strong></td></tr>
+<tr><td>40</td><td>brain size is key to art ability</td><td><strong>NO</strong>（作者反脑容量决定论）</td></tr>
+</tbody></table>
+<hr>
+<h1>第二部分：填空类</h1>
+<h2>4. Notes / Summary / Table Completion</h2>
+<h3>做题技巧</h3>
+<ol><li>1. 读小标题 → 锁定段落带。  </li><li>2. 空前空后定 <strong>词性</strong>（名词复数？不可数？）。  </li><li>3. 扫描同义表达，<strong>抄原文原词</strong>（除非指令允许改写，雅思几乎都要求来自原文）。  </li><li>4. 遵守字数：ONE WORD ONLY / NO MORE THAN TWO WORDS。</li></ol>
+<h3>必避错误</h3>
+<ul><li>❌ 自己写同义词（dust→dirt）  </li><li>❌ 单复数错误（horn/horns）  </li><li>❌ 无视小标题导致窜段</li></ul>
+<h3>真题精析（Saiga Notes 1–7）</h3>
+<table><thead><tr><th>Q</th><th>线索</th><th>原文锚点</th><th>答案</th><th>易错</th></tr></thead><tbody>
+<tr><td>1</td><td>keep ___ out</td><td>nose filters <strong>dust</strong></td><td>dust</td><td>dirt/sand</td></tr>
+<tr><td>2</td><td>lower temperature of ___</td><td>cools <strong>blood</strong></td><td>blood</td><td>body</td></tr>
+<tr><td>3</td><td>thick ___ in winter</td><td>winter <strong>coat</strong></td><td>coat</td><td>fur</td></tr>
+<tr><td>4</td><td>poaching for ___</td><td><strong>horns</strong></td><td>horns</td><td>漏复数</td></tr>
+<tr><td>5</td><td>reduction in size of ___</td><td><strong>habitat</strong></td><td>habitat</td><td>land/area</td></tr>
+<tr><td>6</td><td>access to ___ for migration</td><td>migration <strong>routes</strong></td><td>routes</td><td>paths</td></tr>
+<tr><td>7</td><td>disappearance of ___</td><td><strong>streams</strong> dried</td><td>streams</td><td>rivers</td></tr>
+</tbody></table>
+<h3>真题精析（DART Notes 19–26）</h3>
+<p><strong>Features：</strong> lanes → boarding → wheelchairs  </p>
+<p><strong>Problems：</strong> fuel → flood → smartcards → gates → queues  </p>
+<p>技巧：小标题 Features/Problems 直接决定搜索区；先功能设计后运营故障。</p>
+<hr>
+<h2>5. Sentence Completion / Short Answers</h2>
+<h3>技巧</h3>
+<ul><li>Sentence completion：语法通顺 + 原词。  </li><li>Short answer：问 <em>where/when/how many</em> 就答对应信息，不加整句。</li></ul>
+<h3>必避</h3>
+<ul><li>超过词数；把答案写成完整句子（除非要求）。</li></ul>
+<hr>
+<h1>第三部分：匹配类</h1>
+<h2>6. Matching Headings（段落标题）</h2>
+<h3>做题技巧</h3>
+<ol><li>1. 先读所有 headings，划主题词。  </li><li>2. 每段读首句+末句，中间扫转折（however, yet）。  </li><li>3. 选“整段功能”，不选“某句亮点细节”。  </li><li>4. 先做有把握段，缩小选项池。</li></ol>
+<h3>必避</h3>
+<ul><li>❌ 看到数字/例子就选含该细节的标题  </li><li>❌ 标题与段首同词就秒选（常是干扰）</li></ul>
+<h3>课堂微例（问题-解决型文章）</h3>
+<p>段若先写 congestion，后写 BRT 方案 → 标题应是 <em>A transport solution for…</em>，不是 <em>Causes of urban growth</em>（即便段内提了增长）。</p>
+<hr>
+<h2>7. Matching Information（哪段包含信息）</h2>
+<h3>技巧</h3>
+<ul><li>题干是细节/例子/原因 → 用独特名词扫描全文。  </li><li>可与 NB: you may use any letter more than once 有关——允许一段多用。</li></ul>
+<h3>必避</h3>
+<ul><li>只读首句就判段；信息常在段中例子里。</li></ul>
+<hr>
+<h2>8. Matching Features / Names（人物/分类匹配）</h2>
+<h3>技巧</h3>
+<ol><li>1. 先在文中把所有人名/分类 <strong>下划线标出</strong>。  </li><li>2. 题干逐条定位到该人附近句子。  </li><li>3. 注意：一人可对应多题；有的选项不用。</li></ol>
+<h3>真题关联</h3>
+<p>Gilbert 篇若出匹配题，应把 Columbus / Chinese / Maxwell / Galileo 先标好再做，避免 Odyssey 与 Columbus 传说混淆。</p>
+<hr>
+<h2>9. Matching Sentence Endings</h2>
+<h3>技巧</h3>
+<ol><li>1. 用题干专有名词定位（Kalambo Falls, June 2023…）。  </li><li>2. 读完整观点后再选结尾。  </li><li>3. 最后检查：整句语法 + 逻辑。</li></ol>
+<h3>真题精析（Rethinking the Past 31–34）</h3>
+<table><thead><tr><th>Q</th><th>锚点</th><th>匹配意</th><th>结尾</th></tr></thead><tbody>
+<tr><td>31</td><td>Kalambo Falls</td><td>非 sapiens 也有精密工艺</td><td><strong>E</strong></td></tr>
+<tr><td>32</td><td>high-altitude</td><td>其他古人类更早适应</td><td><strong>F</strong></td></tr>
+<tr><td>33</td><td>June 2023</td><td>多数社会女性也狩猎</td><td><strong>D</strong></td></tr>
+<tr><td>34</td><td>Iberian leader</td><td>权力人物性别误判</td><td><strong>B</strong></td></tr>
+</tbody></table>
+<p><strong>干扰项处理：</strong> 语义沾边但锚点不对的先删。</p>
+<hr>
+<h1>第四部分：选择与图表</h1>
+<h2>10. Multiple Choice（单选）</h2>
+<h3>技巧分层</h3>
+<table><thead><tr><th>问法</th><th>策略</th></tr></thead><tbody>
+<tr><td>According to the passage…</td><td>细节定位 + 同义</td></tr>
+<tr><td>The writer’s purpose in paragraph X…</td><td>看段落功能，不看某细节</td></tr>
+<tr><td>Which of the following…</td><td>排除绝对项/未提及项</td></tr>
+</tbody></table>
+<h3>真题精析（Rethinking the Past 27–30）</h3>
+<table><thead><tr><th>Q</th><th>问法</th><th>正解方向</th><th>技巧</th></tr></thead><tbody>
+<tr><td>27</td><td>第2段 writer doing</td><td>点明理解上的关键转变</td><td>抓 purpose 动词</td></tr>
+<tr><td>28</td><td>mobile phones 类比</td><td>进化常是渐进</td><td>类比服务的论点</td></tr>
+<tr><td>29</td><td>unpick this stuff</td><td>重审受旧社会观念影响的研究</td><td>代词/短语指代</td></tr>
+<tr><td>30</td><td>末段暗示</td><td>过去说明不平等非必然</td><td>作者结论</td></tr>
+</tbody></table>
+<p><strong>必避：</strong> 选项内容正确但不回答“题干在问什么”。</p>
+<hr>
+<h2>11. Diagram / Flowchart Labelling</h2>
+<h3>技巧</h3>
+<ul><li>图上已有词 = 定位工具。  </li><li>流程题答案顺序常跟箭头一致。  </li><li>注意被动描述：<em>is filtered / is stored</em>。</li></ul>
+<h3>必避</h3>
+<ul><li>跳步填空；忽略图例单位。</li></ul>
+<hr>
+<h1>第五部分：篇章策略与课程序列</h1>
+<h2>12. 三种篇章的阅读策略</h2>
+<table><thead><tr><th>篇章类型</th><th>代表</th><th>先看什么</th></tr></thead><tbody>
+<tr><td>问题→解决</td><td>Saiga / Dar</td><td>问题链、方案、残留问题</td></tr>
+<tr><td>时间/传记</td><td>Gilbert</td><td>时间线与“谁先发现”</td></tr>
+<tr><td>学术论说</td><td>Rethinking the Past / Self-esteem</td><td>旧假设→证据→作者态度</td></tr>
+</tbody></table>
+<p><strong>转到写作的彩蛋：</strong> Dar 篇“方案不完美”结构，可直接迁移到大作文 Problem-Solution 的评价段。</p>
+<hr>
+<h2>13. 8 课详细课程序列（90 分钟/课）</h2>
+<h3>Lesson 1 — 题型地图 + T/F/NG 精髓</h3>
+<ol><li>1. 题型一页表（15）  </li><li>2. FALSE vs NG 诊所（20）  </li><li>3. Saiga Q8–13 精析（40）  </li><li>4. 作业：Gilbert Q1–5 证据卡（15）</li></ol>
+<h3>Lesson 2 — Y/N/NG 与作者态度</h3>
+<ol><li>1. 作者 vs 他人观点（15）  </li><li>2. Self-esteem Q1–10 全析（55）  </li><li>3. 陷阱归类比赛（20）</li></ol>
+<h3>Lesson 3 — 填空王者课</h3>
+<ol><li>1. 词性预测操练（15）  </li><li>2. Saiga Notes 1–7（30）  </li><li>3. DART Notes 19–26（30）  </li><li>4. 错因：同义诱惑清单（15）</li></ol>
+<h3>Lesson 4 — Matching Headings + Information</h3>
+<ol><li>1. 主旨 vs 细节（20）  </li><li>2. 限时 headings 一套（40）  </li><li>3. 错题只问：这段在“干什么”？（30）</li></ol>
+<h3>Lesson 5 — Features / Endings</h3>
+<ol><li>1. 人名锚点法（15）  </li><li>2. Rethinking endings 31–34（40）  </li><li>3. 语法通顺但语义错的干扰项（35）</li></ol>
+<h3>Lesson 6 — MCQ 目的题</h3>
+<ol><li>1. purpose 动词表（15）  </li><li>2. Rethinking 27–30 讲练（45）  </li><li>3. 类比题专项（mobile phone）（30）</li></ol>
+<h3>Lesson 7 — Passage 3 综合（论说文）</h3>
+<ol><li>1. 论证地图（20）  </li><li>2. Y/N/NG 35–40（30）  </li><li>3. 限时混合题（40）</li></ol>
+<h3>Lesson 8 — 全真计时 + 错因画像</h3>
+<ol><li>1. 60 分钟一套（或两篇精做）（60）  </li><li>2. 用下方错因表建个人 Top3（30）</li></ol>
+<hr>
+<h2>14. 错因分类表（改作业代码）</h2>
+<table><thead><tr><th>代码</th><th>含义</th><th>修复动作</th></tr></thead><tbody>
+<tr><td>LOC</td><td>定位错段/错句</td><td>重划定位词</td></tr>
+<tr><td>CMP</td><td>比较词没审</td><td>圈 more/most/evenly</td></tr>
+<tr><td>EXT</td><td>题干多写信息</td><td>问“原文有这后果吗？”</td></tr>
+<tr><td>SYN</td><td>填空自造同义</td><td>强制抄原词</td></tr>
+<tr><td>PUR</td><td>目的题抓细节</td><td>重说段落功能</td></tr>
+<tr><td>VIEW</td><td>作者/他人混淆</td><td>标 according to X</td></tr>
+<tr><td>NEG</td><td>漏读 not/never</td><td>否定词高亮</td></tr>
+<tr><td>ORD</td><td>无视填空顺序/小标题</td><td>先看小标题</td></tr>
+</tbody></table>
+<p>每次精批只给 <strong>Top 3 代码</strong>。</p>
+<hr>
+<h2>15. 学生证据卡模板（判断题必用）</h2>
+<pre><code>
+Q__: 题干关键词：____________________
+定位句：
+“________________________________”
+同义 / 相反 / 缺失？ → 答案：______
+陷阱类型：____________________
+</code></pre>
+<h2>16. 填空预测卡</h2>
+<pre><code>
+空前词：______ 空后词：______
+预测词性：n. / v. / adj. / 复数？
+原文词：______（是否≤词数限制）
+</code></pre>
+<hr>
+<h2>17. 教师示范课脚本（30 分钟微型课）</h2>
+<p><strong>材料：</strong> Saiga Q8 + Q11  </p>
+<p><strong>目标：</strong> 当场分清 FALSE 与 NG  </p>
+<ol><li>1. 学生先独立做两题（4）  </li><li>2. 揭示：Q8 有分布数据打脸 evenly → FALSE（8）  </li><li>3. 揭示：Q11 有气候威胁但无“比世界其他地方更…”→ NG（8）  </li><li>4. 学生用自己的话写出区别公式（5）  </li><li>5. 再做 Self-esteem Q8（成人 vs 学生更幸福）巩固假比较 = NG（5）</li></ol>
+<hr>
+<h2>18. 附录：题型判定与优先顺序口诀</h2>
+<pre><code>
+有序填空先下手，数字人名好定位；
+判断先圈极端词，比较因果最易坑；
+标题只抓段落用，选择先问在问啥；
+匹配先标锚点名，抄词永远胜过猜。
+</code></pre>
+<hr>
+<p><em>本教案汇总雅思阅读主流题型技巧，并嵌入已精析真题（Saiga、DART、Rethinking the Past、Self-esteem Myth、William Gilbert）。可与分册教案配合：阅读 Test3 精析、TFNG 证据句教案。</em></p>
+</section>
+<section id="workbook" class="panel"><h1>雅思阅读题型速练手册</h1>
+<h2>A. 题型识别（30 秒）</h2>
+<p>本段题目块是：________________  </p>
+<p>指令关键词（ONE WORD / YES/NO / headings…）：________________  </p>
+<p>我先做还是后做？________________ 原因：________________</p>
+<hr>
+<h2>B. T/F/NG · Y/N/NG 证据卡</h2>
+<table><thead><tr><th>Q</th><th>极端/比较词</th><th>定位句关键词</th><th>T/F/Y/N/NG</th><th>陷阱代码</th></tr></thead><tbody>
+<tr><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody></table>
+<p>陷阱代码：CMP 比较 / EXT 多写 / NEG 否定 / VIEW 作者他人 / LOC 定位错</p>
+<hr>
+<h2>C. 填空预测卡</h2>
+<table><thead><tr><th>Q</th><th>词性预测</th><th>原文词</th><th>字数OK?</th><th>若错，错因</th></tr></thead><tbody>
+<tr><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody></table>
+<p>铁律：不写自己的同义词。</p>
+<hr>
+<h2>D. Matching / MCQ 卡</h2>
+<p><strong>Headings：</strong> 这段在“干什么”？一句话：____________________  </p>
+<p>我排除的干扰标题：____________________ 因为只是细节：____________________</p>
+<p><strong>MCQ purpose：</strong> 题干问的是细节还是目的？____________________  </p>
+<p>正确选项动词：____________________</p>
+<p><strong>Endings：</strong> 锚点名词：____________________ 整句逻辑通吗？ Y/N</p>
+<hr>
+<h2>E. 课后错因 Top3</h2>
+<ol><li>1. ________  → 下周专练：________  </li><li>2. ________  → 下周专练：________  </li><li>3. ________  → 下周专练：________</li></ol>
+<hr>
+<h2>F. 迷你测验（口答）</h2>
+<ol><li>1. evenly 分布但原文 90% 在一国 → ?  </li><li>2. 提到气候威胁，未比其他地区 → ?  </li><li>3. 报告称 low SE 导致社会问题，作者说证据不足；题干问“报告断言…” → ?  </li><li>4. dust 的同义词 dirt 能填吗？  </li><li>5. 目的题选项内容正确但不回答“作者在做什么” → 如何处理？</li></ol>
+<p>参考：1 FALSE  2 NG  3 YES  4 不能  5 排除，重看段落功能</p></section>
+</div>
+<script>
+document.querySelectorAll('.btn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.btn').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  document.getElementById(b.dataset.target).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+</script>
+</body></html>
