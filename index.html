@@ -101,19 +101,44 @@
             <button type="button" class="seg-btn" data-mode="off">纯文本</button>
           </div>
           <button type="button" class="btn btn-ghost btn-sm" id="clear-concept-filter">清除概念筛选</button>
+          <div class="tour-controls">
+            <button type="button" class="btn btn-secondary btn-sm" id="tour-prev">上一处</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="tour-next">下一处精读</button>
+            <span class="tour-pos" id="tour-pos">点击彩色句段查看讲解</span>
+          </div>
         </div>
 
         <div class="reading-grid">
           <article class="text-body" id="text-body"></article>
-          <aside class="guide-card">
-            <h2>三层学习路径</h2>
-            <ol class="path-list">
-              <li><strong>识别手法</strong> — 判断文中有哪些文学技巧</li>
-              <li><strong>分析效果</strong> — 阐释手法如何作用于读者与主题</li>
-              <li><strong>撰写诠释</strong> — 用证据写成一段分析文字</li>
-            </ol>
-            <p class="hint">提示：原文中彩色下划线对应手法或概念；点侧栏概念可聚焦相关句段。</p>
-            <button class="btn btn-primary" data-go="1" type="button">进入第一层</button>
+          <aside class="explain-panel" id="explain-panel">
+            <p class="explain-empty" id="explain-empty">点击原文中的彩色标注，或按「下一处精读」，查看手法、概念与效果讲解。</p>
+            <div id="explain-content" hidden>
+              <p class="eyebrow">精读讲解</p>
+              <blockquote class="explain-quote" id="explain-quote"></blockquote>
+              <div class="explain-tags" id="explain-tags"></div>
+              <div class="explain-block">
+                <h3>手法是什么</h3>
+                <p id="explain-tech"></p>
+              </div>
+              <div class="explain-block">
+                <h3>作用与效果</h3>
+                <p id="explain-effect"></p>
+              </div>
+              <div class="explain-block">
+                <h3>概念连接</h3>
+                <div id="explain-concepts"></div>
+              </div>
+              <div class="explain-block explain-note">
+                <h3>怎么读这一句</h3>
+                <p id="explain-note"></p>
+              </div>
+            </div>
+            <div class="explain-foot">
+              <ol class="path-list compact">
+                <li><strong>识别</strong> → <strong>效果</strong> → <strong>诠释</strong></li>
+              </ol>
+              <button class="btn btn-primary" data-go="1" type="button">进入第一层练习</button>
+            </div>
           </aside>
         </div>
       </section>

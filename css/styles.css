@@ -519,7 +519,8 @@ body {
 .text-body,
 .guide-card,
 .block,
-.ai-panel {
+.ai-panel,
+.explain-panel {
   background: rgba(255, 255, 255, 0.66);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -529,7 +530,144 @@ body {
 .text-body { padding: 1.5rem 1.6rem; }
 .guide-card,
 .block,
-.ai-panel { padding: 1.25rem 1.3rem; }
+.ai-panel,
+.explain-panel { padding: 1.25rem 1.3rem; }
+
+.explain-panel {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+}
+
+.explain-empty {
+  margin: 0 0 1rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.explain-quote {
+  margin: 0 0 0.85rem;
+  padding: 0.75rem 0.9rem;
+  background: rgba(16, 25, 22, 0.05);
+  border-radius: 10px;
+  font-size: 1.02rem;
+  border-left: 3px solid var(--jade);
+}
+
+.explain-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.explain-block {
+  margin-bottom: 0.9rem;
+}
+
+.explain-block h3 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.explain-block p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.explain-note {
+  padding: 0.75rem 0.85rem;
+  background: rgba(42, 143, 116, 0.08);
+  border-radius: 10px;
+}
+
+.concept-explain {
+  padding: 0.55rem 0.65rem;
+  margin-bottom: 0.4rem;
+  border-left: 3px solid var(--c, var(--jade));
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 0 8px 8px 0;
+}
+
+.concept-explain strong {
+  color: var(--c, var(--jade));
+  margin-right: 0.35rem;
+}
+
+.concept-explain span {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.concept-explain p {
+  margin: 0.25rem 0 0;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.explain-foot {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+
+.path-list.compact {
+  margin-bottom: 0.75rem;
+  padding-left: 1rem;
+  font-size: 0.88rem;
+}
+
+.tour-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin-left: auto;
+}
+
+.tour-pos {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.mark {
+  border-radius: 3px;
+  padding: 0 0.1em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  cursor: pointer;
+  transition: filter 0.2s ease, opacity 0.2s ease, outline 0.15s ease;
+}
+
+.mark:hover {
+  filter: brightness(1.08);
+}
+
+.mark.active {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  animation: markPulse 0.8s ease;
+}
+
+.mark:focus-visible {
+  outline: 2px solid var(--jade);
+  outline-offset: 2px;
+}
+
+.btn-secondary.btn-sm {
+  margin-top: 0;
+  padding: 0.4rem 0.85rem;
+}
 
 .para {
   display: grid;
@@ -546,15 +684,6 @@ body {
 }
 
 .para p { margin: 0; text-align: justify; }
-
-.mark {
-  border-radius: 3px;
-  padding: 0 0.1em;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-  cursor: help;
-  transition: filter 0.2s ease, opacity 0.2s ease;
-}
 
 .mark.dim { opacity: 0.28; filter: grayscale(0.4); }
 .mark.pulse {

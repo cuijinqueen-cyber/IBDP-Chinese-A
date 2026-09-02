@@ -16,7 +16,9 @@
     conceptFilter: null,
     legendMode: "tech",
     layer1QuoteCorrect: 0,
-    layer2Correct: 0
+    layer2Correct: 0,
+    activeAnn: -1,
+    tourIndex: -1
   };
 
   function $(sel, root) {
@@ -168,14 +170,13 @@
   function applyMarks(text, mode, filterConcept) {
     if (mode === "off") return escapeHtml(text);
 
-    // Sort annotations by phrase length desc to avoid partial overlaps
     const anns = window.ANNOTATIONS.slice().sort(function (a, b) {
       return b.phrase.length - a.phrase.length;
     });
 
-    // Build list of ranges in this paragraph
     const ranges = [];
     anns.forEach(function (ann) {
+      const annIndex = window.ANNOTATIONS.indexOf(ann);
       let from = 0;
       while (from < text.length) {
         const idx = text.indexOf(ann.phrase, from);
@@ -183,7 +184,8 @@
         ranges.push({
           start: idx,
           end: idx + ann.phrase.length,
-          ann: ann
+          ann: ann,
+          annIndex: annIndex
         });
         from = idx + ann.phrase.length;
       }
@@ -195,7 +197,6 @@
       return a.start - b.start || b.end - a.end;
     });
 
-    // Greedy non-overlapping
     const picked = [];
     let cursor = 0;
     ranges.forEach(function (r) {
@@ -211,15 +212,13 @@
       html += escapeHtml(text.slice(pos, r.start));
       const tech = techById(r.ann.tech);
       const primaryConcept = conceptById(r.ann.concepts[0]);
-      let color, bg, title, dim;
+      let color, bg, dim;
 
       if (mode === "tech") {
         color = tech ? tech.color : "#666";
         bg = tech ? tech.bg : "rgba(0,0,0,0.08)";
-        title = (tech ? tech.name : "") + "：" + r.ann.effect;
         dim = false;
       } else {
-        // concept mode — color by first matching filtered concept or first concept
         let c = primaryConcept;
         if (filterConcept) {
           const matchId = r.ann.concepts.find(function (cid) {
@@ -232,32 +231,25 @@
         }
         color = c ? c.color : "#666";
         bg = c ? c.bg : "rgba(0,0,0,0.08)";
-        const cNames = r.ann.concepts
-          .map(function (cid) {
-            const x = conceptById(cid);
-            return x ? x.name : cid;
-          })
-          .join("、");
-        title =
-          (tech ? tech.name + " · " : "") +
-          cNames +
-          "：" +
-          r.ann.effect;
       }
 
+      const active = state.activeAnn === r.annIndex ? " active" : "";
       html +=
         '<mark class="mark' +
         (dim ? " dim" : "") +
-        '" style="background:' +
+        active +
+        '" tabindex="0" role="button" style="background:' +
         bg +
         "; box-shadow: inset 0 -2px 0 " +
         color +
-        '" title="' +
-        escapeHtml(title) +
+        '" data-ann-index="' +
+        r.annIndex +
         '" data-tech="' +
         r.ann.tech +
         '" data-concepts="' +
         r.ann.concepts.join(",") +
+        '" aria-label="查看精读讲解：' +
+        escapeHtml(r.ann.phrase) +
         '">' +
         escapeHtml(text.slice(r.start, r.end)) +
         "</mark>";
@@ -283,6 +275,128 @@
         );
       })
       .join("");
+  }
+
+  function showExplanation(annIndex) {
+    const ann = window.ANNOTATIONS[annIndex];
+    if (!ann) return;
+    state.activeAnn = annIndex;
+    state.tourIndex = annIndex;
+
+    const tech = techById(ann.tech);
+    const empty = $("#explain-empty");
+    const content = $("#explain-content");
+    if (empty) empty.hidden = true;
+    if (content) content.hidden = false;
+
+    $("#explain-quote").textContent = "「" + ann.phrase + "」";
+
+    const tags = $("#explain-tags");
+    let tagHtml = "";
+    if (tech) {
+      tagHtml +=
+        '<span class="concept-chip" style="--c:' +
+        tech.color +
+        ";--cbg:" +
+        tech.bg +
+        '"><span class="dot"></span>手法 · ' +
+        escapeHtml(tech.name) +
+        "</span>";
+    }
+    ann.concepts.forEach(function (cid) {
+      const c = conceptById(cid);
+      if (!c) return;
+      tagHtml +=
+        '<span class="concept-chip" style="--c:' +
+        c.color +
+        ";--cbg:" +
+        c.bg +
+        '"><span class="dot"></span>' +
+        escapeHtml(c.name) +
+        " · " +
+        escapeHtml(c.nameEn) +
+        "</span>";
+    });
+    tags.innerHTML = tagHtml;
+
+    $("#explain-tech").textContent = tech
+      ? tech.name + "：" + tech.desc
+      : ann.tech;
+    $("#explain-effect").textContent = ann.effect;
+
+    const conceptsBox = $("#explain-concepts");
+    conceptsBox.innerHTML = ann.concepts
+      .map(function (cid) {
+        const c = conceptById(cid);
+        if (!c) return "";
+        return (
+          '<div class="concept-explain" style="--c:' +
+          c.color +
+          '"><strong>' +
+          escapeHtml(c.name) +
+          "</strong><span>" +
+          escapeHtml(c.nameEn) +
+          "</span><p>" +
+          escapeHtml(c.focus || c.blurb) +
+          "</p></div>"
+        );
+      })
+      .join("");
+
+    const note =
+      (window.READING_NOTES && window.READING_NOTES[ann.phrase]) ||
+      "把引文、手法与效果连成一句分析，再问它如何回应引导问题。";
+    $("#explain-note").textContent = note;
+
+    const pos = $("#tour-pos");
+    if (pos) {
+      pos.textContent =
+        "精读 " + (annIndex + 1) + " / " + window.ANNOTATIONS.length;
+    }
+
+    // highlight active marks without full re-render if possible
+    $all(".mark").forEach(function (m) {
+      m.classList.toggle("active", Number(m.dataset.annIndex) === annIndex);
+    });
+
+    const activeMark = $('.mark[data-ann-index="' + annIndex + '"]');
+    if (activeMark) {
+      activeMark.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
+  function tourStep(delta) {
+    if (state.colorMode === "off") {
+      state.colorMode = "tech";
+      $all(".seg-btn").forEach(function (b) {
+        b.classList.toggle("active", b.dataset.mode === "tech");
+      });
+      renderText();
+    }
+    let next = state.tourIndex + delta;
+    if (state.tourIndex < 0) next = 0;
+    if (next < 0) next = window.ANNOTATIONS.length - 1;
+    if (next >= window.ANNOTATIONS.length) next = 0;
+    showExplanation(next);
+  }
+
+  function bindTextClicks() {
+    const body = $("#text-body");
+    if (!body || body.dataset.bound) return;
+    body.dataset.bound = "1";
+    body.addEventListener("click", function (e) {
+      const mark = e.target.closest(".mark");
+      if (!mark) return;
+      const idx = Number(mark.dataset.annIndex);
+      if (!Number.isNaN(idx)) showExplanation(idx);
+    });
+    body.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const mark = e.target.closest(".mark");
+      if (!mark) return;
+      e.preventDefault();
+      showExplanation(Number(mark.dataset.annIndex));
+    });
   }
 
   function renderReadingMeta() {
@@ -811,6 +925,9 @@
           b.classList.toggle("active", b === btn);
         });
         renderText();
+        if (state.activeAnn >= 0 && state.colorMode !== "off") {
+          showExplanation(state.activeAnn);
+        }
       });
     });
 
@@ -821,6 +938,13 @@
       });
       renderText();
     });
+
+    const tourPrev = $("#tour-prev");
+    const tourNext = $("#tour-next");
+    if (tourPrev) tourPrev.addEventListener("click", function () { tourStep(-1); });
+    if (tourNext) tourNext.addEventListener("click", function () { tourStep(1); });
+
+    bindTextClicks();
 
     $all(".legend-tab").forEach(function (tab) {
       tab.addEventListener("click", function () {
