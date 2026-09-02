@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>文脉 · IBDP 中文A 互动学习平台</title>
-  <meta name="description" content="五层互动：手法识别、彩色精读标注、深入思考、写作大纲、AI初评与教师复审。" />
+  <title>文脉 · IBDP 文学精读工坊</title>
+  <meta name="description" content="按 IBDP 文学七大概念设计的分层精读：识别手法、分析效果、撰写诠释。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
@@ -13,12 +13,37 @@
 <body>
   <div class="noise" aria-hidden="true"></div>
 
+  <!-- Landing -->
+  <header class="hero" id="hero">
+    <div class="hero-veil"></div>
+    <div class="hero-inner">
+      <p class="hero-kicker">IBDP 中文 A · 文学</p>
+      <h1 class="hero-brand">文脉</h1>
+      <p class="hero-lead">在精读中识别手法，在分析中看见效果，在写作中完成诠释。</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" id="enter-workshop" type="button">进入精读工坊</button>
+        <button class="btn btn-ghost-light" id="scroll-concepts" type="button">七大概念</button>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true"><span></span></div>
+  </header>
+
+  <section class="concepts-band" id="concepts">
+    <div class="band-inner">
+      <header class="band-head">
+        <p class="eyebrow">Seven Concepts</p>
+        <h2>IB 文学七大概念</h2>
+        <p class="band-lead">贯穿全站的思考透镜。点击卡片可筛选原文中的相关标注。</p>
+      </header>
+      <div class="concept-grid" id="concept-grid"></div>
+    </div>
+  </section>
+
   <div class="app" id="app">
-    <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-brand">
-        <a href="#" class="brand" id="brand-home">文脉</a>
-        <p class="brand-sub">IBDP 中文 A · 互动平台</p>
+        <a href="#hero" class="brand">文脉</a>
+        <p class="brand-sub">精读 · 主题 · 诠释</p>
       </div>
 
       <div class="student-box">
@@ -28,54 +53,66 @@
 
       <nav class="layer-nav" id="layer-nav" aria-label="练习层级">
         <button class="layer-nav-btn active" data-layer="0" type="button">
-          <span class="ln">00</span><span>文本导读</span>
+          <span class="ln">读</span><span>文本精读</span>
         </button>
         <button class="layer-nav-btn" data-layer="1" type="button">
-          <span class="ln">01</span><span>识别文学手法</span>
+          <span class="ln">01</span><span>识别手法</span>
         </button>
         <button class="layer-nav-btn" data-layer="2" type="button">
-          <span class="ln">02</span><span>彩色精读标注</span>
+          <span class="ln">02</span><span>分析效果</span>
         </button>
         <button class="layer-nav-btn" data-layer="3" type="button">
-          <span class="ln">03</span><span>深入思考</span>
-        </button>
-        <button class="layer-nav-btn" data-layer="4" type="button">
-          <span class="ln">04</span><span>写作大纲</span>
-        </button>
-        <button class="layer-nav-btn" data-layer="5" type="button">
-          <span class="ln">05</span><span>写作提交</span>
+          <span class="ln">03</span><span>撰写诠释</span>
         </button>
       </nav>
+
+      <div class="legend-box">
+        <p class="legend-title">色标图例</p>
+        <div class="legend-tabs">
+          <button type="button" class="legend-tab active" data-legend="tech">文学手法</button>
+          <button type="button" class="legend-tab" data-legend="concept">七大概念</button>
+        </div>
+        <ul class="legend-list" id="legend-list"></ul>
+      </div>
 
       <div class="sidebar-foot">
         <div class="progress-mini">
           <div class="progress-bar"><span id="global-progress"></span></div>
-          <p id="global-progress-text">0 / 5 层</p>
+          <p id="global-progress-text">0 / 3 层完成</p>
         </div>
-        <a class="btn btn-ghost btn-block" id="open-teacher" href="/teacher.html" target="_blank" rel="noopener">老师点评端口</a>
       </div>
     </aside>
 
-    <!-- Main -->
     <main class="main">
-      <!-- Layer 0: Reading -->
+      <!-- Layer 0: Close reading -->
       <section class="panel active" id="panel-0" data-panel="0">
         <header class="panel-head">
-          <p class="eyebrow">文本导读</p>
+          <p class="eyebrow">文本精读</p>
           <h1 class="panel-title" id="work-title"></h1>
           <p class="panel-lead" id="work-meta"></p>
+          <p class="guiding" id="guiding-q"></p>
         </header>
+
+        <div class="reading-toolbar">
+          <span class="tool-label">标注模式</span>
+          <div class="seg" role="group" aria-label="标注模式">
+            <button type="button" class="seg-btn active" data-mode="tech">按手法着色</button>
+            <button type="button" class="seg-btn" data-mode="concept">按概念着色</button>
+            <button type="button" class="seg-btn" data-mode="off">纯文本</button>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" id="clear-concept-filter">清除概念筛选</button>
+        </div>
+
         <div class="reading-grid">
           <article class="text-body" id="text-body"></article>
           <aside class="guide-card">
-            <h2>五层学习路径</h2>
+            <h2>三层学习路径</h2>
             <ol class="path-list">
               <li><strong>识别手法</strong> — 判断文中有哪些文学技巧</li>
-              <li><strong>彩色标注</strong> — 精读时用不同颜色标出手法</li>
-              <li><strong>深入思考</strong> — 回应人物、视角、主题与全局问题</li>
-              <li><strong>写作大纲</strong> — 按 IB Paper 1 标准搭建结构</li>
-              <li><strong>写作提交</strong> — AI 初评，教师二次审核</li>
+              <li><strong>分析效果</strong> — 阐释手法如何作用于读者与主题</li>
+              <li><strong>撰写诠释</strong> — 用证据写成一段分析文字</li>
             </ol>
+            <p class="hint">提示：原文中彩色下划线对应手法或概念；点侧栏概念可聚焦相关句段。</p>
             <button class="btn btn-primary" data-go="1" type="button">进入第一层</button>
           </aside>
         </div>
@@ -84,8 +121,8 @@
       <!-- Layer 1 -->
       <section class="panel" id="panel-1" data-panel="1" hidden>
         <header class="panel-head">
-          <p class="eyebrow">第一层</p>
-          <h1 class="panel-title">识别文学手法</h1>
+          <p class="eyebrow">第一层 · 识别</p>
+          <h1 class="panel-title">识别文本的文学手法</h1>
           <p class="panel-lead" id="layer1-intro"></p>
         </header>
 
@@ -100,115 +137,80 @@
           <h2 class="subhead">任务 B：为下列句子选择最准确的手法</h2>
           <div id="quote-tasks"></div>
           <div class="layer-result" id="layer1-result" hidden></div>
-          <button class="btn btn-primary" data-go="2" type="button">进入第二层：彩色精读</button>
+          <button class="btn btn-primary" data-go="2" type="button">进入第二层：分析效果</button>
         </div>
       </section>
 
       <!-- Layer 2 -->
       <section class="panel" id="panel-2" data-panel="2" hidden>
         <header class="panel-head">
-          <p class="eyebrow">第二层</p>
-          <h1 class="panel-title">彩色精读标注</h1>
-          <p class="panel-lead">先在左侧选择一种手法色彩，再在原文中拖选词句进行标注。不同手法对应不同颜色，形成你的精读地图。</p>
+          <p class="eyebrow">第二层 · 分析</p>
+          <h1 class="panel-title">分析手法的作用与效果</h1>
+          <p class="panel-lead" id="layer2-intro"></p>
         </header>
 
-        <div class="annotate-toolbar" id="annotate-toolbar"></div>
-        <div class="annotate-actions">
-          <button class="btn btn-ghost" id="undo-ann" type="button">撤销上一标</button>
-          <button class="btn btn-ghost" id="clear-ann" type="button">清空标注</button>
-          <button class="btn btn-secondary" id="show-key-ann" type="button">对照参考标注</button>
-          <button class="btn btn-primary" id="save-ann" type="button">完成本层</button>
-        </div>
-        <p class="feedback" id="ann-feedback" role="status"></p>
-
-        <div class="annotate-layout">
-          <article class="text-body annotate-target" id="annotate-body"></article>
-          <aside class="ann-legend">
-            <h2>我的标注</h2>
-            <ul id="ann-list"></ul>
-            <p class="hint">提示：至少标注 6 处，覆盖不少于 3 种手法。</p>
-          </aside>
-        </div>
-        <button class="btn btn-primary" data-go="3" type="button">进入第三层：深入思考</button>
+        <div id="effect-tasks"></div>
+        <div class="layer-result" id="layer2-result" hidden></div>
+        <button class="btn btn-primary" data-go="3" type="button">进入第三层：撰写诠释</button>
       </section>
 
       <!-- Layer 3 -->
       <section class="panel" id="panel-3" data-panel="3" hidden>
         <header class="panel-head">
-          <p class="eyebrow">第三层</p>
-          <h1 class="panel-title">深入思考</h1>
-          <p class="panel-lead">在识别与标注之后，回应更高阶的阐释问题。可展开提示，但请先独立思考。</p>
-        </header>
-        <div id="think-list"></div>
-        <div class="layer-result" id="layer3-result" hidden></div>
-        <button class="btn btn-primary" data-go="4" type="button">进入第四层：写作大纲</button>
-      </section>
-
-      <!-- Layer 4 -->
-      <section class="panel" id="panel-4" data-panel="4" hidden>
-        <header class="panel-head">
-          <p class="eyebrow">第四层</p>
-          <h1 class="panel-title">写作大纲</h1>
-          <p class="panel-lead">依据文本与 IBDP Paper 1 评分标准，搭建评论写作大纲。</p>
-        </header>
-
-        <div class="criteria-row" id="criteria-row"></div>
-
-        <div class="block">
-          <label class="field-label" for="outline-prompt">选择题干</label>
-          <select id="outline-prompt"></select>
-          <p class="prompt-preview" id="prompt-preview"></p>
-        </div>
-
-        <div class="outline-grid" id="outline-grid"></div>
-        <div class="outline-actions">
-          <button class="btn btn-secondary" id="save-outline" type="button">保存大纲</button>
-          <button class="btn btn-primary" data-go="5" type="button">进入第五层：完成写作</button>
-        </div>
-        <p class="feedback" id="outline-feedback" role="status"></p>
-      </section>
-
-      <!-- Layer 5 -->
-      <section class="panel" id="panel-5" data-panel="5" hidden>
-        <header class="panel-head">
-          <p class="eyebrow">第五层</p>
-          <h1 class="panel-title">写作练习与提交通道</h1>
-          <p class="panel-lead">根据大纲完成评论写作。提交后先由系统按 IB 标准做 AI 初评，再进入教师复审队列。</p>
+          <p class="eyebrow">第三层 · 诠释</p>
+          <h1 class="panel-title">写一段文本分析</h1>
+          <p class="panel-lead" id="layer3-intro"></p>
         </header>
 
         <div class="write-layout">
           <div class="write-main">
-            <div class="write-meta">
-              <label>题干</label>
-              <select id="essay-prompt"></select>
-            </div>
-            <label class="field-label" for="essay-body">正文</label>
-            <textarea id="essay-body" rows="16" placeholder="请撰写完整评论。建议包含：开篇论点、至少两段文本分析（引文+手法+效果）、结尾回扣主题……"></textarea>
-            <div class="write-stats">
-              <span id="char-count">0 字</span>
-              <span id="essay-status">未提交</span>
-            </div>
-            <div class="write-actions">
-              <button class="btn btn-ghost" id="load-outline-to-essay" type="button">导入我的大纲</button>
-              <button class="btn btn-secondary" id="ai-preview" type="button">AI 预评（不提交）</button>
-              <button class="btn btn-primary" id="submit-essay" type="button">提交至提交通道</button>
+            <div class="block write-block">
+              <label class="field-label" for="write-prompt">选择题干</label>
+              <select id="write-prompt"></select>
+              <p class="prompt-preview" id="write-prompt-preview"></p>
+              <div class="hint-chips" id="write-hints"></div>
+
+              <div class="frames">
+                <p class="frames-label">句式支架（点击插入）</p>
+                <div id="frame-btns"></div>
+              </div>
+
+              <label class="field-label" for="analysis-body">分析段落</label>
+              <textarea id="analysis-body" rows="12" placeholder="结构建议：文本证据 + 手法命名 + 效果/读者反应 + 连接概念或主题……"></textarea>
+              <div class="write-stats">
+                <span id="char-count">0 字</span>
+                <span id="write-status">未自评</span>
+              </div>
+              <div class="write-actions">
+                <button class="btn btn-ghost" id="show-sample" type="button">对照范文</button>
+                <button class="btn btn-secondary" id="self-check" type="button">按量规自评</button>
+                <button class="btn btn-primary" id="finish-layer3" type="button">完成本层</button>
+              </div>
+              <div class="sample-box" id="sample-box" hidden></div>
             </div>
           </div>
-          <aside class="ai-panel" id="ai-panel">
-            <h2>AI 初评报告</h2>
-            <p class="hint">提交或预评后显示。此为基于量规的自动反馈，供修改参考；最终成绩以教师复审为准。</p>
-            <div id="ai-report" class="ai-report empty">尚未生成评价。</div>
+
+          <aside class="ai-panel">
+            <h2>自评量规</h2>
+            <p class="hint">对照 IB 分析写作习惯：证据—手法—效果—概念。</p>
+            <ul class="rubric-list" id="rubric-list"></ul>
+            <div class="feedback" id="write-feedback" role="status"></div>
+            <div class="evidence-bank">
+              <h3>证据库</h3>
+              <p class="hint">可点击插入到写作框</p>
+              <ul id="evidence-list"></ul>
+            </div>
           </aside>
         </div>
-
-        <div class="submission-receipt" id="submission-receipt" hidden></div>
       </section>
     </main>
   </div>
 
+  <footer class="site-foot">
+    <p>文脉 · IBDP 文学精读工坊 · 教学示例文本，非官方考题</p>
+  </footer>
+
   <script src="js/data.js"></script>
-  <script src="js/ai-grader.js"></script>
-  <script src="js/api.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

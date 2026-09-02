@@ -2,24 +2,21 @@
   "use strict";
 
   const STORAGE = {
-    progress: "wenmai-progress-v2",
-    annotations: "wenmai-annotations-v2",
-    thoughts: "wenmai-thoughts-v2",
-    outline: "wenmai-outline-v2",
-    essay: "wenmai-essay-v2",
-    submissions: "wenmai-submissions-v2",
-    student: "wenmai-student-v2"
+    progress: "wenmai-lit-progress-v1",
+    student: "wenmai-lit-student-v1",
+    analysis: "wenmai-lit-analysis-v1",
+    layer1: "wenmai-lit-layer1-v1",
+    layer2: "wenmai-lit-layer2-v1"
   };
 
   const state = {
     layer: 0,
-    done: { 1: false, 2: false, 3: false, 4: false, 5: false },
-    activeTech: "metaphor",
-    annotations: [],
-    quoteCorrect: 0,
-    presenceChecked: false,
-    teacherAuthed: false,
-    currentSubId: null
+    done: { 1: false, 2: false, 3: false },
+    colorMode: "tech", // tech | concept | off
+    conceptFilter: null,
+    legendMode: "tech",
+    layer1QuoteCorrect: 0,
+    layer2Correct: 0
   };
 
   function $(sel, root) {
@@ -51,22 +48,20 @@
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
-      /* ignore quota */
+      /* ignore */
     }
   }
 
   function techById(id) {
-    return window.TECH_PALETTE.find(function (t) {
+    return window.TECHNIQUES.find(function (t) {
       return t.id === id;
     });
   }
 
-  function uid() {
-    return "s_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 7);
-  }
-
-  function studentName() {
-    return ($("#student-name").value || "").trim() || "匿名同学";
+  function conceptById(id) {
+    return window.CONCEPTS.find(function (c) {
+      return c.id === id;
+    });
   }
 
   /* ---------- Navigation ---------- */
@@ -81,7 +76,8 @@
     $all(".layer-nav-btn").forEach(function (btn) {
       btn.classList.toggle("active", Number(btn.dataset.layer) === state.layer);
     });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const app = $("#app");
+    if (app) app.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function markDone(layer) {
@@ -91,55 +87,224 @@
   }
 
   function updateProgressUI() {
-    const total = 5;
     let done = 0;
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 3; i++) {
       if (state.done[i]) {
         done += 1;
         const btn = $('.layer-nav-btn[data-layer="' + i + '"]');
         if (btn) btn.classList.add("done");
       }
     }
-    $("#global-progress").style.width = (done / total) * 100 + "%";
-    $("#global-progress-text").textContent = done + " / " + total + " 层";
+    const bar = $("#global-progress");
+    if (bar) bar.style.width = (done / 3) * 100 + "%";
+    const text = $("#global-progress-text");
+    if (text) text.textContent = done + " / 3 层完成";
   }
 
-  /* ---------- Layer 0 text ---------- */
-  function renderReadingText(targetId, interactive) {
-    const root = $(targetId);
-    root.innerHTML = window.TEXT_DATA.paragraphs
+  /* ---------- Legend ---------- */
+  function renderLegend() {
+    const list = $("#legend-list");
+    if (!list) return;
+    const items =
+      state.legendMode === "concept" ? window.CONCEPTS : window.TECHNIQUES;
+    list.innerHTML = items
+      .map(function (item) {
+        return (
+          '<li><span class="swatch" style="background:' +
+          item.color +
+          '"></span><span>' +
+          escapeHtml(item.name) +
+          (item.nameEn ? " · " + escapeHtml(item.nameEn) : "") +
+          "</span></li>"
+        );
+      })
+      .join("");
+  }
+
+  /* ---------- Concepts band ---------- */
+  function renderConcepts() {
+    const grid = $("#concept-grid");
+    if (!grid) return;
+    grid.innerHTML = window.CONCEPTS.map(function (c) {
+      return (
+        '<button type="button" class="concept-card" data-concept="' +
+        c.id +
+        '" style="--c:' +
+        c.color +
+        '">' +
+        '<span class="cn">' +
+        escapeHtml(c.name) +
+        "</span>" +
+        '<span class="en">' +
+        escapeHtml(c.nameEn) +
+        "</span>" +
+        '<p class="blurb">' +
+        escapeHtml(c.blurb) +
+        "</p></button>"
+      );
+    }).join("");
+
+    grid.addEventListener("click", function (e) {
+      const card = e.target.closest(".concept-card");
+      if (!card) return;
+      const id = card.dataset.concept;
+      const same = state.conceptFilter === id;
+      state.conceptFilter = same ? null : id;
+      $all(".concept-card").forEach(function (el) {
+        el.classList.toggle("active", el.dataset.concept === state.conceptFilter);
+      });
+      if (state.conceptFilter) {
+        state.colorMode = "concept";
+        $all(".seg-btn").forEach(function (b) {
+          b.classList.toggle("active", b.dataset.mode === "concept");
+        });
+      }
+      renderText();
+      goLayer(0);
+    });
+  }
+
+  /* ---------- Text with colored marks ---------- */
+  function applyMarks(text, mode, filterConcept) {
+    if (mode === "off") return escapeHtml(text);
+
+    // Sort annotations by phrase length desc to avoid partial overlaps
+    const anns = window.ANNOTATIONS.slice().sort(function (a, b) {
+      return b.phrase.length - a.phrase.length;
+    });
+
+    // Build list of ranges in this paragraph
+    const ranges = [];
+    anns.forEach(function (ann) {
+      let from = 0;
+      while (from < text.length) {
+        const idx = text.indexOf(ann.phrase, from);
+        if (idx === -1) break;
+        ranges.push({
+          start: idx,
+          end: idx + ann.phrase.length,
+          ann: ann
+        });
+        from = idx + ann.phrase.length;
+      }
+    });
+
+    if (!ranges.length) return escapeHtml(text);
+
+    ranges.sort(function (a, b) {
+      return a.start - b.start || b.end - a.end;
+    });
+
+    // Greedy non-overlapping
+    const picked = [];
+    let cursor = 0;
+    ranges.forEach(function (r) {
+      if (r.start >= cursor) {
+        picked.push(r);
+        cursor = r.end;
+      }
+    });
+
+    let html = "";
+    let pos = 0;
+    picked.forEach(function (r) {
+      html += escapeHtml(text.slice(pos, r.start));
+      const tech = techById(r.ann.tech);
+      const primaryConcept = conceptById(r.ann.concepts[0]);
+      let color, bg, title, dim;
+
+      if (mode === "tech") {
+        color = tech ? tech.color : "#666";
+        bg = tech ? tech.bg : "rgba(0,0,0,0.08)";
+        title = (tech ? tech.name : "") + "：" + r.ann.effect;
+        dim = false;
+      } else {
+        // concept mode — color by first matching filtered concept or first concept
+        let c = primaryConcept;
+        if (filterConcept) {
+          const matchId = r.ann.concepts.find(function (cid) {
+            return cid === filterConcept;
+          });
+          c = matchId ? conceptById(matchId) : primaryConcept;
+          dim = !matchId;
+        } else {
+          dim = false;
+        }
+        color = c ? c.color : "#666";
+        bg = c ? c.bg : "rgba(0,0,0,0.08)";
+        const cNames = r.ann.concepts
+          .map(function (cid) {
+            const x = conceptById(cid);
+            return x ? x.name : cid;
+          })
+          .join("、");
+        title =
+          (tech ? tech.name + " · " : "") +
+          cNames +
+          "：" +
+          r.ann.effect;
+      }
+
+      html +=
+        '<mark class="mark' +
+        (dim ? " dim" : "") +
+        '" style="background:' +
+        bg +
+        "; box-shadow: inset 0 -2px 0 " +
+        color +
+        '" title="' +
+        escapeHtml(title) +
+        '" data-tech="' +
+        r.ann.tech +
+        '" data-concepts="' +
+        r.ann.concepts.join(",") +
+        '">' +
+        escapeHtml(text.slice(r.start, r.end)) +
+        "</mark>";
+      pos = r.end;
+    });
+    html += escapeHtml(text.slice(pos));
+    return html;
+  }
+
+  function renderText() {
+    const body = $("#text-body");
+    if (!body) return;
+    body.innerHTML = window.TEXT_DATA.paragraphs
       .map(function (p) {
         return (
-          '<div class="para" data-pid="' +
+          '<div class="para" id="' +
           p.id +
           '"><span class="para-num">' +
-          p.num +
+          escapeHtml(p.num) +
           "</span><p>" +
-          (interactive ? escapeHtml(p.text) : escapeHtml(p.text)) +
+          applyMarks(p.text, state.colorMode, state.conceptFilter) +
           "</p></div>"
         );
       })
       .join("");
   }
 
-  function initLayer0() {
-    const d = window.TEXT_DATA;
-    $("#work-title").textContent = d.title;
-    $("#work-meta").textContent = d.author + " · " + d.source + " · " + d.examNote;
-    renderReadingText("#text-body", false);
+  function renderReadingMeta() {
+    $("#work-title").textContent = window.TEXT_DATA.title;
+    $("#work-meta").textContent =
+      window.TEXT_DATA.author + " · " + window.TEXT_DATA.source;
+    $("#guiding-q").textContent =
+      "引导问题：" + window.TEXT_DATA.guidingQuestion;
   }
 
   /* ---------- Layer 1 ---------- */
-  function initLayer1() {
+  function renderLayer1() {
     $("#layer1-intro").textContent = window.LAYER1.intro;
+
+    const options = window.TECHNIQUES.concat(window.LAYER1.distractors);
     const grid = $("#tech-check-grid");
-    const all = window.TECH_PALETTE.concat(window.LAYER1.distractors);
-    grid.innerHTML = all
+    grid.innerHTML = options
       .map(function (t) {
-        const color = t.color || "#888";
+        const color = t.color || "#999";
         return (
-          '<label class="tech-check" data-id="' +
-          t.id +
+          '<label class="tech-check" style="--tc:' +
+          color +
           '"><input type="checkbox" value="' +
           t.id +
           '" /><span class="swatch" style="background:' +
@@ -153,655 +318,554 @@
       })
       .join("");
 
-    $("#check-tech-presence").onclick = function () {
-      const selected = $all("#tech-check-grid input:checked").map(function (i) {
-        return i.value;
-      });
-      const present = window.LAYER1.presentIds;
-      const distractors = window.LAYER1.distractors.map(function (d) {
-        return d.id;
-      });
-
-      $all("#tech-check-grid .tech-check").forEach(function (lab) {
-        lab.classList.remove("hit", "miss");
-        const id = lab.dataset.id;
-        const checked = selected.indexOf(id) !== -1;
-        if (present.indexOf(id) !== -1 && checked) lab.classList.add("hit");
-        if (distractors.indexOf(id) !== -1 && checked) lab.classList.add("miss");
-        if (present.indexOf(id) !== -1 && !checked) lab.classList.add("miss");
-      });
-
-      const correctSelected = selected.filter(function (id) {
-        return present.indexOf(id) !== -1;
-      }).length;
-      const wrongSelected = selected.filter(function (id) {
-        return distractors.indexOf(id) !== -1;
-      }).length;
-      const missed = present.length - correctSelected;
-
-      state.presenceChecked = correctSelected >= 6 && wrongSelected === 0;
-      $("#presence-feedback").textContent =
-        "命中 " +
-        correctSelected +
-        "/" +
-        present.length +
-        " 种应选手法；误选干扰项 " +
-        wrongSelected +
-        "；漏选 " +
-        missed +
-        "。" +
-        (state.presenceChecked ? " 清单识别达标。" : " 请对照原文再调整。");
-
-      maybeFinishLayer1();
-    };
-
-    const tasks = $("#quote-tasks");
-    tasks.innerHTML = "";
-    state.quoteCorrect = 0;
-
-    window.LAYER1.quoteTasks.forEach(function (task, idx) {
-      const card = document.createElement("div");
-      card.className = "quote-card";
-      card.innerHTML =
-        "<blockquote>" +
-        escapeHtml(task.quote) +
-        '</blockquote><div class="options"></div><p class="feedback" hidden></p>';
-      const optionsEl = $(".options", card);
-      const feedback = $(".feedback", card);
-
-      window.TECH_PALETTE.forEach(function (tech) {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "option";
-        btn.textContent = tech.name;
-        btn.addEventListener("click", function () {
-          if (card.dataset.locked === "1") return;
-          card.dataset.locked = "1";
-          $all(".option", card).forEach(function (b) {
-            b.disabled = true;
-            if (b.textContent === techById(task.answer).name) b.classList.add("is-answer");
-          });
-          const ok = tech.id === task.answer;
-          if (!ok) btn.classList.add("is-miss");
-          if (ok) state.quoteCorrect += 1;
-          feedback.hidden = false;
-          feedback.innerHTML =
-            (ok ? "<strong>正确。</strong> " : "<strong>再看解析。</strong> ") +
-            escapeHtml(task.explain);
-          updateLayer1Result();
-          maybeFinishLayer1();
-        });
-        optionsEl.appendChild(btn);
-      });
-
-      // number label
-      const num = document.createElement("div");
-      num.className = "focus";
-      num.style.fontFamily = "var(--font-ui)";
-      num.style.fontSize = "0.78rem";
-      num.style.color = "var(--jade)";
-      num.textContent = "句子 " + (idx + 1);
-      card.insertBefore(num, card.firstChild);
-
-      tasks.appendChild(card);
-    });
-  }
-
-  function updateLayer1Result() {
-    const total = window.LAYER1.quoteTasks.length;
-    const answered = $all("#quote-tasks .quote-card[data-locked='1']").length;
-    const box = $("#layer1-result");
-    box.hidden = false;
-    box.textContent =
-      "句子辨识：" +
-      state.quoteCorrect +
-      "/" +
-      total +
-      " 次答对（已作答 " +
-      answered +
-      "）。";
-  }
-
-  function maybeFinishLayer1() {
-    const answered = $all("#quote-tasks .quote-card[data-locked='1']").length;
-    if (answered === window.LAYER1.quoteTasks.length && state.presenceChecked) {
-      markDone(1);
-    } else if (answered === window.LAYER1.quoteTasks.length && state.quoteCorrect >= 5) {
-      markDone(1);
-    }
-  }
-
-  /* ---------- Layer 2 annotation ---------- */
-  function initLayer2() {
-    renderReadingText("#annotate-body", true);
-    const toolbar = $("#annotate-toolbar");
-    toolbar.innerHTML = window.TECH_PALETTE.map(function (t) {
-      return (
-        '<button type="button" class="tech-chip" data-id="' +
-        t.id +
-        '"><span class="dot" style="background:' +
-        t.color +
-        '"></span>' +
-        escapeHtml(t.name) +
-        "</button>"
-      );
-    }).join("");
-
-    state.annotations = loadJSON(STORAGE.annotations, []);
-    if (state.annotations.length) {
-      applyAnnotationsToDOM();
-    }
-    renderAnnList();
-    setActiveTech(state.activeTech || "metaphor");
-
-    $all(".tech-chip", toolbar).forEach(function (chip) {
-      chip.addEventListener("click", function () {
-        setActiveTech(chip.dataset.id);
-      });
-    });
-
-    const body = $("#annotate-body");
-    body.addEventListener("mouseup", function () {
-      const sel = window.getSelection();
-      if (!sel || sel.isCollapsed || !state.activeTech) return;
-      if (!body.contains(sel.anchorNode)) return;
-      const text = sel.toString().trim();
-      if (text.length < 2 || text.length > 60) {
-        $("#ann-feedback").textContent = "请选择 2–60 字的连续片段再标注。";
-        return;
-      }
-      // Avoid nesting complexity: only annotate if selection is within a single paragraph text node path
-      try {
-        const range = sel.getRangeAt(0);
-        if (!body.contains(range.commonAncestorContainer)) return;
-        wrapSelection(range, state.activeTech, text);
-        sel.removeAllRanges();
-      } catch (e) {
-        $("#ann-feedback").textContent = "该选区无法标注，请重新拖选纯文本。";
-      }
-    });
-
-    $("#undo-ann").onclick = function () {
-      if (!state.annotations.length) return;
-      state.annotations.pop();
-      saveJSON(STORAGE.annotations, state.annotations);
-      rebuildAnnotateBody();
-      renderAnnList();
-    };
-
-    $("#clear-ann").onclick = function () {
-      if (!confirm("确定清空全部标注？")) return;
-      state.annotations = [];
-      saveJSON(STORAGE.annotations, state.annotations);
-      rebuildAnnotateBody();
-      renderAnnList();
-      $("#ann-feedback").textContent = "已清空。";
-    };
-
-    $("#show-key-ann").onclick = function () {
-      // merge reference keys as suggestions if not already present
-      let added = 0;
-      window.LAYER2_KEYS.forEach(function (k) {
-        const exists = state.annotations.some(function (a) {
-          return a.text === k.phrase;
-        });
-        if (!exists) {
-          state.annotations.push({
-            id: uid(),
-            text: k.phrase,
-            tech: k.tech,
-            ref: true
-          });
-          added += 1;
-        }
-      });
-      saveJSON(STORAGE.annotations, state.annotations);
-      rebuildAnnotateBody();
-      renderAnnList();
-      $("#ann-feedback").textContent = "已叠加参考标注 " + added + " 处，请对照学习后可清空重标。";
-    };
-
-    $("#save-ann").onclick = function () {
-      const techs = new Set(
-        state.annotations.filter(function (a) {
-          return !a.ref;
-        }).map(function (a) {
-          return a.tech;
-        })
-      );
-      const count = state.annotations.filter(function (a) {
-        return !a.ref;
-      }).length;
-      if (count >= 6 && techs.size >= 3) {
-        markDone(2);
-        $("#ann-feedback").textContent =
-          "精读标注完成：自标 " + count + " 处，覆盖 " + techs.size + " 种手法。";
-      } else {
-        $("#ann-feedback").textContent =
-          "还需努力：自标 " +
-          count +
-          "/6 处，手法种类 " +
-          techs.size +
-          "/3。可先看参考标注再独立重做。";
-      }
-    };
-  }
-
-  function setActiveTech(id) {
-    state.activeTech = id;
-    $all(".tech-chip").forEach(function (c) {
-      c.classList.toggle("active", c.dataset.id === id);
-    });
-  }
-
-  function wrapSelection(range, techId, text) {
-    const tech = techById(techId);
-    const mark = document.createElement("span");
-    mark.className = "ann-mark";
-    mark.dataset.tech = techId;
-    mark.style.background = tech.bg;
-    mark.style.boxShadow = "inset 0 -2px 0 " + tech.color;
-    mark.title = tech.name + "：" + tech.desc;
-    try {
-      range.surroundContents(mark);
-    } catch (e) {
-      // fallback: extract and insert
-      const frag = range.extractContents();
-      mark.appendChild(frag);
-      range.insertNode(mark);
-    }
-    state.annotations.push({ id: uid(), text: text, tech: techId, ref: false });
-    saveJSON(STORAGE.annotations, state.annotations);
-    renderAnnList();
-    $("#ann-feedback").textContent = "已标注「" + text.slice(0, 18) + (text.length > 18 ? "…" : "") + "」为" + tech.name + "。";
-  }
-
-  function rebuildAnnotateBody() {
-    renderReadingText("#annotate-body", true);
-    applyAnnotationsToDOM();
-  }
-
-  function applyAnnotationsToDOM() {
-    const sorted = state.annotations.slice().sort(function (a, b) {
-      return b.text.length - a.text.length;
-    });
-
-    $all("#annotate-body .para p").forEach(function (p) {
-      const original = window.TEXT_DATA.paragraphs.find(function (x) {
-        return x.id === p.parentElement.dataset.pid;
-      });
-      if (!original) return;
-
-      const inPara = sorted.filter(function (a) {
-        return original.text.indexOf(a.text) !== -1;
-      });
-      if (!inPara.length) {
-        p.textContent = original.text;
-        return;
-      }
-
-      const used = [];
-      const events = inPara
-        .map(function (a) {
-          const start = original.text.indexOf(a.text);
-          return { start: start, end: start + a.text.length, ann: a };
-        })
-        .filter(function (e) {
-          return e.start >= 0;
-        })
-        .sort(function (a, b) {
-          return a.start - b.start || b.end - a.end;
-        });
-
-      let cursor = 0;
-      let html = "";
-      events.forEach(function (e) {
-        if (e.start < cursor) return;
-        const overlap = used.some(function (u) {
-          return !(e.end <= u.start || e.start >= u.end);
-        });
-        if (overlap) return;
-        html += escapeHtml(original.text.slice(cursor, e.start));
-        const tech = techById(e.ann.tech);
-        html +=
-          '<span class="ann-mark" title="' +
-          escapeHtml(tech.name + "：" + tech.desc) +
-          '" style="background:' +
-          tech.bg +
-          ";box-shadow:inset 0 -2px 0 " +
-          tech.color +
-          '">' +
-          escapeHtml(e.ann.text) +
-          "</span>";
-        used.push(e);
-        cursor = e.end;
-      });
-      html += escapeHtml(original.text.slice(cursor));
-      p.innerHTML = html;
-    });
-  }
-
-  function renderAnnList() {
-    const list = $("#ann-list");
-    if (!state.annotations.length) {
-      list.innerHTML = "<li class='hint'>尚未标注。选择色彩后拖选原文。</li>";
-      return;
-    }
-    list.innerHTML = state.annotations
-      .slice()
-      .reverse()
-      .map(function (a) {
-        const tech = techById(a.tech);
+    const box = $("#quote-tasks");
+    box.innerHTML = window.LAYER1.quoteTasks
+      .map(function (task, i) {
+        const ans = techById(task.answer);
+        const opts = window.TECHNIQUES.map(function (t) {
+          return (
+            '<label class="opt"><input type="radio" name="' +
+            task.id +
+            '" value="' +
+            t.id +
+            '" /><span><span class="swatch" style="display:inline-block;background:' +
+            t.color +
+            ';margin-right:0.35rem;vertical-align:middle"></span>' +
+            escapeHtml(t.name) +
+            "</span></label>"
+          );
+        }).join("");
         return (
-          "<li><span class='tag' style='color:" +
-          (tech ? tech.color : "#333") +
-          "'>" +
-          escapeHtml(tech ? tech.name : a.tech) +
-          (a.ref ? " · 参考" : "") +
-          "</span><span>" +
-          escapeHtml(a.text) +
-          "</span></li>"
+          '<div class="quote-card" data-qid="' +
+          task.id +
+          '" style="--tc:' +
+          (ans ? ans.color : "var(--jade)") +
+          '">' +
+          "<blockquote>" +
+          (i + 1) +
+          ". 「" +
+          escapeHtml(task.quote) +
+          "」</blockquote>" +
+          '<div class="opt-row">' +
+          opts +
+          "</div>" +
+          '<p class="explain" hidden data-explain></p></div>'
         );
       })
       .join("");
+
+    box.addEventListener("change", onQuoteChange);
+  }
+
+  function onQuoteChange(e) {
+    const input = e.target;
+    if (!input.matches('input[type="radio"]')) return;
+    const card = input.closest(".quote-card");
+    const task = window.LAYER1.quoteTasks.find(function (t) {
+      return t.id === card.dataset.qid;
+    });
+    if (!task) return;
+
+    $all(".opt", card).forEach(function (o) {
+      o.classList.remove("correct", "wrong");
+    });
+    const label = input.closest(".opt");
+    const explain = $("[data-explain]", card);
+    if (input.value === task.answer) {
+      label.classList.add("correct");
+      explain.hidden = false;
+      explain.textContent = "✓ " + task.explain;
+    } else {
+      label.classList.add("wrong");
+      explain.hidden = false;
+      const right = techById(task.answer);
+      explain.textContent =
+        "再想想。参考答案是「" +
+        (right ? right.name : task.answer) +
+        "」。" +
+        task.explain;
+    }
+    updateLayer1Score();
+  }
+
+  function updateLayer1Score() {
+    let correct = 0;
+    window.LAYER1.quoteTasks.forEach(function (task) {
+      const checked = $('input[name="' + task.id + '"]:checked');
+      if (checked && checked.value === task.answer) correct += 1;
+    });
+    state.layer1QuoteCorrect = correct;
+    const total = window.LAYER1.quoteTasks.length;
+    const result = $("#layer1-result");
+    if (correct >= Math.ceil(total * 0.6)) {
+      result.hidden = false;
+      result.textContent =
+        "第一层进度：句子识别 " +
+        correct +
+        "/" +
+        total +
+        "。可进入第二层，继续追问手法的效果。";
+      if (correct === total) markDone(1);
+    }
+  }
+
+  function checkPresence() {
+    const present = new Set(window.LAYER1.presentIds);
+    const checked = $all('#tech-check-grid input[type="checkbox"]:checked').map(
+      function (el) {
+        return el.value;
+      }
+    );
+    const checkedSet = new Set(checked);
+    let hit = 0;
+    let miss = 0;
+    $all(".tech-check").forEach(function (label) {
+      const id = $("input", label).value;
+      label.classList.remove("hit", "miss");
+      const isPresent = present.has(id);
+      const isChecked = checkedSet.has(id);
+      if (isChecked && isPresent) {
+        label.classList.add("hit");
+        hit += 1;
+      } else if (isChecked && !isPresent) {
+        label.classList.add("miss");
+        miss += 1;
+      } else if (!isChecked && isPresent) {
+        label.classList.add("miss");
+      }
+    });
+    const fb = $("#presence-feedback");
+    const total = present.size;
+    fb.className = "feedback " + (hit === total && miss === 0 ? "ok" : "bad");
+    fb.textContent =
+      "命中 " +
+      hit +
+      "/" +
+      total +
+      " 种真实出现的手法" +
+      (miss ? "；有 " + miss + " 处误选或漏选" : "。全部正确！") +
+      " 色条对应各手法色标。";
+    if (hit === total && miss === 0 && state.layer1QuoteCorrect >= 5) {
+      markDone(1);
+    }
+  }
+
+  /* ---------- Layer 2 ---------- */
+  function renderLayer2() {
+    $("#layer2-intro").textContent = window.LAYER2.intro;
+    const box = $("#effect-tasks");
+    box.innerHTML = window.LAYER2.tasks
+      .map(function (task, i) {
+        const tech = techById(task.tech);
+        const concept = conceptById(task.concept);
+        const opts = task.options
+          .map(function (o) {
+            return (
+              '<label class="opt"><input type="radio" name="' +
+              task.id +
+              '" value="' +
+              o.id +
+              '" /><span>' +
+              escapeHtml(o.text) +
+              "</span></label>"
+            );
+          })
+          .join("");
+        return (
+          '<div class="effect-card" data-eid="' +
+          task.id +
+          '" style="--tc:' +
+          (tech ? tech.color : "var(--jade)") +
+          '">' +
+          (concept
+            ? '<span class="concept-chip" style="--c:' +
+              concept.color +
+              ";--cbg:" +
+              concept.bg +
+              '"><span class="dot"></span>' +
+              escapeHtml(concept.name) +
+              " · " +
+              escapeHtml(concept.nameEn) +
+              "</span>"
+            : "") +
+          (tech
+            ? '<span class="concept-chip" style="--c:' +
+              tech.color +
+              ";--cbg:" +
+              tech.bg +
+              '"><span class="dot"></span>手法：' +
+              escapeHtml(tech.name) +
+              "</span>"
+            : "") +
+          "<blockquote>" +
+          (i + 1) +
+          ". 「" +
+          escapeHtml(task.quote) +
+          "」</blockquote>" +
+          "<p><strong>" +
+          escapeHtml(task.prompt) +
+          "</strong></p>" +
+          '<div class="opt-row">' +
+          opts +
+          "</div>" +
+          '<p class="explain" hidden data-explain></p></div>'
+        );
+      })
+      .join("");
+
+    box.addEventListener("change", onEffectChange);
+  }
+
+  function onEffectChange(e) {
+    const input = e.target;
+    if (!input.matches('input[type="radio"]')) return;
+    const card = input.closest(".effect-card");
+    const task = window.LAYER2.tasks.find(function (t) {
+      return t.id === card.dataset.eid;
+    });
+    if (!task) return;
+
+    const correctOpt = task.options.find(function (o) {
+      return o.correct;
+    });
+    $all(".opt", card).forEach(function (o) {
+      o.classList.remove("correct", "wrong");
+    });
+    const label = input.closest(".opt");
+    const explain = $("[data-explain]", card);
+    if (correctOpt && input.value === correctOpt.id) {
+      label.classList.add("correct");
+      explain.hidden = false;
+      explain.textContent = "✓ " + task.explain;
+    } else {
+      label.classList.add("wrong");
+      explain.hidden = false;
+      explain.textContent = "尚未切中效果。提示：" + task.explain;
+      // reveal correct
+      $all("input", card).forEach(function (inp) {
+        if (correctOpt && inp.value === correctOpt.id) {
+          inp.closest(".opt").classList.add("correct");
+        }
+      });
+    }
+    updateLayer2Score();
+  }
+
+  function updateLayer2Score() {
+    let correct = 0;
+    window.LAYER2.tasks.forEach(function (task) {
+      const correctOpt = task.options.find(function (o) {
+        return o.correct;
+      });
+      const checked = $('input[name="' + task.id + '"]:checked');
+      if (checked && correctOpt && checked.value === correctOpt.id) correct += 1;
+    });
+    state.layer2Correct = correct;
+    const total = window.LAYER2.tasks.length;
+    const result = $("#layer2-result");
+    result.hidden = false;
+    result.textContent =
+      "第二层：效果分析 " +
+      correct +
+      "/" +
+      total +
+      "。注意色标——左边条是手法色，概念芯片是七大概念色。";
+    if (correct >= Math.ceil(total * 0.7)) markDone(2);
   }
 
   /* ---------- Layer 3 ---------- */
-  function initLayer3() {
-    const saved = loadJSON(STORAGE.thoughts, {});
-    const root = $("#think-list");
-    root.innerHTML = "";
+  function renderLayer3() {
+    $("#layer3-intro").textContent = window.LAYER3.intro;
 
-    window.LAYER3.forEach(function (q, idx) {
-      const card = document.createElement("div");
-      card.className = "think-card";
-      card.innerHTML =
-        '<div class="focus">' +
-        escapeHtml(q.focus) +
-        "</div><h3>" +
-        (idx + 1) +
-        ". " +
-        escapeHtml(q.prompt) +
-        '</h3><button type="button" class="hint-btn">展开思考提示</button><ul class="hints">' +
-        q.hints.map(function (h) {
-          return "<li>" + escapeHtml(h) + "</li>";
-        }).join("") +
-        '</ul><textarea placeholder="写下你的阐释（建议 80 字以上）……">' +
-        escapeHtml(saved[q.id] || "") +
-        "</textarea>";
-
-      const hintBtn = $(".hint-btn", card);
-      const hints = $(".hints", card);
-      const ta = $("textarea", card);
-      hintBtn.addEventListener("click", function () {
-        hints.classList.toggle("open");
-        hintBtn.textContent = hints.classList.contains("open") ? "收起提示" : "展开思考提示";
-      });
-      ta.addEventListener("input", function () {
-        saved[q.id] = ta.value;
-        saveJSON(STORAGE.thoughts, saved);
-        checkLayer3(saved);
-      });
-      root.appendChild(card);
-    });
-    checkLayer3(saved);
-  }
-
-  function checkLayer3(saved) {
-    const answered = window.LAYER3.filter(function (q) {
-      return (saved[q.id] || "").trim().length >= 40;
-    }).length;
-    const box = $("#layer3-result");
-    if (answered > 0) {
-      box.hidden = false;
-      box.textContent = "深入思考进度：" + answered + "/" + window.LAYER3.length + " 题已作答（每题至少约 40 字）。";
-    }
-    if (answered >= 3) markDone(3);
-  }
-
-  /* ---------- Layer 4 outline ---------- */
-  function initLayer4() {
-    const row = $("#criteria-row");
-    row.innerHTML = window.IB_OUTLINE.criteria
-      .map(function (c) {
+    const sel = $("#write-prompt");
+    sel.innerHTML = window.LAYER3.prompts
+      .map(function (p) {
         return (
-          '<div class="criteria-card"><h3>' +
-          escapeHtml(c.name) +
-          "</h3><p>" +
-          escapeHtml(c.guide) +
-          "</p></div>"
+          '<option value="' + p.id + '">' + escapeHtml(p.title) + "</option>"
         );
       })
       .join("");
 
-    const select = $("#outline-prompt");
-    const essaySelect = $("#essay-prompt");
-    select.innerHTML = "";
-    essaySelect.innerHTML = "";
-    window.IB_OUTLINE.prompts.forEach(function (p, i) {
-      const opt = new Option(p.title + " — " + p.question.slice(0, 18) + "…", p.id);
-      select.add(opt);
-      essaySelect.add(new Option(p.title, p.id));
+    sel.addEventListener("change", syncWritePrompt);
+    syncWritePrompt();
+
+    const frames = $("#frame-btns");
+    frames.innerHTML = window.LAYER3.frames
+      .map(function (f, i) {
+        return (
+          '<button type="button" class="frame-btn" data-frame="' +
+          i +
+          '">' +
+          escapeHtml(f) +
+          "</button>"
+        );
+      })
+      .join("");
+
+    frames.addEventListener("click", function (e) {
+      const btn = e.target.closest(".frame-btn");
+      if (!btn) return;
+      insertAtCursor($("#analysis-body"), window.LAYER3.frames[Number(btn.dataset.frame)] + "\n");
     });
 
-    const saved = loadJSON(STORAGE.outline, { promptId: "wp1", slots: {} });
-    select.value = saved.promptId || "wp1";
-    essaySelect.value = saved.promptId || "wp1";
-    updatePromptPreview();
+    const rubric = $("#rubric-list");
+    rubric.innerHTML = window.LAYER3.rubric
+      .map(function (r) {
+        return (
+          '<label class="rubric-item"><input type="checkbox" data-rubric="' +
+          r.id +
+          '" /><span><strong>' +
+          escapeHtml(r.label) +
+          "</strong><small>" +
+          escapeHtml(r.tip) +
+          "</small></span></label>"
+        );
+      })
+      .join("");
 
-    select.addEventListener("change", function () {
-      saved.promptId = select.value;
-      essaySelect.value = select.value;
-      saveJSON(STORAGE.outline, saved);
-      updatePromptPreview();
+    rubric.addEventListener("change", function (e) {
+      const item = e.target.closest(".rubric-item");
+      if (item) item.classList.toggle("checked", e.target.checked);
     });
 
-    const grid = $("#outline-grid");
-    grid.innerHTML = "";
-    window.IB_OUTLINE.outlineSlots.forEach(function (slot) {
-      const wrap = document.createElement("div");
-      wrap.className = "outline-slot";
-      wrap.innerHTML =
-        "<label for='slot-" +
-        slot.id +
-        "'>" +
-        escapeHtml(slot.label) +
-        "</label><textarea id='slot-" +
-        slot.id +
-        "' placeholder='" +
-        escapeHtml(slot.placeholder) +
-        "'>" +
-        escapeHtml(saved.slots[slot.id] || "") +
-        "</textarea>";
-      $("textarea", wrap).addEventListener("input", function (e) {
-        saved.slots[slot.id] = e.target.value;
-        saveJSON(STORAGE.outline, saved);
-      });
-      grid.appendChild(wrap);
+    const ev = $("#evidence-list");
+    ev.innerHTML = window.ANNOTATIONS.slice(0, 10)
+      .map(function (a) {
+        const tech = techById(a.tech);
+        return (
+          '<li><button type="button" class="ev-btn" style="--tc:' +
+          (tech ? tech.color : "var(--jade)") +
+          '" data-quote="' +
+          escapeHtml(a.phrase) +
+          '">「' +
+          escapeHtml(a.phrase) +
+          "」 · " +
+          escapeHtml(tech ? tech.name : "") +
+          "</button></li>"
+        );
+      })
+      .join("");
+
+    ev.addEventListener("click", function (e) {
+      const btn = e.target.closest(".ev-btn");
+      if (!btn) return;
+      insertAtCursor($("#analysis-body"), "「" + btn.dataset.quote + "」");
+      updateCharCount();
     });
 
-    $("#save-outline").onclick = function () {
-      const filled = window.IB_OUTLINE.outlineSlots.filter(function (s) {
-        return (saved.slots[s.id] || "").trim().length >= 15;
-      }).length;
-      saveJSON(STORAGE.outline, saved);
-      if (filled >= 3) {
-        markDone(4);
-        $("#outline-feedback").textContent =
-          "大纲已保存（完成 " + filled + " 个槽位）。可进入第五层扩写成文。";
-      } else {
-        $("#outline-feedback").textContent =
-          "请至少完成中心论点与两段主体分析（当前有效槽位 " + filled + "）。";
-      }
-    };
-  }
-
-  function updatePromptPreview() {
-    const id = $("#outline-prompt").value;
-    const p = window.IB_OUTLINE.prompts.find(function (x) {
-      return x.id === id;
-    });
-    $("#prompt-preview").textContent = p ? p.question : "";
-  }
-
-  function currentPromptQuestion() {
-    const id = $("#essay-prompt").value || $("#outline-prompt").value;
-    const p = window.IB_OUTLINE.prompts.find(function (x) {
-      return x.id === id;
-    });
-    return p ? p.question : "";
-  }
-
-  /* ---------- Layer 5 writing + submit ---------- */
-  function initLayer5() {
-    const savedEssay = loadJSON(STORAGE.essay, { promptId: "wp1", body: "", lastAi: null });
-    $("#essay-prompt").value = savedEssay.promptId || "wp1";
-    $("#essay-body").value = savedEssay.body || "";
-    updateCharCount();
-    if (savedEssay.lastAi) {
-      $("#ai-report").classList.remove("empty");
-      $("#ai-report").innerHTML = window.AIGrader.renderReport(savedEssay.lastAi);
+    const saved = loadJSON(STORAGE.analysis, null);
+    if (saved && saved.body) {
+      $("#analysis-body").value = saved.body;
+      if (saved.promptId) sel.value = saved.promptId;
+      syncWritePrompt();
+      updateCharCount();
     }
 
-    $("#essay-body").addEventListener("input", function () {
+    $("#analysis-body").addEventListener("input", function () {
       updateCharCount();
-      savedEssay.body = $("#essay-body").value;
-      savedEssay.promptId = $("#essay-prompt").value;
-      saveJSON(STORAGE.essay, savedEssay);
+      saveJSON(STORAGE.analysis, {
+        body: $("#analysis-body").value,
+        promptId: $("#write-prompt").value
+      });
     });
-    $("#essay-prompt").addEventListener("change", function () {
-      savedEssay.promptId = $("#essay-prompt").value;
-      saveJSON(STORAGE.essay, savedEssay);
+  }
+
+  function syncWritePrompt() {
+    const id = $("#write-prompt").value;
+    const prompt = window.LAYER3.prompts.find(function (p) {
+      return p.id === id;
     });
+    if (!prompt) return;
+    const concept = conceptById(prompt.concept);
+    $("#write-prompt-preview").innerHTML =
+      escapeHtml(prompt.question) +
+      (concept
+        ? ' <span class="concept-chip" style="--c:' +
+          concept.color +
+          ";--cbg:" +
+          concept.bg +
+          '"><span class="dot"></span>' +
+          escapeHtml(concept.name) +
+          "</span>"
+        : "");
+    $("#write-hints").innerHTML = prompt.hints
+      .map(function (h) {
+        return (
+          '<button type="button" class="hint-chip" data-hint="' +
+          escapeHtml(h) +
+          '">' +
+          escapeHtml(h) +
+          "</button>"
+        );
+      })
+      .join("");
+  }
 
-    $("#load-outline-to-essay").onclick = function () {
-      const outline = loadJSON(STORAGE.outline, { slots: {} });
-      const parts = window.IB_OUTLINE.outlineSlots.map(function (s) {
-        const v = (outline.slots[s.id] || "").trim();
-        return v ? "【" + s.label + "】\n" + v : "";
-      }).filter(Boolean);
-      if (!parts.length) {
-        alert("尚未保存大纲，请先完成第四层。");
-        return;
-      }
-      $("#essay-body").value = parts.join("\n\n") + "\n\n";
-      $("#essay-body").dispatchEvent(new Event("input"));
-    };
-
-    $("#ai-preview").onclick = function () {
-      runAi(false);
-    };
-    $("#submit-essay").onclick = function () {
-      runAi(true);
-    };
+  function insertAtCursor(textarea, text) {
+    if (!textarea) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const val = textarea.value;
+    textarea.value = val.slice(0, start) + text + val.slice(end);
+    textarea.focus();
+    const pos = start + text.length;
+    textarea.setSelectionRange(pos, pos);
+    saveJSON(STORAGE.analysis, {
+      body: textarea.value,
+      promptId: $("#write-prompt").value
+    });
   }
 
   function updateCharCount() {
-    const n = ($("#essay-body").value || "").trim().length;
+    const n = ($("#analysis-body").value || "").trim().length;
     $("#char-count").textContent = n + " 字";
   }
 
-  async function runAi(submit) {
-    const body = ($("#essay-body").value || "").trim();
-    if (body.length < 80) {
-      alert("请先写出更完整的评论（建议不少于 80 字）再预评/提交。");
-      return;
-    }
-    if (submit && !($("#student-name").value || "").trim()) {
-      alert("提交前请在左侧填写学习者姓名。");
-      $("#student-name").focus();
-      return;
-    }
-
-    const result = window.AIGrader.grade(body, currentPromptQuestion());
-    $("#ai-report").classList.remove("empty");
-    $("#ai-report").innerHTML = window.AIGrader.renderReport(result);
-
-    const essayStore = loadJSON(STORAGE.essay, {});
-    essayStore.body = body;
-    essayStore.promptId = $("#essay-prompt").value;
-    essayStore.lastAi = result;
-    saveJSON(STORAGE.essay, essayStore);
-
-    if (!submit) {
-      $("#essay-status").textContent = "已预评（未提交）";
-      return;
-    }
-
-    const prompt = window.IB_OUTLINE.prompts.find(function (p) {
-      return p.id === $("#essay-prompt").value;
+  function selfCheck() {
+    const body = ($("#analysis-body").value || "").trim();
+    const fb = $("#write-feedback");
+    const checks = $all("#rubric-list input:checked").length;
+    const total = window.LAYER3.rubric.length;
+    const hasQuote = /「|」|"|“|”/.test(body) || body.length > 80;
+    const techHit = window.TECHNIQUES.some(function (t) {
+      return body.indexOf(t.name) !== -1;
+    });
+    const conceptHit = window.CONCEPTS.some(function (c) {
+      return body.indexOf(c.name) !== -1;
+    });
+    const effectWords = ["使", "让", "突出", "强化", "暗示", "表现", "揭示", "感受", "效果"];
+    const hasEffect = effectWords.some(function (w) {
+      return body.indexOf(w) !== -1;
     });
 
-    const submission = await window.WenmaiAPI.create({
-      student: studentName(),
-      promptId: $("#essay-prompt").value,
-      promptTitle: prompt ? prompt.title : "",
-      promptQuestion: prompt ? prompt.question : "",
-      body: body,
-      ai: result
-    });
+    const tips = [];
+    if (body.length < 120) tips.push("篇幅偏短，建议写到 120 字以上。");
+    if (!hasQuote) tips.push("尽量嵌入具体引文作为证据。");
+    if (!techHit) tips.push("请明确命名至少一种文学手法。");
+    if (!hasEffect) tips.push("补充手法对读者/意义的作用（效果）。");
+    if (!conceptHit) tips.push("尝试连接到一个 IB 概念（如身份、视角、转变）。");
+    if (checks < total) tips.push("量规还有未勾选项，请逐条自检。");
 
-    markDone(5);
-    $("#essay-status").textContent = "已提交，待教师复审";
-    const receipt = $("#submission-receipt");
-    receipt.hidden = false;
-    receipt.innerHTML =
-      "<strong>提交成功。</strong> 编号 " +
-      escapeHtml(submission.id) +
-      " · " +
-      escapeHtml(submission.student) +
-      "<br/>AI 初评：" +
-      result.total +
-      "/40（" +
-      result.level +
-      "）。请打开「老师点评端口」进行二次审核。<br/>" +
-      '<a href="/teacher.html" target="_blank" rel="noopener">进入老师点评</a>　' +
-      '<a href="http://localhost:8081/teacher.html" target="_blank" rel="noopener">本机 :8081</a>';
+    if (!tips.length && checks === total) {
+      fb.className = "feedback ok";
+      fb.textContent = "自评良好：证据、手法、效果与概念均有体现。可完成本层。";
+      $("#write-status").textContent = "自评通过";
+      markDone(3);
+    } else {
+      fb.className = "feedback bad";
+      fb.textContent = tips.join(" ") || "请继续完善分析段。";
+      $("#write-status").textContent = "需修订";
+    }
   }
 
-  /* ---------- Teacher link (独立点评页，无需密码) ---------- */
-  function initTeacher() {
-    // 主入口：/teacher.html 与 :8081，无密码
+  function showSample() {
+    const box = $("#sample-box");
+    box.hidden = !box.hidden;
+    if (!box.hidden) {
+      box.innerHTML = "<strong>范文参考（勿照抄）</strong><p>" + escapeHtml(window.LAYER3.sample) + "</p>";
+    }
   }
 
-  function renderSubList() {}
-  function showSubDetail() {}
+  function finishLayer3() {
+    const body = ($("#analysis-body").value || "").trim();
+    if (body.length < 100) {
+      $("#write-feedback").className = "feedback bad";
+      $("#write-feedback").textContent = "请先完成至少约 100 字的分析段，再标记完成。";
+      return;
+    }
+    selfCheck();
+    if (state.done[3]) {
+      $("#write-feedback").className = "feedback ok";
+      $("#write-feedback").textContent =
+        "第三层已完成。建议回到精读区，用概念色标再通读一遍，巩固主题诠释。";
+    }
+  }
 
-
-  /* ---------- Boot ---------- */
-  function bindNav() {
+  /* ---------- Bindings ---------- */
+  function bindUI() {
     $all(".layer-nav-btn").forEach(function (btn) {
       btn.addEventListener("click", function () {
         goLayer(btn.dataset.layer);
       });
     });
+
     $all("[data-go]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         goLayer(btn.dataset.go);
       });
     });
-    $("#brand-home").addEventListener("click", function (e) {
-      e.preventDefault();
+
+    $("#enter-workshop").addEventListener("click", function () {
+      $("#app").scrollIntoView({ behavior: "smooth" });
       goLayer(0);
+    });
+
+    $("#scroll-concepts").addEventListener("click", function () {
+      $("#concepts").scrollIntoView({ behavior: "smooth" });
+    });
+
+    $all(".seg-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        state.colorMode = btn.dataset.mode;
+        $all(".seg-btn").forEach(function (b) {
+          b.classList.toggle("active", b === btn);
+        });
+        renderText();
+      });
+    });
+
+    $("#clear-concept-filter").addEventListener("click", function () {
+      state.conceptFilter = null;
+      $all(".concept-card").forEach(function (el) {
+        el.classList.remove("active");
+      });
+      renderText();
+    });
+
+    $all(".legend-tab").forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        state.legendMode = tab.dataset.legend;
+        $all(".legend-tab").forEach(function (t) {
+          t.classList.toggle("active", t === tab);
+        });
+        renderLegend();
+      });
+    });
+
+    $("#check-tech-presence").addEventListener("click", checkPresence);
+    $("#self-check").addEventListener("click", selfCheck);
+    $("#show-sample").addEventListener("click", showSample);
+    $("#finish-layer3").addEventListener("click", finishLayer3);
+
+    const hints = $("#write-hints");
+    if (hints) {
+      hints.addEventListener("click", function (e) {
+        const chip = e.target.closest(".hint-chip");
+        if (!chip) return;
+        insertAtCursor($("#analysis-body"), chip.dataset.hint);
+        updateCharCount();
+      });
+    }
+
+    const nameInput = $("#student-name");
+    nameInput.value = loadJSON(STORAGE.student, "") || "";
+    nameInput.addEventListener("change", function () {
+      saveJSON(STORAGE.student, nameInput.value.trim());
     });
   }
 
   function init() {
-    state.done = loadJSON(STORAGE.progress, state.done);
-    const name = localStorage.getItem(STORAGE.student) || "";
-    $("#student-name").value = name;
-    $("#student-name").addEventListener("change", function () {
-      localStorage.setItem(STORAGE.student, $("#student-name").value.trim());
-    });
+    const savedProgress = loadJSON(STORAGE.progress, null);
+    if (savedProgress) state.done = Object.assign(state.done, savedProgress);
 
-    bindNav();
-    initLayer0();
-    initLayer1();
-    initLayer2();
-    initLayer3();
-    initLayer4();
-    initLayer5();
-    initTeacher();
+    renderConcepts();
+    renderLegend();
+    renderReadingMeta();
+    renderText();
+    renderLayer1();
+    renderLayer2();
+    renderLayer3();
+    bindUI();
     updateProgressUI();
     goLayer(0);
   }

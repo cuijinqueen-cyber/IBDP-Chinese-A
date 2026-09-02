@@ -1,15 +1,94 @@
-/* 文脉平台 · 文本与五层练习数据 */
+/* 文脉 · IBDP 文学 · 七大概念 + 三层精读练习数据 */
 window.APP = {
   brand: "文脉",
-  course: "IBDP 中文 A · 语言与文学"
+  course: "IBDP 中文 A · 文学",
+  tagline: "精读 · 主题 · 诠释"
 };
+
+/* IB 语言A文学：七大概念（各有独立色标） */
+window.CONCEPTS = [
+  {
+    id: "identity",
+    name: "身份",
+    nameEn: "Identity",
+    color: "#c45c26",
+    bg: "rgba(196,92,38,0.18)",
+    blurb: "文本如何塑造人物/叙述者的自我认知与尊严？",
+    focus: "少年“我”的自尊心被当众斩断，成年叙述者重新定义这段伤害。"
+  },
+  {
+    id: "culture",
+    name: "文化",
+    nameEn: "Culture",
+    color: "#8a6d3b",
+    bg: "rgba(138,109,59,0.18)",
+    blurb: "乡土教育、体罚、入团等习俗如何构成权力语境？",
+    focus: "师生权力、号歌、挖薯与入团，折射特定年代的教育文化。"
+  },
+  {
+    id: "creativity",
+    name: "创造力",
+    nameEn: "Creativity",
+    color: "#2a8f74",
+    bg: "rgba(42,143,116,0.18)",
+    blurb: "作者如何创造性地编织意象链与情感节奏？",
+    focus: "快刀—水草—芽—刀斫之痕：意象递进把羞辱写成创伤诗学。"
+  },
+  {
+    id: "communication",
+    name: "沟通",
+    nameEn: "Communication",
+    color: "#3d6ea8",
+    bg: "rgba(61,110,168,0.18)",
+    blurb: "耳光、辱骂、沉默与怜悯如何构成（失败的）沟通？",
+    focus: "暴力与沉默代替对话；晚年偶遇仍无法开口，沟通始终断裂。"
+  },
+  {
+    id: "perspective",
+    name: "视角",
+    nameEn: "Perspective",
+    color: "#b23a2f",
+    bg: "rgba(178,58,47,0.16)",
+    blurb: "成年回顾的双重视角如何改写少年仇恨？",
+    focus: "叙述者既贴近少年创伤，又以成熟声音评价、笑看与怜悯。"
+  },
+  {
+    id: "transformation",
+    name: "转变",
+    nameEn: "Transformation",
+    color: "#1f6f5b",
+    bg: "rgba(31,111,91,0.18)",
+    blurb: "从寻仇到发奋，再到怜悯，情感如何转变？",
+    focus: "仇恨—发奋—一笑泯之—怜悯：成长即对伤害的重新理解。"
+  },
+  {
+    id: "representation",
+    name: "再现",
+    nameEn: "Representation",
+    color: "#4a6670",
+    bg: "rgba(74,102,112,0.18)",
+    blurb: "文本如何再现创伤记忆与权力关系？",
+    focus: "细节、反差与象征共同再现“被忽视的柔弱心灵”。"
+  }
+];
+
+/* 文学手法色板（与概念色标分开体系） */
+window.TECHNIQUES = [
+  { id: "metaphor", name: "比喻", color: "#0d7a5f", bg: "rgba(13,122,95,0.28)", desc: "以彼物喻此物，使抽象可感" },
+  { id: "personify", name: "拟人", color: "#2f5f9a", bg: "rgba(47,95,154,0.28)", desc: "赋予物以人的情态动作" },
+  { id: "contrast", name: "对比", color: "#a83228", bg: "rgba(168,50,40,0.25)", desc: "并置差异以突出矛盾或变化" },
+  { id: "detail", name: "细节描写", color: "#9a7428", bg: "rgba(154,116,40,0.28)", desc: "细微动作与感官细节传情" },
+  { id: "psycho", name: "心理描写", color: "#5a6b3a", bg: "rgba(90,107,58,0.28)", desc: "直接呈现内心活动与幻想" },
+  { id: "irony", name: "反讽反差", color: "#d4632a", bg: "rgba(212,99,42,0.25)", desc: "表象与实质的错位" },
+  { id: "symbol", name: "象征意象", color: "#176655", bg: "rgba(23,102,85,0.28)", desc: "意象贯穿并升华主题" },
+  { id: "flashback", name: "插叙对照", color: "#556b78", bg: "rgba(85,107,120,0.28)", desc: "插入他事以对照或铺垫" }
+];
 
 window.TEXT_DATA = {
   title: "英语老师",
   author: "谢宗玉",
-  source: "选自《在往事中成长》",
-  examNote: "练习文本对应 IB Paper 1 非文学/文学评论能力训练",
-  fullText: "",
+  source: "选自《在往事中成长》· 教学示例文本",
+  guidingQuestion: "作者如何通过语言手法与叙事视角，再现成长中的伤害，并引导读者重新理解师生权力与身份尊严？",
   paragraphs: [
     { id: "p1", num: "①", text: "早晨，阳光照进教室，照着一颗颗晃动的脑袋和一张张开合的嘴。我们在晨读，我们在大声晨读。别人读的是英语，我对英语不感兴趣，我在读语文。英语老师从后面走进教室，我没觉察。他冷不防从我手中把书抢了，反手就甩了我一个耳光。一教室沸扬的声音就这样被他突如其来的耳光给掀哑了，大家愣愣地看着我俩，早晨照进来的阳光这时也有些茫然无措的样子。" },
     { id: "p2", num: "②", text: "英语老师扭过头叫道：你们停下来干嘛！然后一教室芽一般的声音又怯怯冒出来，顷刻间又是一片灿烂。英语老师拍了一下手，没事般地走了。" },
@@ -28,21 +107,28 @@ window.TEXT_DATA = {
   ]
 };
 
-/* 文学手法色板 —— 第二层标注用 */
-window.TECH_PALETTE = [
-  { id: "metaphor", name: "比喻", color: "#2a8f74", bg: "rgba(42,143,116,0.28)", desc: "以彼物喻此物，使抽象可感" },
-  { id: "personify", name: "拟人", color: "#3d6ea8", bg: "rgba(61,110,168,0.28)", desc: "赋予物以人的情态动作" },
-  { id: "contrast", name: "对比", color: "#b23a2f", bg: "rgba(178,58,47,0.25)", desc: "并置差异以突出矛盾或变化" },
-  { id: "detail", name: "细节/动作描写", color: "#8a6d3b", bg: "rgba(196,163,90,0.32)", desc: "细微动作与感官细节传情" },
-  { id: "psycho", name: "心理描写", color: "#6b4f9a", bg: "rgba(107,79,154,0.25)", desc: "直接呈现内心活动与幻想" },
-  { id: "irony", name: "反讽/反差", color: "#c45c26", bg: "rgba(196,92,38,0.25)", desc: "表象与实质的错位" },
-  { id: "symbol", name: "象征/意象链", color: "#1f6f5b", bg: "rgba(31,111,91,0.3)", desc: "意象贯穿并升华主题" },
-  { id: "flashback", name: "插叙/对照", color: "#4a6670", bg: "rgba(74,102,112,0.28)", desc: "插入他事以对照或铺垫" }
+/* 精读锚点：原文短语 → 手法 + 概念（用于彩色标注与对照） */
+window.ANNOTATIONS = [
+  { phrase: "阳光这时也有些茫然无措的样子", tech: "personify", concepts: ["creativity", "perspective"], effect: "景物拟人分担尴尬，放大当众受辱的窒息感。" },
+  { phrase: "芽一般的声音又怯怯冒出来", tech: "metaphor", concepts: ["creativity", "culture"], effect: "以怯怯冒出的芽喻压抑后的顺从，暗示权力下的恐惧。" },
+  { phrase: "没事般地走了", tech: "irony", concepts: ["communication", "identity"], effect: "施暴者轻描淡写，与受害者无法平静形成伦理反差。" },
+  { phrase: "他没事一般，我可不行", tech: "contrast", concepts: ["identity", "perspective"], effect: "并置双方反应，凸显权力不对等与尊严受损。" },
+  { phrase: "泪水却从我的指缝里快速渗出来", tech: "detail", concepts: ["identity", "representation"], effect: "动作细节写出强忍却失控的羞耻。" },
+  { phrase: "被一把无形的快刀给拦腰斩断了", tech: "metaphor", concepts: ["identity", "creativity"], effect: "把抽象自尊心具象为可被斩断之物，强化精神创伤。" },
+  { phrase: "仇恨的水草却疯了般昂扬生长", tech: "metaphor", concepts: ["transformation", "creativity"], effect: "潮湿蔓延的水草写仇恨难以铲除，预示情感失控。" },
+  { phrase: "我要报复，我要杀了他", tech: "psycho", concepts: ["identity", "transformation"], effect: "内心独白暴露少年创伤的极端反应。" },
+  { phrase: "细嫩的芽儿来", tech: "metaphor", concepts: ["transformation", "creativity"], effect: "伤口生芽暗示尊严/仇恨的再生与转化可能。" },
+  { phrase: "像唱号歌", tech: "metaphor", concepts: ["culture", "representation"], effect: "把课堂声音与丧葬号歌相连，暗示死亡语汇渗入日常。" },
+  { phrase: "非暴力不合作", tech: "irony", concepts: ["communication", "culture"], effect: "借政治语汇命名拒绝入团，软性对抗权力。" },
+  { phrase: "一笑泯之", tech: "contrast", concepts: ["transformation", "perspective"], effect: "以武侠宽解对照私人恩怨，标记叙述者成熟。" },
+  { phrase: "他依然把仇恨带在心上", tech: "flashback", concepts: ["perspective", "transformation"], effect: "插入同学经历作对照，凸显“我”已参悟。" },
+  { phrase: "遍布刀斫之痕", tech: "symbol", concepts: ["representation", "identity", "creativity"], effect: "呼应快刀意象，将个人羞辱普遍化为成长创伤。" },
+  { phrase: "说不出的怜悯", tech: "contrast", concepts: ["transformation", "communication"], effect: "仇恨转为怜悯，完成情感转变，却仍无法真正沟通。" }
 ];
 
-/* 第一层：识别手法 */
+/* —— 第一层：识别文本手法 —— */
 window.LAYER1 = {
-  intro: "先通读全文，判断文中出现了哪些文学手法。可多选；选完后查看解析。",
+  intro: "通读选段后，先判断文中出现了哪些文学手法，再为关键句选择最准确的手法名称。目标：练“看见”——能定位、能命名。",
   presentIds: ["metaphor", "personify", "contrast", "detail", "psycho", "irony", "symbol", "flashback"],
   distractors: [
     { id: "parallel", name: "排比", desc: "三项以上结构相似的并列" },
@@ -66,7 +152,7 @@ window.LAYER1 = {
       id: "q3",
       quote: "自尊心……就像被一把无形的快刀给拦腰斩断了。",
       answer: "metaphor",
-      explain: "比喻（兼意象）：把抽象尊严具象为可被斩断之物。"
+      explain: "比喻：把抽象尊严具象为可被斩断之物，强化精神创伤的剧烈感。"
     },
     {
       id: "q4",
@@ -78,160 +164,157 @@ window.LAYER1 = {
       id: "q5",
       quote: "俯下身把语文课本拾起。然后伏在课桌上……泪水却从我的指缝里快速渗出来。",
       answer: "detail",
-      explain: "细节/动作描写：俯、拾、伏与泪自指缝渗出，写出无力与屈辱。"
+      explain: "细节描写：俯、拾、伏与泪自指缝渗出，写出无力与屈辱。"
     },
     {
       id: "q6",
       quote: "大学同学仍怀恨在心，而“我”已哑然失笑。",
       answer: "flashback",
-      explain: "插叙对照：插入同学经历，对照不同成长路径，铺垫后文议论。"
+      explain: "插叙对照：插入同学经历，对照不同成长路径，铺垫主题。"
     },
     {
       id: "q7",
       quote: "成长的心灵，注定会遍布刀斫之痕……",
       answer: "symbol",
-      explain: "象征/意象链：呼应前文“快刀”，将个人伤痛普遍化。"
+      explain: "象征：呼应前文“快刀”，将个人伤痛普遍化为成长创伤。"
     },
     {
       id: "q8",
-      quote: "英语老师拍了一下手，没事般地走了。 / 后来“我”却“逃也似的溜了”，终觉怜悯。",
+      quote: "英语老师拍了一下手，没事般地走了。 / 后来“我”却逃也似的溜了，终觉怜悯。",
       answer: "irony",
-      explain: "反讽/反差：老师的轻描淡写与“我”长久的精神余震形成反差。"
+      explain: "反讽反差：老师的轻描淡写与“我”长久的精神余震形成错位。"
     }
   ]
 };
 
-/* 第二层：彩色标注参考答案（可选对照） */
-window.LAYER2_KEYS = [
-  { phrase: "茫然无措的样子", tech: "personify" },
-  { phrase: "芽一般的声音又怯怯冒出来", tech: "metaphor" },
-  { phrase: "一片灿烂", tech: "metaphor" },
-  { phrase: "俯下身把语文课本拾起", tech: "detail" },
-  { phrase: "伏在课桌上，一动也不动", tech: "detail" },
-  { phrase: "泪水却从我的指缝里快速渗出来", tech: "detail" },
-  { phrase: "被一把无形的快刀给拦腰斩断了", tech: "metaphor" },
-  { phrase: "仇恨的水草却疯了般昂扬生长", tech: "metaphor" },
-  { phrase: "我要报复，我要杀了他", tech: "psycho" },
-  { phrase: "细嫩的芽儿来", tech: "metaphor" },
-  { phrase: "他没事一般，我可不行", tech: "contrast" },
-  { phrase: "像唱号歌", tech: "metaphor" },
-  { phrase: "非暴力不合作", tech: "irony" },
-  { phrase: "一笑泯之", tech: "contrast" },
-  { phrase: "他依然把仇恨带在心上", tech: "flashback" },
-  { phrase: "遍布刀斫之痕", tech: "symbol" },
-  { phrase: "说不出的怜悯", tech: "contrast" }
-];
-
-/* 第三层：深入思考 */
-window.LAYER3 = [
-  {
-    id: "t1",
-    focus: "人物与权力",
-    prompt: "英语老师是“纯粹的施暴者”吗？文本如何让你看见他形象的复杂性？",
-    hints: ["打耳光与“棺材”口头禅", "唱号歌、趴桌睡觉、晚年敲钟", "推荐入团是否算一种扭曲的关切"]
-  },
-  {
-    id: "t2",
-    focus: "叙事视角",
-    prompt: "成年叙述者回望少年“我”，这种双重声音如何影响语气、评价与主题表达？",
-    hints: ["“为自己幼稚的想法感到好笑”", "“也许他还没参悟透”", "结尾的怜悯是否完成和解"]
-  },
-  {
-    id: "t3",
-    focus: "意象与主题",
-    prompt: "从“快刀”“水草”“芽”到“刀斫之痕”，意象链如何把个人羞辱写成成长创伤？",
-    hints: ["具象化精神伤痛", "再生与蔓延", "个人经验的普遍化"]
-  },
-  {
-    id: "t4",
-    focus: "读者与伦理",
-    prompt: "文本是否邀请读者原谅老师？“忘记仇恨”与“承认伤害”在文中如何并存？",
-    hints: ["同学对照", "偶遇时逃走", "“说不出的怜悯”"]
-  },
-  {
-    id: "t5",
-    focus: "全局问题（IB）",
-    prompt: "若联系 IB 全局问题，本文更贴近哪一类？试说明文本如何回应“文化中的权力”或“信念与价值观”。",
-    hints: ["师生权力不对等", "乡土教育与体罚常态", "成长中的尊严与身份"]
-  }
-];
-
-/* 第四层：IBDP 写作大纲 */
-window.IB_OUTLINE = {
-  paper: "Paper 1 · 文本分析 / 评论写作",
-  criteria: [
+/* —— 第二层：分析手法的作用与效果 —— */
+window.LAYER2 = {
+  intro: "识别之后，进一步追问：这一手法如何作用于读者感受、人物形象与主题？每题选出最贴切的效果说明，并思考它通向哪一概念。",
+  tasks: [
     {
-      id: "A",
-      name: "标准 A：理解与阐释",
-      guide: "准确把握文本意义、语境与作者意图；阐释需有文本依据。"
+      id: "e1",
+      quote: "阳光这时也有些茫然无措的样子",
+      tech: "personify",
+      concept: "perspective",
+      prompt: "此处拟人的主要效果是？",
+      options: [
+        { id: "a", text: "说明当天天气突变，预示情节转折", correct: false },
+        { id: "b", text: "让景物分担尴尬，放大公开受辱的窒息气氛", correct: true },
+        { id: "c", text: "赞美晨光美好，冲淡暴力场面", correct: false },
+        { id: "d", text: "暗示英语老师内心也感到愧疚", correct: false }
+      ],
+      explain: "景物拟人把教室里的尴尬外化，读者与“大家”一起愣住，强化当众羞辱的压迫感；同时以旁观式视角烘托事件冲击。"
     },
     {
-      id: "B",
-      name: "标准 B：分析与评价",
-      guide: "分析作者如何运用语言、结构、技巧与风格制造意义；评价其效果。"
+      id: "e2",
+      quote: "自尊心……被一把无形的快刀给拦腰斩断了",
+      tech: "metaphor",
+      concept: "identity",
+      prompt: "“快刀”这一比喻如何服务于主题？",
+      options: [
+        { id: "a", text: "强调耳光造成的身体疼痛", correct: false },
+        { id: "b", text: "把抽象尊严具象化，凸显精神创伤的剧烈与不可逆", correct: true },
+        { id: "c", text: "暗示叙述者日后真的会持刀报复", correct: false },
+        { id: "d", text: "表现英语老师武功高强", correct: false }
+      ],
+      explain: "尊严被写成可斩断之物，使“身份”受损变得可感；后文“刀斫之痕”与之呼应，形成意象链。"
     },
     {
-      id: "C",
-      name: "标准 C：连贯与组织",
-      guide: "论点清晰，段落有逻辑推进，开头与结尾有效服务整体论证。"
+      id: "e3",
+      quote: "他没事一般，我可不行",
+      tech: "contrast",
+      concept: "communication",
+      prompt: "这一对比最能揭示什么？",
+      options: [
+        { id: "a", text: "师生性格一冷一热的差异", correct: false },
+        { id: "b", text: "权力不对等下沟通断裂：施暴者可抽身，受害者无法平静", correct: true },
+        { id: "c", text: "“我”小题大做，老师并无恶意", correct: false },
+        { id: "d", text: "教室纪律很快恢复正常", correct: false }
+      ],
+      explain: "对比不是简单性格描写，而是呈现沟通失败与伦理失衡：暴力取代对话，一方“没事”，一方创伤长留。"
     },
     {
-      id: "D",
-      name: "标准 D：语言",
-      guide: "用语准确、得体、有文学评论意识；句式有变化，术语使用恰当。"
+      id: "e4",
+      quote: "仇恨的水草却疯了般昂扬生长",
+      tech: "metaphor",
+      concept: "transformation",
+      prompt: "用水草写仇恨，对情感转变线有何作用？",
+      options: [
+        { id: "a", text: "表现“我”热爱植物与自然", correct: false },
+        { id: "b", text: "写出仇恨潮湿、蔓延、难以铲除，为后文从寻仇到转化蓄势", correct: true },
+        { id: "c", text: "说明教室环境潮湿阴暗", correct: false },
+        { id: "d", text: "讽刺同学的冷漠围观", correct: false }
+      ],
+      explain: "水草意象让仇恨可视化、有生命力；后文“芽儿”“一笑泯之”“怜悯”构成转变轨迹的对照。"
+    },
+    {
+      id: "e5",
+      quote: "他依然把仇恨带在心上……我……哑然失笑",
+      tech: "flashback",
+      concept: "perspective",
+      prompt: "插入同学经历的主要效果是？",
+      options: [
+        { id: "a", text: "证明所有学生都曾被体罚", correct: false },
+        { id: "b", text: "以对照凸显成年叙述者视角的转变与“参悟”", correct: true },
+        { id: "c", text: "引出法律楼天台的风景描写", correct: false },
+        { id: "d", text: "批评同学胆小不敢报复", correct: false }
+      ],
+      explain: "插叙提供平行个案，让读者看见两种回应创伤的路径；“失笑”标记视角成熟，而非简单原谅。"
+    },
+    {
+      id: "e6",
+      quote: "成长的心灵，注定会遍布刀斫之痕",
+      tech: "symbol",
+      concept: "representation",
+      prompt: "“刀斫之痕”作为象征，如何完成主题升华？",
+      options: [
+        { id: "a", text: "仅回顾耳光的物理伤痕", correct: false },
+        { id: "b", text: "呼应“快刀”意象，把个人羞辱再现为普遍的成长创伤", correct: true },
+        { id: "c", text: "暗示成年人故意伤害儿童", correct: false },
+        { id: "d", text: "呼吁废除所有学校教育", correct: false }
+      ],
+      explain: "象征把私密记忆写成可共享的创伤再现；同时回扣身份、文化权力与被忽视的柔弱心灵。"
     }
-  ],
+  ]
+};
+
+/* —— 第三层：写一段文本分析 —— */
+window.LAYER3 = {
+  intro: "综合前两层：选定证据 → 命名手法 → 阐释效果 → 连接概念/主题。完成一段 120–220 字的分析文字。",
   prompts: [
     {
-      id: "wp1",
-      title: "人物形象",
-      question: "选文塑造的英语老师形象有何特色？请结合文本加以分析。"
+      id: "w1",
+      title: "身份与尊严",
+      concept: "identity",
+      question: "作者如何通过比喻与细节描写，表现少年“我”的身份尊严如何被当众摧毁？",
+      hints: ["快刀 / 拦腰斩断", "指缝渗泪、俯身拾书", "效果 → 主题：精神创伤"]
     },
     {
-      id: "wp2",
-      title: "师生关系",
-      question: "作者对师生关系的描写起到了哪些作用？"
+      id: "w2",
+      title: "视角与转变",
+      concept: "perspective",
+      question: "成年叙述者的回顾视角，如何改写少年仇恨并完成情感转变？请结合插叙或对比手法分析。",
+      hints: ["一笑泯之 / 同学对照", "双重视角", "从寻仇到怜悯"]
     },
     {
-      id: "wp3",
-      title: "表现手法",
-      question: "作者采用了哪些表现手法？这些手法如何服务于主题？"
-    },
-    {
-      id: "wp4",
-      title: "结尾启示",
-      question: "故事的结尾给了你哪些启示？请作有文本依据的阐释。"
+      id: "w3",
+      title: "意象与再现",
+      concept: "representation",
+      question: "从“快刀”“水草”“芽”到“刀斫之痕”，意象链如何再现成长创伤这一主题？",
+      hints: ["意象递进", "个人→普遍", "创造力与再现"]
     }
   ],
-  outlineSlots: [
-    { id: "thesis", label: "中心论点", placeholder: "一句话概括你的核心判断（避免只复述情节）……" },
-    { id: "p1", label: "主体段 1：观点 + 引文 + 手法 + 效果", placeholder: "观点：\n引文：\n手法：\n效果/主题：" },
-    { id: "p2", label: "主体段 2：观点 + 引文 + 手法 + 效果", placeholder: "观点：\n引文：\n手法：\n效果/主题：" },
-    { id: "p3", label: "主体段 3（可选）：对照 / 结构 / 结尾", placeholder: "可写情感转变、插叙作用或结尾怜悯……" },
-    { id: "conc", label: "结尾回扣", placeholder: "回扣中心论点，提升到成长/权力/记忆等层面……" }
-  ]
-};
-
-/* AI 初评用关键词与引文库 */
-window.AI_RUBRIC = {
-  minChars: 350,
-  targetChars: 800,
-  quoteSnippets: [
-    "茫然无措", "芽一般", "快刀", "拦腰斩断", "仇恨的水草", "细嫩的芽",
-    "没事一般", "指缝", "号歌", "棺材", "非暴力不合作", "一笑泯之",
-    "刀斫之痕", "怜悯", "挖薯", "入团"
+  frames: [
+    "作者运用……手法，将“……”描写为……，使读者感受到……。",
+    "这一写法不仅……，更进一步揭示了……（概念/主题）。",
+    "与后文“……”形成呼应/对照，强化了……的表达效果。"
   ],
-  techTerms: [
-    "比喻", "拟人", "对比", "细节", "心理", "反讽", "象征", "意象",
-    "插叙", "对照", "动作描写", "叙述视角", "反差", "讽刺"
+  rubric: [
+    { id: "evidence", label: "文本证据", tip: "含具体引文或明确指涉句段" },
+    { id: "technique", label: "手法命名", tip: "准确使用文学术语" },
+    { id: "effect", label: "效果阐释", tip: "说明对读者/意义的作用，而非只贴标签" },
+    { id: "concept", label: "概念/主题", tip: "连接到身份、视角、转变、再现等概念之一" },
+    { id: "cohesion", label: "连贯表达", tip: "句间有推进，避免情节复述堆砌" }
   ],
-  themeTerms: [
-    "自尊心", "伤害", "成长", "权力", "师生", "怜悯", "仇恨", "记忆",
-    "尊严", "乡土", "创伤", "不对等"
-  ],
-  structureSignals: {
-    intro: ["首先", "本文", "作者", "开篇", "选文", "塑造", "展现"],
-    body: ["例如", "通过", "运用", "写出", "表现", "可见", "由此", "这一"],
-    conclusion: ["综上", "总而言之", "由此可见", "因此", "结尾", "启示", "回扣"]
-  }
+  sample: "作者以“无形的快刀……拦腰斩断”为喻，将抽象的自尊心具象为可被斩断之物，使当众受辱的精神创伤变得剧烈可感。配合“泪水……从指缝里……渗出来”的细节，羞耻被写成身体化的失控。这一写法紧扣“身份”概念：少年的自我尊严在权力暴力下瞬间崩塌，并为后文“刀斫之痕”的象征升华埋下意象伏笔。"
 };
