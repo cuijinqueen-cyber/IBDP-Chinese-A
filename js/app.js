@@ -405,6 +405,46 @@
     $("#explain-quote").textContent = "「" + item.phrase + "」";
     $("#explain-ask").textContent = item.ask || "观察这句话的异常之处，并思考手法。";
 
+    // Persistent underlined-line解析
+    const parseText = $("#line-parse-text");
+    if (parseText) {
+      parseText.textContent =
+        item.lineParse ||
+        item.techHow ||
+        "回到划线句，抓住关键词与修辞标志，说明作者如何写、为何这样写。";
+    }
+    const parseEffect = $("#line-parse-effect");
+    if (parseEffect) parseEffect.textContent = item.effect || "";
+    const parseTags = $("#line-parse-tags");
+    if (parseTags) {
+      let html = "";
+      if (tech) {
+        html +=
+          '<span class="concept-chip" style="--c:' +
+          tech.color +
+          ";--cbg:" +
+          tech.bg +
+          '"><span class="dot"></span>' +
+          escapeHtml(tech.name) +
+          "</span>";
+      }
+      (item.concepts || []).forEach(function (cid) {
+        const c = conceptById(cid);
+        if (!c) return;
+        html +=
+          '<span class="concept-chip" style="--c:' +
+          c.color +
+          ";--cbg:" +
+          c.bg +
+          '"><span class="dot"></span>' +
+          escapeHtml(c.name) +
+          "</span>";
+      });
+      parseTags.innerHTML = html;
+    }
+    const again = $("#explain-line-parse-again");
+    if (again) again.textContent = item.lineParse || "";
+
     renderGuessOptions(item);
 
     // Step 3 content

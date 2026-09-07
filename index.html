@@ -118,11 +118,21 @@
               <p id="close-progress-text">已精读 0 / 19 处手法</p>
             </div>
 
-            <p class="explain-empty" id="explain-empty">点击「开始带读」，或点原文彩色句段。每处按四步完成：观察 → 辨认手法 → 拆解手法 → 阐释效果。</p>
+            <p class="explain-empty" id="explain-empty">点击原文彩色划线句，或按「开始带读」。选中后会先显示<strong>划线部分解析</strong>（手法 + 句段精讲 + 效果），再按四步完成带读。</p>
 
             <div id="explain-content" hidden>
               <p class="eyebrow" id="explain-step-label">手法精读</p>
               <blockquote class="explain-quote" id="explain-quote"></blockquote>
+
+              <!-- Always-visible parse of the underlined phrase -->
+              <div class="line-parse-card" id="line-parse-card">
+                <div class="line-parse-head">
+                  <h3>划线部分解析</h3>
+                  <div class="explain-tags" id="line-parse-tags"></div>
+                </div>
+                <p class="line-parse-text" id="line-parse-text"></p>
+                <p class="line-parse-effect"><strong>效果：</strong><span id="line-parse-effect"></span></p>
+              </div>
 
               <!-- Step chips -->
               <div class="step-rail" id="step-rail" aria-label="精读步骤">
@@ -153,11 +163,15 @@
                   <h3>手法定义</h3>
                   <p id="explain-tech"></p>
                 </div>
+                <div class="explain-block explain-note">
+                  <h3>划线句再解析</h3>
+                  <p id="explain-line-parse-again"></p>
+                </div>
                 <div class="explain-block">
                   <h3>文本中的手法标记</h3>
                   <ul class="marker-list" id="explain-markers"></ul>
                 </div>
-                <div class="explain-block explain-note">
+                <div class="explain-block">
                   <h3>手法精讲</h3>
                   <p id="explain-note"></p>
                 </div>
