@@ -680,7 +680,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.65rem;
 }
 
 .line-parse-head h3 {
@@ -692,23 +692,52 @@ body {
   color: var(--jade);
 }
 
+.parse-section {
+  margin-bottom: 0.75rem;
+}
+
+.parse-section h4 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
 .line-parse-text {
-  margin: 0 0 0.65rem;
+  margin: 0;
   font-size: 0.95rem;
   line-height: 1.7;
   color: var(--ink);
 }
 
-.line-parse-effect {
-  margin: 0;
-  padding-top: 0.55rem;
-  border-top: 1px dashed rgba(31, 111, 91, 0.25);
-  font-size: 0.9rem;
-  color: var(--ink-soft);
+.parse-effect-box {
+  margin-bottom: 0;
+  padding: 0.75rem 0.85rem;
+  border-radius: 10px;
+  background: rgba(178, 58, 47, 0.08);
+  border-left: 4px solid var(--cinnabar);
 }
 
-.line-parse-effect strong {
-  color: var(--jade);
+.parse-effect-box h4 {
+  color: var(--cinnabar);
+}
+
+.line-parse-effect-main {
+  margin: 0 0 0.45rem;
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.line-parse-effect-detail {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
 }
 
 .guided-progress {

@@ -405,7 +405,7 @@
     $("#explain-quote").textContent = "「" + item.phrase + "」";
     $("#explain-ask").textContent = item.ask || "观察这句话的异常之处，并思考手法。";
 
-    // Persistent underlined-line解析
+    // Persistent underlined-line解析 + 效果
     const parseText = $("#line-parse-text");
     if (parseText) {
       parseText.textContent =
@@ -414,7 +414,17 @@
         "回到划线句，抓住关键词与修辞标志，说明作者如何写、为何这样写。";
     }
     const parseEffect = $("#line-parse-effect");
-    if (parseEffect) parseEffect.textContent = item.effect || "";
+    if (parseEffect) {
+      parseEffect.textContent =
+        item.effect ||
+        (ann && ann.effect) ||
+        "思考这一手法让读者产生什么感受，又如何服务主题。";
+    }
+    const parseEffectDetail = $("#line-parse-effect-detail");
+    if (parseEffectDetail) {
+      parseEffectDetail.textContent = item.effectDetail || "";
+      parseEffectDetail.hidden = !item.effectDetail;
+    }
     const parseTags = $("#line-parse-tags");
     if (parseTags) {
       let html = "";
@@ -443,7 +453,11 @@
       parseTags.innerHTML = html;
     }
     const again = $("#explain-line-parse-again");
-    if (again) again.textContent = item.lineParse || "";
+    if (again) {
+      again.textContent =
+        (item.lineParse || "") +
+        (item.effect ? " 【效果】" + item.effect : "");
+    }
 
     renderGuessOptions(item);
 
