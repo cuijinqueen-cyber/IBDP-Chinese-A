@@ -6,7 +6,8 @@
     student: "wenmai-lit-student-v1",
     analysis: "wenmai-lit-analysis-v1",
     layer1: "wenmai-lit-layer1-v1",
-    layer2: "wenmai-lit-layer2-v1"
+    layer2: "wenmai-lit-layer2-v1",
+    closeDone: "wenmai-lit-close-done-v1"
   };
 
   const state = {
@@ -18,7 +19,10 @@
     layer1QuoteCorrect: 0,
     layer2Correct: 0,
     activeAnn: -1,
-    tourIndex: -1
+    tourIndex: -1,
+    closeStep: 1,
+    closeDone: {},
+    guessed: false
   };
 
   function $(sel, root) {
@@ -234,10 +238,12 @@
       }
 
       const active = state.activeAnn === r.annIndex ? " active" : "";
+      const done = state.closeDone[r.annIndex] ? " read-done" : "";
       html +=
         '<mark class="mark' +
         (dim ? " dim" : "") +
         active +
+        done +
         '" tabindex="0" role="button" style="background:' +
         bg +
         "; box-shadow: inset 0 -2px 0 " +
@@ -277,86 +283,223 @@
       .join("");
   }
 
-  function showExplanation(annIndex) {
+  function closeReadingByIndex(i) {
+    return (window.CLOSE_READINGS && window.CLOSE_READINGS[i]) || null;
+  }
+
+  function setCloseStep(step) {
+    state.closeStep = step;
+    $all(".step-chip").forEach(function (chip) {
+      const s = Number(chip.dataset.step);
+      chip.classList.toggle("active", s === step);
+      chip.classList.toggle("done", s < step);
+    });
+    $all(".step-pane").forEach(function (pane) {
+      pane.hidden = Number(pane.dataset.pane) !== step;
+    });
+    const label = $("#explain-step-label");
+    if (label) {
+      const names = { 1: "步骤 1 · 观察", 2: "步骤 2 · 辨认手法", 3: "步骤 3 · 拆解手法", 4: "步骤 4 · 效果" };
+      label.textContent = names[step] || "手法精读";
+    }
+  }
+
+  function updateCloseProgressUI() {
+    const total = (window.CLOSE_READINGS || window.ANNOTATIONS).length;
+    let done = 0;
+    Object.keys(state.closeDone).forEach(function (k) {
+      if (state.closeDone[k]) done += 1;
+    });
+    const bar = $("#close-progress");
+    if (bar) bar.style.width = (done / total) * 100 + "%";
+    const text = $("#close-progress-text");
+    if (text) text.textContent = "已精读 " + done + " / " + total + " 处手法";
+    const pos = $("#tour-pos");
+    if (pos) {
+      if (state.activeAnn >= 0) {
+        pos.textContent =
+          "第 " + (state.activeAnn + 1) + " / " + total + " 处" +
+          (state.closeDone[state.activeAnn] ? " · 已完成" : "");
+      } else {
+        pos.textContent = "共 " + total + " 处手法精读";
+      }
+    }
+  }
+
+  function shuffleCopy(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = a[i];
+      a[i] = a[j];
+      a[j] = t;
+    }
+    return a;
+  }
+
+  function renderGuessOptions(cr) {
+    const box = $("#guess-tech-opts");
+    const fb = $("#guess-tech-feedback");
+    const nextBtn = $("#to-step-3");
+    if (!box) return;
+    state.guessed = false;
+    if (fb) {
+      fb.textContent = "";
+      fb.className = "feedback";
+    }
+    if (nextBtn) nextBtn.hidden = true;
+
+    const correct = techById(cr.tech);
+    let options = [correct];
+    const others = window.TECHNIQUES.filter(function (t) {
+      return t.id !== cr.tech;
+    });
+    shuffleCopy(others).slice(0, 3).forEach(function (t) {
+      options.push(t);
+    });
+    options = shuffleCopy(options);
+
+    box.innerHTML = options
+      .map(function (t) {
+        return (
+          '<label class="opt guess-opt" style="border-left:3px solid ' +
+          t.color +
+          '"><input type="radio" name="guess-tech" value="' +
+          t.id +
+          '" /><span><strong>' +
+          escapeHtml(t.name) +
+          "</strong> — " +
+          escapeHtml(t.desc) +
+          "</span></label>"
+        );
+      })
+      .join("");
+  }
+
+  function showExplanation(annIndex, startStep) {
+    const cr = closeReadingByIndex(annIndex);
     const ann = window.ANNOTATIONS[annIndex];
-    if (!ann) return;
+    if (!ann && !cr) return;
+    const item = cr || {
+      phrase: ann.phrase,
+      tech: ann.tech,
+      concepts: ann.concepts,
+      effect: ann.effect,
+      ask: "这一处主要用了什么文学手法？",
+      markers: [],
+      techHow: (window.READING_NOTES && window.READING_NOTES[ann.phrase]) || "",
+      effectDetail: "",
+      model: ""
+    };
+
     state.activeAnn = annIndex;
     state.tourIndex = annIndex;
+    state.guessed = !!state.closeDone[annIndex];
 
-    const tech = techById(ann.tech);
+    const tech = techById(item.tech);
     const empty = $("#explain-empty");
     const content = $("#explain-content");
     if (empty) empty.hidden = true;
     if (content) content.hidden = false;
 
-    $("#explain-quote").textContent = "「" + ann.phrase + "」";
+    $("#explain-quote").textContent = "「" + item.phrase + "」";
+    $("#explain-ask").textContent = item.ask || "观察这句话的异常之处，并思考手法。";
 
+    renderGuessOptions(item);
+
+    // Step 3 content
     const tags = $("#explain-tags");
-    let tagHtml = "";
-    if (tech) {
-      tagHtml +=
-        '<span class="concept-chip" style="--c:' +
-        tech.color +
-        ";--cbg:" +
-        tech.bg +
-        '"><span class="dot"></span>手法 · ' +
-        escapeHtml(tech.name) +
-        "</span>";
+    if (tags) {
+      let tagHtml = "";
+      if (tech) {
+        tagHtml +=
+          '<span class="concept-chip" style="--c:' +
+          tech.color +
+          ";--cbg:" +
+          tech.bg +
+          '"><span class="dot"></span>手法 · ' +
+          escapeHtml(tech.name) +
+          "</span>";
+      }
+      (item.concepts || []).forEach(function (cid) {
+        const c = conceptById(cid);
+        if (!c) return;
+        tagHtml +=
+          '<span class="concept-chip" style="--c:' +
+          c.color +
+          ";--cbg:" +
+          c.bg +
+          '"><span class="dot"></span>' +
+          escapeHtml(c.name) +
+          "</span>";
+      });
+      tags.innerHTML = tagHtml;
     }
-    ann.concepts.forEach(function (cid) {
-      const c = conceptById(cid);
-      if (!c) return;
-      tagHtml +=
-        '<span class="concept-chip" style="--c:' +
-        c.color +
-        ";--cbg:" +
-        c.bg +
-        '"><span class="dot"></span>' +
-        escapeHtml(c.name) +
-        " · " +
-        escapeHtml(c.nameEn) +
-        "</span>";
-    });
-    tags.innerHTML = tagHtml;
 
     $("#explain-tech").textContent = tech
       ? tech.name + "：" + tech.desc
-      : ann.tech;
-    $("#explain-effect").textContent = ann.effect;
+      : item.tech;
 
-    const conceptsBox = $("#explain-concepts");
-    conceptsBox.innerHTML = ann.concepts
-      .map(function (cid) {
-        const c = conceptById(cid);
-        if (!c) return "";
-        return (
-          '<div class="concept-explain" style="--c:' +
-          c.color +
-          '"><strong>' +
-          escapeHtml(c.name) +
-          "</strong><span>" +
-          escapeHtml(c.nameEn) +
-          "</span><p>" +
-          escapeHtml(c.focus || c.blurb) +
-          "</p></div>"
-        );
-      })
-      .join("");
-
-    const note =
-      (window.READING_NOTES && window.READING_NOTES[ann.phrase]) ||
-      "把引文、手法与效果连成一句分析，再问它如何回应引导问题。";
-    $("#explain-note").textContent = note;
-
-    const pos = $("#tour-pos");
-    if (pos) {
-      pos.textContent =
-        "精读 " + (annIndex + 1) + " / " + window.ANNOTATIONS.length;
+    const markers = $("#explain-markers");
+    if (markers) {
+      const list = item.markers && item.markers.length
+        ? item.markers
+        : ["回到原文，标出提示该手法的关键词或句式。"];
+      markers.innerHTML = list
+        .map(function (m) {
+          return "<li>" + escapeHtml(m) + "</li>";
+        })
+        .join("");
     }
 
-    // highlight active marks without full re-render if possible
+    $("#explain-note").textContent =
+      item.techHow ||
+      (window.READING_NOTES && window.READING_NOTES[item.phrase]) ||
+      "";
+
+    // Step 4
+    $("#explain-effect").textContent = item.effect || "";
+    const detail = $("#explain-effect-detail");
+    if (detail) detail.textContent = item.effectDetail || "";
+
+    const conceptsBox = $("#explain-concepts");
+    if (conceptsBox) {
+      conceptsBox.innerHTML = (item.concepts || [])
+        .map(function (cid) {
+          const c = conceptById(cid);
+          if (!c) return "";
+          return (
+            '<div class="concept-explain" style="--c:' +
+            c.color +
+            '"><strong>' +
+            escapeHtml(c.name) +
+            "</strong><span>" +
+            escapeHtml(c.nameEn) +
+            "</span><p>" +
+            escapeHtml(c.focus || c.blurb) +
+            "</p></div>"
+          );
+        })
+        .join("");
+    }
+
+    const model = $("#explain-model");
+    if (model) model.textContent = item.model || "";
+
+    const doneFb = $("#close-done-feedback");
+    if (doneFb) {
+      doneFb.textContent = state.closeDone[annIndex]
+        ? "本处已标记完成。可继续下一处。"
+        : "";
+      doneFb.className = state.closeDone[annIndex] ? "feedback ok" : "feedback";
+    }
+
+    setCloseStep(startStep || 1);
+    updateCloseProgressUI();
+
     $all(".mark").forEach(function (m) {
       m.classList.toggle("active", Number(m.dataset.annIndex) === annIndex);
+      m.classList.toggle("read-done", !!state.closeDone[Number(m.dataset.annIndex)]);
     });
 
     const activeMark = $('.mark[data-ann-index="' + annIndex + '"]');
@@ -373,11 +516,12 @@
       });
       renderText();
     }
+    const total = (window.CLOSE_READINGS || window.ANNOTATIONS).length;
     let next = state.tourIndex + delta;
     if (state.tourIndex < 0) next = 0;
-    if (next < 0) next = window.ANNOTATIONS.length - 1;
-    if (next >= window.ANNOTATIONS.length) next = 0;
-    showExplanation(next);
+    if (next < 0) next = total - 1;
+    if (next >= total) next = 0;
+    showExplanation(next, 1);
   }
 
   function bindTextClicks() {
@@ -388,15 +532,125 @@
       const mark = e.target.closest(".mark");
       if (!mark) return;
       const idx = Number(mark.dataset.annIndex);
-      if (!Number.isNaN(idx)) showExplanation(idx);
+      if (!Number.isNaN(idx)) showExplanation(idx, 1);
     });
     body.addEventListener("keydown", function (e) {
       if (e.key !== "Enter" && e.key !== " ") return;
       const mark = e.target.closest(".mark");
       if (!mark) return;
       e.preventDefault();
-      showExplanation(Number(mark.dataset.annIndex));
+      showExplanation(Number(mark.dataset.annIndex), 1);
     });
+  }
+
+  function bindGuidedCloseReading() {
+    const start = $("#start-tour");
+    if (start) {
+      start.addEventListener("click", function () {
+        showExplanation(state.activeAnn >= 0 ? state.activeAnn : 0, 1);
+      });
+    }
+
+    const to2 = $("#to-step-2");
+    if (to2) to2.addEventListener("click", function () { setCloseStep(2); });
+
+    const guessBox = $("#guess-tech-opts");
+    if (guessBox) {
+      guessBox.addEventListener("change", function (e) {
+        const input = e.target;
+        if (!input.matches('input[type="radio"]')) return;
+        const cr = closeReadingByIndex(state.activeAnn);
+        if (!cr) return;
+        const fb = $("#guess-tech-feedback");
+        const nextBtn = $("#to-step-3");
+        $all(".guess-opt", guessBox).forEach(function (o) {
+          o.classList.remove("correct", "wrong");
+        });
+        const label = input.closest(".guess-opt");
+        if (input.value === cr.tech) {
+          label.classList.add("correct");
+          state.guessed = true;
+          if (fb) {
+            fb.className = "feedback ok";
+            fb.textContent = "正确。下一步拆解：这一手法在文本里靠哪些标记运作？";
+          }
+          if (nextBtn) nextBtn.hidden = false;
+        } else {
+          label.classList.add("wrong");
+          if (fb) {
+            fb.className = "feedback bad";
+            fb.textContent = "还不是最准确的手法。再看引文中的标志词／句式，或查看其他选项。";
+          }
+        }
+      });
+    }
+
+    const to3 = $("#to-step-3");
+    if (to3) to3.addEventListener("click", function () { setCloseStep(3); });
+
+    const to4 = $("#to-step-4");
+    if (to4) to4.addEventListener("click", function () { setCloseStep(4); });
+
+    $all(".step-chip").forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        if (state.activeAnn < 0) return;
+        const step = Number(chip.dataset.step);
+        // allow going back freely; forward to 3/4 requires guess or already done
+        if (step >= 3 && !state.guessed && !state.closeDone[state.activeAnn]) {
+          setCloseStep(2);
+          const fb = $("#guess-tech-feedback");
+          if (fb) {
+            fb.className = "feedback bad";
+            fb.textContent = "请先完成手法辨认，再进入拆解与效果。";
+          }
+          return;
+        }
+        setCloseStep(step);
+      });
+    });
+
+    const markDone = $("#mark-close-done");
+    if (markDone) {
+      markDone.addEventListener("click", function () {
+        if (state.activeAnn < 0) return;
+        state.closeDone[state.activeAnn] = true;
+        saveJSON(STORAGE.closeDone, state.closeDone);
+        updateCloseProgressUI();
+        $all('.mark[data-ann-index="' + state.activeAnn + '"]').forEach(function (m) {
+          m.classList.add("read-done");
+        });
+        const fb = $("#close-done-feedback");
+        if (fb) {
+          fb.className = "feedback ok";
+          fb.textContent = "已完成本处手法精读。建议继续下一处，或累计完成 8 处后进入练习层。";
+        }
+      });
+    }
+
+    const nextInline = $("#tour-next-inline");
+    if (nextInline) {
+      nextInline.addEventListener("click", function () {
+        tourStep(1);
+      });
+    }
+
+    const copyBtn = $("#copy-model");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", function () {
+        const text = ($("#explain-model") && $("#explain-model").textContent) || "";
+        if (!text) return;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            copyBtn.textContent = "已复制示范句";
+            setTimeout(function () {
+              copyBtn.textContent = "插入到剪贴板提示";
+            }, 1500);
+          });
+        } else {
+          copyBtn.textContent = "请手动选中示范句复制";
+        }
+      });
+    }
   }
 
   function renderReadingMeta() {
@@ -945,6 +1199,7 @@
     if (tourNext) tourNext.addEventListener("click", function () { tourStep(1); });
 
     bindTextClicks();
+    bindGuidedCloseReading();
 
     $all(".legend-tab").forEach(function (tab) {
       tab.addEventListener("click", function () {
@@ -981,6 +1236,7 @@
   function init() {
     const savedProgress = loadJSON(STORAGE.progress, null);
     if (savedProgress) state.done = Object.assign(state.done, savedProgress);
+    state.closeDone = loadJSON(STORAGE.closeDone, {}) || {};
 
     renderConcepts();
     renderLegend();
@@ -991,6 +1247,7 @@
     renderLayer3();
     bindUI();
     updateProgressUI();
+    updateCloseProgressUI();
     goLayer(0);
   }
 

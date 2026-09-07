@@ -53,7 +53,7 @@
 
       <nav class="layer-nav" id="layer-nav" aria-label="练习层级">
         <button class="layer-nav-btn active" data-layer="0" type="button">
-          <span class="ln">读</span><span>文本精读</span>
+          <span class="ln">读</span><span>手法带读</span>
         </button>
         <button class="layer-nav-btn" data-layer="1" type="button">
           <span class="ln">01</span><span>识别手法</span>
@@ -87,14 +87,15 @@
       <!-- Layer 0: Close reading -->
       <section class="panel active" id="panel-0" data-panel="0">
         <header class="panel-head">
-          <p class="eyebrow">文本精读</p>
+          <p class="eyebrow">手法带读 · 精读工坊</p>
           <h1 class="panel-title" id="work-title"></h1>
           <p class="panel-lead" id="work-meta"></p>
           <p class="guiding" id="guiding-q"></p>
+          <p class="panel-lead" style="margin-top:0.75rem">带读重点：每处先<strong>辨认手法</strong>，再看文本标记如何运作，最后说出<strong>效果</strong>。建议完成 8 处以上再进入练习层。</p>
         </header>
 
         <div class="reading-toolbar">
-          <span class="tool-label">标注模式</span>
+          <span class="tool-label">精读带读</span>
           <div class="seg" role="group" aria-label="标注模式">
             <button type="button" class="seg-btn active" data-mode="tech">按手法着色</button>
             <button type="button" class="seg-btn" data-mode="concept">按概念着色</button>
@@ -102,41 +103,93 @@
           </div>
           <button type="button" class="btn btn-ghost btn-sm" id="clear-concept-filter">清除概念筛选</button>
           <div class="tour-controls">
-            <button type="button" class="btn btn-secondary btn-sm" id="tour-prev">上一处</button>
-            <button type="button" class="btn btn-secondary btn-sm" id="tour-next">下一处精读</button>
-            <span class="tour-pos" id="tour-pos">点击彩色句段查看讲解</span>
+            <button type="button" class="btn btn-secondary btn-sm" id="start-tour">开始带读</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="tour-prev">上一处</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="tour-next">下一处</button>
+            <span class="tour-pos" id="tour-pos">共 19 处手法精读</span>
           </div>
         </div>
 
-        <div class="reading-grid">
+        <div class="reading-grid reading-grid-guided">
           <article class="text-body" id="text-body"></article>
-          <aside class="explain-panel" id="explain-panel">
-            <p class="explain-empty" id="explain-empty">点击原文中的彩色标注，或按「下一处精读」，查看手法、概念与效果讲解。</p>
+          <aside class="explain-panel guided-panel" id="explain-panel">
+            <div class="guided-progress">
+              <div class="progress-bar"><span id="close-progress"></span></div>
+              <p id="close-progress-text">已精读 0 / 19 处手法</p>
+            </div>
+
+            <p class="explain-empty" id="explain-empty">点击「开始带读」，或点原文彩色句段。每处按四步完成：观察 → 辨认手法 → 拆解手法 → 阐释效果。</p>
+
             <div id="explain-content" hidden>
-              <p class="eyebrow">精读讲解</p>
+              <p class="eyebrow" id="explain-step-label">手法精读</p>
               <blockquote class="explain-quote" id="explain-quote"></blockquote>
-              <div class="explain-tags" id="explain-tags"></div>
-              <div class="explain-block">
-                <h3>手法是什么</h3>
-                <p id="explain-tech"></p>
+
+              <!-- Step chips -->
+              <div class="step-rail" id="step-rail" aria-label="精读步骤">
+                <button type="button" class="step-chip active" data-step="1">1 观察</button>
+                <button type="button" class="step-chip" data-step="2">2 辨认手法</button>
+                <button type="button" class="step-chip" data-step="3">3 拆解手法</button>
+                <button type="button" class="step-chip" data-step="4">4 效果</button>
               </div>
-              <div class="explain-block">
-                <h3>作用与效果</h3>
-                <p id="explain-effect"></p>
+
+              <div class="step-pane" data-pane="1">
+                <h3 class="step-title">先观察这句话</h3>
+                <p class="ask-line" id="explain-ask"></p>
+                <p class="hint">先不要急着下结论：圈出异常用词、句式节奏或修辞标志。</p>
+                <button type="button" class="btn btn-secondary btn-sm" id="to-step-2">下一步：辨认手法</button>
               </div>
-              <div class="explain-block">
-                <h3>概念连接</h3>
-                <div id="explain-concepts"></div>
+
+              <div class="step-pane" data-pane="2" hidden>
+                <h3 class="step-title">这一处主要用了什么手法？</h3>
+                <div class="opt-row" id="guess-tech-opts"></div>
+                <p class="feedback" id="guess-tech-feedback" role="status"></p>
+                <button type="button" class="btn btn-secondary btn-sm" id="to-step-3" hidden>下一步：拆解手法</button>
               </div>
-              <div class="explain-block explain-note">
-                <h3>怎么读这一句</h3>
-                <p id="explain-note"></p>
+
+              <div class="step-pane" data-pane="3" hidden>
+                <h3 class="step-title">拆解：手法如何运作</h3>
+                <div class="explain-tags" id="explain-tags"></div>
+                <div class="explain-block">
+                  <h3>手法定义</h3>
+                  <p id="explain-tech"></p>
+                </div>
+                <div class="explain-block">
+                  <h3>文本中的手法标记</h3>
+                  <ul class="marker-list" id="explain-markers"></ul>
+                </div>
+                <div class="explain-block explain-note">
+                  <h3>手法精讲</h3>
+                  <p id="explain-note"></p>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" id="to-step-4">下一步：阐释效果</button>
+              </div>
+
+              <div class="step-pane" data-pane="4" hidden>
+                <h3 class="step-title">效果与示范分析</h3>
+                <div class="explain-block">
+                  <h3>作用与效果</h3>
+                  <p id="explain-effect"></p>
+                  <p id="explain-effect-detail" class="effect-detail"></p>
+                </div>
+                <div class="explain-block">
+                  <h3>概念连接</h3>
+                  <div id="explain-concepts"></div>
+                </div>
+                <div class="explain-block explain-model">
+                  <h3>示范分析句（可仿写）</h3>
+                  <p id="explain-model"></p>
+                  <button type="button" class="btn btn-ghost btn-sm" id="copy-model">插入到剪贴板提示</button>
+                </div>
+                <div class="step-actions">
+                  <button type="button" class="btn btn-secondary" id="mark-close-done">完成本处精读</button>
+                  <button type="button" class="btn btn-primary" id="tour-next-inline">下一处手法</button>
+                </div>
+                <p class="feedback" id="close-done-feedback" role="status"></p>
               </div>
             </div>
+
             <div class="explain-foot">
-              <ol class="path-list compact">
-                <li><strong>识别</strong> → <strong>效果</strong> → <strong>诠释</strong></li>
-              </ol>
+              <p class="hint">带读目标：每处都走完「辨认手法 → 说出效果」。完成约 8 处即可进入练习层。</p>
               <button class="btn btn-primary" data-go="1" type="button">进入第一层练习</button>
             </div>
           </aside>
