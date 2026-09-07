@@ -6,7 +6,8 @@ from pptx import Presentation
 from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
-from pptx.oxml import parse_xml
+from lxml import etree
+from pptx.oxml.ns import qn
 from pptx.util import Inches, Pt
 
 # --- canvas ---
@@ -28,7 +29,8 @@ SNOW = RGBColor(0xEE, 0xE8, 0xDE)
 LINE = RGBColor(0xD9, 0xCF, 0xC0)
 WHITE = RGBColor(0xFF, 0xFF, 0xFF)
 
-FONT = "WenQuanYi Micro Hei"
+# PowerPoint-safe CJK font (falls back on Mac/Linux)
+FONT = "Microsoft YaHei"
 
 prs = Presentation()
 prs.slide_width = W
@@ -38,21 +40,15 @@ blank = prs.slide_layouts[6]
 
 def set_run(run, text, size, color, bold=False):
     run.text = text
-    run.font.name = FONT
     run.font.size = Pt(size)
     run.font.color.rgb = color
     run.font.bold = bold
     rPr = run._r.get_or_add_rPr()
-    # east asian font
-    ea = rPr.find("{http://schemas.openxmlformats.org/drawingml/2006/main}ea")
-    if ea is None:
-        ea = parse_xml(
-            '<a:ea xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" typeface="%s"/>'
-            % FONT
-        )
-        rPr.append(ea)
-    else:
-        ea.set("typeface", FONT)
+    for tag in ("latin", "ea", "cs"):
+        el = rPr.find(qn("a:%s" % tag))
+        if el is None:
+            el = etree.SubElement(rPr, qn("a:%s" % tag))
+        el.set("typeface", FONT)
 
 
 def add_rect(slide, l, t, w, h, fill, line=None):
@@ -946,6 +942,9 @@ tb(s, Inches(0.8), Inches(4.3), Inches(11.5), Inches(1.3),
 tb(s, Inches(0.8), Inches(6.5), Inches(11.5), Inches(0.4),
    "白先勇  ·  《永远的尹雪艳》  ·  《台北人》", 14, GOLD)
 
-out = "/workspace/永远的尹雪艳_文学概念与手法.pptx"
-prs.save(out)
-print("saved", out, "slides", len(prs.slides))
+out_cn = "/workspace/永远的尹雪艳_文学概念与手法.pptx"
+out_en = "/workspace/Forever-Yin-Xueyan.pptx"
+prs.save(out_cn)
+prs.save(out_en)
+print("saved", out_cn, "slides", len(prs.slides))
+print("saved", out_en)
