@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>竹节人 · 从阅读到写作</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+
+  <header class="site-nav" aria-label="课程导航">
+    <div class="nav-brand">竹节人课堂</div>
+    <nav class="nav-links">
+      <a href="#provoke">想一想</a>
+      <a href="#read">读故事</a>
+      <a href="#words">词语猎人</a>
+      <a href="#write">写作工坊</a>
+      <a href="#reflect">反思</a>
+    </nav>
+    <div class="wordbank-chip" id="wordbankChip" aria-live="polite">
+      词库 <strong id="wordCount">0</strong>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO: one composition -->
+    <section class="hero" aria-labelledby="hero-brand">
+      <div class="hero-atmosphere" aria-hidden="true">
+        <svg class="bamboo-grove" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#b8d4c4"/>
+              <stop offset="55%" stop-color="#d9ebe0"/>
+              <stop offset="100%" stop-color="#eef6f0"/>
+            </linearGradient>
+            <linearGradient id="stem" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#2f5d45"/>
+              <stop offset="100%" stop-color="#4f8a65"/>
+            </linearGradient>
+          </defs>
+          <rect width="1200" height="800" fill="url(#sky)"/>
+          <!-- distant bamboo -->
+          <g opacity="0.35">
+            <rect x="80" y="120" width="18" height="680" fill="#3d6b52" rx="4"/>
+            <rect x="160" y="80" width="14" height="720" fill="#4a7a5c" rx="4"/>
+            <rect x="980" y="100" width="16" height="700" fill="#3d6b52" rx="4"/>
+            <rect x="1080" y="140" width="12" height="660" fill="#4a7a5c" rx="4"/>
+          </g>
+          <!-- bamboo stick figures -->
+          <g class="stick-fighter left-fighter">
+            <circle cx="420" cy="290" r="28" fill="#c4a574"/>
+            <rect x="408" y="318" width="24" height="70" rx="8" fill="#c4a574"/>
+            <rect x="370" y="330" width="40" height="14" rx="6" fill="#a67c52" transform="rotate(-25 390 337)"/>
+            <rect x="430" y="330" width="40" height="14" rx="6" fill="#a67c52" transform="rotate(30 450 337)"/>
+            <rect x="400" y="385" width="16" height="55" rx="6" fill="#a67c52" transform="rotate(8 408 412)"/>
+            <rect x="424" y="385" width="16" height="55" rx="6" fill="#a67c52" transform="rotate(-12 432 412)"/>
+          </g>
+          <g class="stick-fighter right-fighter">
+            <circle cx="720" cy="300" r="28" fill="#b8956a"/>
+            <rect x="708" y="328" width="24" height="70" rx="8" fill="#b8956a"/>
+            <rect x="670" y="345" width="40" height="14" rx="6" fill="#8f6b45" transform="rotate(-35 690 352)"/>
+            <rect x="730" y="340" width="40" height="14" rx="6" fill="#8f6b45" transform="rotate(20 750 347)"/>
+            <rect x="700" y="395" width="16" height="55" rx="6" fill="#8f6b45" transform="rotate(-10 708 422)"/>
+            <rect x="724" y="395" width="16" height="55" rx="6" fill="#8f6b45" transform="rotate(15 732 422)"/>
+          </g>
+          <!-- desk crack line -->
+          <path d="M280 470 H900" stroke="#6b8f76" stroke-width="6" stroke-linecap="round" opacity="0.5"/>
+          <path d="M300 490 H880" stroke="#8fb39a" stroke-width="3" stroke-dasharray="8 10" opacity="0.6"/>
+        </svg>
+      </div>
+
+      <div class="hero-content">
+        <p class="hero-brand" id="hero-brand">竹节人</p>
+        <h1 class="hero-title">从阅读中，学会把“好玩”写出来</h1>
+        <p class="hero-lead">一堂课：读懂童年游戏，收集生动词语，写出你自己的玩具故事。</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#provoke">开始探究</a>
+          <a class="btn btn-ghost" href="#write">直接去写作</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROVOKE -->
+    <section class="section section-provoke" id="provoke">
+      <div class="section-inner">
+        <p class="eyebrow">Tuning in · 想一想</p>
+        <h2>如果没有电子玩具，什么还能让你着迷？</h2>
+        <p class="section-lead">先别急着读课文。点开下面每一问，写下你的真实想法——写作从这里开始。</p>
+
+        <div class="prompt-stack" id="promptStack">
+          <article class="prompt-item" data-prompt="1">
+            <button class="prompt-toggle" aria-expanded="false">
+              <span class="prompt-num">01</span>
+              <span class="prompt-q">你小时候最迷什么玩具或游戏？为什么“停不下来”？</span>
+              <span class="prompt-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="prompt-panel" hidden>
+              <label for="ans1">把画面说出来（也可以先打字）：</label>
+              <textarea id="ans1" rows="3" placeholder="例如：一放学就掏出……因为……"></textarea>
+            </div>
+          </article>
+
+          <article class="prompt-item" data-prompt="2">
+            <button class="prompt-toggle" aria-expanded="false">
+              <span class="prompt-num">02</span>
+              <span class="prompt-q">如果要用三个动词写出“好玩”，你会选哪三个？</span>
+              <span class="prompt-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="prompt-panel" hidden>
+              <label for="ans2">三个动词：</label>
+              <input id="ans2" type="text" placeholder="例：追、喊、扑" />
+            </div>
+          </article>
+
+          <article class="prompt-item" data-prompt="3">
+            <button class="prompt-toggle" aria-expanded="false">
+              <span class="prompt-num">03</span>
+              <span class="prompt-q">大人也会偷偷玩吗？你见过类似的事吗？</span>
+              <span class="prompt-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="prompt-panel" hidden>
+              <label for="ans3">你的观察：</label>
+              <textarea id="ans3" rows="3" placeholder="我想起……"></textarea>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- READ -->
+    <section class="section section-read" id="read">
+      <div class="section-inner">
+        <p class="eyebrow">Finding out · 读故事</p>
+        <h2>课文里藏着三段“好玩”</h2>
+        <p class="section-lead">按顺序点开每一幕。读完后，用自己的话概括——先说清楚，再学写清楚。</p>
+
+        <div class="story-stages" id="storyStages">
+          <button class="stage-tab is-active" data-stage="0" aria-selected="true">做竹节人</button>
+          <button class="stage-tab" data-stage="1" aria-selected="false">斗竹节人</button>
+          <button class="stage-tab" data-stage="2" aria-selected="false">老师也玩</button>
+        </div>
+
+        <article class="stage-panel" id="stagePanel" aria-live="polite">
+          <!-- filled by JS -->
+        </article>
+
+        <div class="retell-box">
+          <h3>口头复述挑战</h3>
+          <p>用“先……再……最后……”讲给自己听，再把关键句写下来。</p>
+          <textarea id="retell" rows="3" placeholder="先……再……最后……"></textarea>
+          <button type="button" class="btn btn-secondary" id="checkRetell">检查结构</button>
+          <p class="inline-feedback" id="retellFeedback" role="status"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORDS -->
+    <section class="section section-words" id="words">
+      <div class="section-inner">
+        <p class="eyebrow">Sorting out · 词语猎人</p>
+        <h2>作者用哪些词，让我们“看见”热闹？</h2>
+        <p class="section-lead">点击句子里的高亮词语，收入你的写作词库。边读边想：这个词写的是动作、声音、样子，还是心情？</p>
+
+        <div class="hunt-layout">
+          <div class="passage" id="wordPassage">
+            <p>
+              下课时，教室里摆开场子，吸引了一圈黑脑袋，
+              <button type="button" class="word-hot" data-word="跺脚拍手" data-tag="动作">跺脚拍手</button>，
+              <button type="button" class="word-hot" data-word="咋咋呼呼" data-tag="声音">咋咋呼呼</button>，好不热闹。
+            </p>
+            <p>
+              那立在裂缝上的竹节们就站成一个壮士模样，
+              <button type="button" class="word-hot" data-word="叉腿张胳膊" data-tag="样子">叉腿张胳膊</button>，
+              <button type="button" class="word-hot" data-word="威风凛凛" data-tag="样子">威风凛凛</button>。
+            </p>
+            <p>
+              两个竹节人放在一起，那就是搏斗了，
+              <button type="button" class="word-hot" data-word="没头没脑" data-tag="动作">没头没脑</button>地对打着，
+              <button type="button" class="word-hot" data-word="不知疲倦" data-tag="心情">不知疲倦</button>，也永不会倒下。
+            </p>
+            <p>
+              我们从老师办公室门前经过，却见老师
+              <button type="button" class="word-hot" data-word="全神贯注" data-tag="心情">全神贯注</button>，
+              <button type="button" class="word-hot" data-word="津津有味" data-tag="心情">津津有味</button>地玩着竹节人。
+              于是，我们的
+              <button type="button" class="word-hot" data-word="悻悻然" data-tag="心情">悻悻然</button>
+              化为乌有，方才的沮丧，一扫而光。
+            </p>
+            <p>
+              常要等老师进来，才知道已经上课，便
+              <button type="button" class="word-hot" data-word="一哄作鸟兽散" data-tag="动作">一哄作鸟兽散</button>。
+            </p>
+          </div>
+
+          <aside class="wordbank-panel" aria-labelledby="bankTitle">
+            <h3 id="bankTitle">我的写作词库</h3>
+            <p class="bank-hint">点击词语收入此处，写作时可一键插入。</p>
+            <ul class="bank-list" id="bankList"></ul>
+            <p class="bank-empty" id="bankEmpty">还没有词语——去左边点一点吧。</p>
+            <div class="tag-legend">
+              <span data-tag="动作">动作</span>
+              <span data-tag="声音">声音</span>
+              <span data-tag="样子">样子</span>
+              <span data-tag="心情">心情</span>
+            </div>
+          </aside>
+        </div>
+
+        <div class="mood-lab">
+          <h3>心情翻转实验室</h3>
+          <p>拖动滑块，看看孩子们发现老师也在玩之后，心情如何变化。</p>
+          <div class="mood-slider-wrap">
+            <span>怨恨 · 沮丧</span>
+            <input type="range" id="moodSlider" min="0" max="100" value="15" aria-label="心情变化" />
+            <span>心满意足</span>
+          </div>
+          <p class="mood-caption" id="moodCaption">竹节人被没收了……心里酸酸的。</p>
+          <label class="mood-write-label" for="moodWrite">用一句话写出这个转折：</label>
+          <input id="moodWrite" type="text" placeholder="起初……后来却发现……于是……" />
+        </div>
+      </div>
+    </section>
+
+    <!-- WRITE -->
+    <section class="section section-write" id="write">
+      <div class="section-inner">
+        <p class="eyebrow">Going further · 写作工坊</p>
+        <h2>把课文里的写法，用到你的故事里</h2>
+        <p class="section-lead">题目：《我的童年小玩具》。先选支架，再调用词库，把“好玩”写具体。</p>
+
+        <div class="scaffold-row" role="group" aria-label="写作支架">
+          <button type="button" class="scaffold-btn is-active" data-scaffold="basic">基础三段</button>
+          <button type="button" class="scaffold-btn" data-scaffold="detail">动作放大</button>
+          <button type="button" class="scaffold-btn" data-scaffold="compare">与竹节人比较</button>
+        </div>
+
+        <div class="write-layout">
+          <div class="write-main">
+            <div class="scaffold-tips" id="scaffoldTips"></div>
+            <label class="sr-only" for="essay">作文区</label>
+            <textarea id="essay" rows="12" placeholder="在这里写下你的故事……"></textarea>
+            <div class="write-toolbar">
+              <button type="button" class="btn btn-ghost" id="insertScaffold">插入句架</button>
+              <button type="button" class="btn btn-secondary" id="countWords">字数统计</button>
+              <button type="button" class="btn btn-primary" id="runChecklist">对照成功标准</button>
+            </div>
+            <p class="word-stat" id="wordStat">当前约 0 字 · 目标 80–120 字</p>
+          </div>
+
+          <aside class="write-side">
+            <h3>一键插入词库</h3>
+            <div class="insert-bank" id="insertBank"></div>
+            <h3>成功标准</h3>
+            <ul class="checklist" id="checklist">
+              <li data-key="structure"><span></span>有开头、经过、感受</li>
+              <li data-key="action"><span></span>至少两处具体动作</li>
+              <li data-key="feeling"><span></span>写出心情或感受</li>
+              <li data-key="length"><span></span>大约 80–120 字</li>
+              <li data-key="vivid"><span></span>用上词库中的生动词语</li>
+            </ul>
+            <p class="checklist-msg" id="checklistMsg"></p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- REFLECT -->
+    <section class="section section-reflect" id="reflect">
+      <div class="section-inner">
+        <p class="eyebrow">Reflection · 反思与行动</p>
+        <h2>今天，你从阅读里偷师了什么？</h2>
+        <p class="section-lead">好的写作者会回头看自己的选择。点选并补充，留下下一课的探究种子。</p>
+
+        <div class="reflect-grid">
+          <label class="reflect-card-like">
+            <span>我读懂了</span>
+            <select id="refRead">
+              <option value="">请选择</option>
+              <option>竹节人怎么做、怎么玩</option>
+              <option>作者用动作词写出热闹</option>
+              <option>老师也有孩子气的一面</option>
+              <option>童年乐趣可以写成故事</option>
+            </select>
+          </label>
+          <label class="reflect-card-like">
+            <span>写作时最难的是</span>
+            <select id="refHard">
+              <option value="">请选择</option>
+              <option>想不出具体动作</option>
+              <option>词语不够生动</option>
+              <option>结构排不好</option>
+              <option>不知道怎么结尾</option>
+            </select>
+          </label>
+          <label class="reflect-card-like">
+            <span>下周我想练</span>
+            <select id="refNext">
+              <option value="">请选择</option>
+              <option>把一个动作写得更细</option>
+              <option>积累更多四字词语</option>
+              <option>写出心情的变化</option>
+              <option>把短文扩写成完整故事</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="inquiry-label" for="inquiryQ">我还想继续探究的问题：</label>
+        <input id="inquiryQ" type="text" placeholder="例如：为什么自制玩具特别有意思？" />
+
+        <div class="action-block">
+          <h3>课后小行动</h3>
+          <p>回家采访家人：他们小时候玩什么？记下三个关键词，下节课带来分享。</p>
+          <button type="button" class="btn btn-primary" id="saveProgress">保存我的学习足迹</button>
+          <p class="save-status" id="saveStatus" role="status"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>PYP 中文 · 《竹节人》互动课 · 从阅读到写作</p>
+  </footer>
+
+  <!-- floating wordbank drawer for mobile -->
+  <div class="float-bank" id="floatBank" hidden>
+    <button type="button" class="float-close" id="closeBank" aria-label="关闭词库">×</button>
+    <h3>写作词库</h3>
+    <ul id="floatBankList"></ul>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
