@@ -19,7 +19,7 @@
     <div class="hero-inner">
       <p class="hero-kicker">IBDP 中文 A · 文学</p>
       <h1 class="hero-brand">文脉</h1>
-      <p class="hero-lead">在精读中识别手法，在分析中看见效果，在写作中完成诠释。</p>
+      <p class="hero-lead">《一把青》《永远的尹雪艳》精读带读：识别手法，拆解划线，看见效果，完成诠释。</p>
       <div class="hero-cta">
         <button class="btn btn-primary" id="enter-workshop" type="button">进入精读工坊</button>
         <button class="btn btn-ghost-light" id="scroll-concepts" type="button">七大概念</button>
@@ -44,6 +44,14 @@
       <div class="sidebar-brand">
         <a href="#hero" class="brand">文脉</a>
         <p class="brand-sub">精读 · 主题 · 诠释</p>
+      </div>
+
+      <div class="student-box">
+        <label for="work-select">精读文本</label>
+        <select id="work-select" aria-label="选择精读文本">
+          <option value="yibaqing">一把青 · 白先勇</option>
+          <option value="yinxueyan">永远的尹雪艳 · 白先勇</option>
+        </select>
       </div>
 
       <div class="student-box">
@@ -106,7 +114,7 @@
             <button type="button" class="btn btn-secondary btn-sm" id="start-tour">开始带读</button>
             <button type="button" class="btn btn-ghost btn-sm" id="tour-prev">上一处</button>
             <button type="button" class="btn btn-secondary btn-sm" id="tour-next">下一处</button>
-            <span class="tour-pos" id="tour-pos">共 19 处手法精读</span>
+            <span class="tour-pos" id="tour-pos">手法精读</span>
           </div>
         </div>
 
@@ -115,7 +123,7 @@
           <aside class="explain-panel guided-panel" id="explain-panel">
             <div class="guided-progress">
               <div class="progress-bar"><span id="close-progress"></span></div>
-              <p id="close-progress-text">已精读 0 / 19 处手法</p>
+              <p id="close-progress-text">已精读 0 处手法</p>
             </div>
 
             <p class="explain-empty" id="explain-empty">点击原文彩色划线句，或按「开始带读」。选中后会先显示<strong>划线部分解析</strong>（手法 + 句段精讲 + 效果），再按四步完成带读。</p>
@@ -309,7 +317,14 @@
     <p>文脉 · IBDP 文学精读工坊 · 教学示例文本，非官方考题</p>
   </footer>
 
-  <script src="js/data.js"></script>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var work = params.get("work") || "yibaqing";
+      if (work !== "yibaqing" && work !== "yinxueyan") work = "yibaqing";
+      document.write('<script src="js/data-' + work + '.js"><\/script>');
+    })();
+  </script>
   <script src="js/app.js"></script>
 </body>
 </html>

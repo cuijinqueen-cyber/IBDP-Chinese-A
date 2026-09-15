@@ -313,6 +313,20 @@ body {
 .student-box input { color: #f4faf6; }
 .student-box input::placeholder { color: rgba(244, 250, 246, 0.45); }
 
+.student-box select,
+#work-select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  color: #f4faf6;
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+}
+
+.student-box select option { color: #14201c; }
+
 .layer-nav { display: grid; gap: 0.35rem; }
 
 .layer-nav-btn {

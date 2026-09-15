@@ -10,6 +10,11 @@
     closeDone: "wenmai-lit-close-done-v1"
   };
 
+  function workStorageKey(base) {
+    const id = (window.APP && window.APP.workId) || "default";
+    return base + "-" + id;
+  }
+
   const state = {
     layer: 0,
     done: { 1: false, 2: false, 3: false },
@@ -668,7 +673,7 @@
       markDone.addEventListener("click", function () {
         if (state.activeAnn < 0) return;
         state.closeDone[state.activeAnn] = true;
-        saveJSON(STORAGE.closeDone, state.closeDone);
+        saveJSON(workStorageKey(STORAGE.closeDone), state.closeDone);
         updateCloseProgressUI();
         $all('.mark[data-ann-index="' + state.activeAnn + '"]').forEach(function (m) {
           m.classList.add("read-done");
@@ -713,6 +718,10 @@
       window.TEXT_DATA.author + " · " + window.TEXT_DATA.source;
     $("#guiding-q").textContent =
       "引导问题：" + window.TEXT_DATA.guidingQuestion;
+    const sub = $(".brand-sub");
+    if (sub && window.APP && window.APP.workTitle) {
+      sub.textContent = "精读 · " + window.APP.workTitle;
+    }
   }
 
   /* ---------- Layer 1 ---------- */
@@ -1285,12 +1294,24 @@
     nameInput.addEventListener("change", function () {
       saveJSON(STORAGE.student, nameInput.value.trim());
     });
+
+    const workSelect = $("#work-select");
+    if (workSelect) {
+      const params = new URLSearchParams(window.location.search);
+      const current = params.get("work") || (window.APP && window.APP.workId) || "yibaqing";
+      workSelect.value = current === "yinxueyan" ? "yinxueyan" : "yibaqing";
+      workSelect.addEventListener("change", function () {
+        const url = new URL(window.location.href);
+        url.searchParams.set("work", workSelect.value);
+        window.location.href = url.toString();
+      });
+    }
   }
 
   function init() {
     const savedProgress = loadJSON(STORAGE.progress, null);
     if (savedProgress) state.done = Object.assign(state.done, savedProgress);
-    state.closeDone = loadJSON(STORAGE.closeDone, {}) || {};
+    state.closeDone = loadJSON(workStorageKey(STORAGE.closeDone), {}) || {};
 
     renderConcepts();
     renderLegend();
