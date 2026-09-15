@@ -16,7 +16,7 @@ python3 -m http.server 8090
 |------|------|
 | `caoyuan.html` | 互动探究网页（推荐上课使用） |
 | `lessons/草原_MYP教案.md` | 完整教案 |
-| `ppt/草原_MYP教案课件.pptx` | 12 页课堂课件 |
+| `ppt/草原_MYP教案课件.pptx` | 16 页课堂课件 |
 
 ## MYP 要点
 
