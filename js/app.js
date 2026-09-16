@@ -18,7 +18,7 @@
   const state = {
     layer: 0,
     done: { 1: false, 2: false, 3: false },
-    colorMode: "tech", // tech | concept | off
+    colorMode: "dual", // dual | tech | effect | concept | off
     conceptFilter: null,
     legendMode: "tech",
     layer1QuoteCorrect: 0,
@@ -65,6 +65,13 @@
 
   function techById(id) {
     return window.TECHNIQUES.find(function (t) {
+      return t.id === id;
+    });
+  }
+
+  function effectById(id) {
+    const list = window.EFFECT_TYPES || [];
+    return list.find(function (t) {
       return t.id === id;
     });
   }
@@ -116,8 +123,9 @@
   function renderLegend() {
     const list = $("#legend-list");
     if (!list) return;
-    const items =
-      state.legendMode === "concept" ? window.CONCEPTS : window.TECHNIQUES;
+    let items = window.TECHNIQUES;
+    if (state.legendMode === "concept") items = window.CONCEPTS;
+    if (state.legendMode === "effect") items = window.EFFECT_TYPES || [];
     list.innerHTML = items
       .map(function (item) {
         return (
@@ -220,14 +228,30 @@
     picked.forEach(function (r) {
       html += escapeHtml(text.slice(pos, r.start));
       const tech = techById(r.ann.tech);
+      const fx = effectById(r.ann.effectType);
       const primaryConcept = conceptById(r.ann.concepts[0]);
-      let color, bg, dim;
+      let color, bg, dim, dualStyle;
+
+      dim = false;
+      dualStyle = "";
 
       if (mode === "tech") {
         color = tech ? tech.color : "#666";
         bg = tech ? tech.bg : "rgba(0,0,0,0.08)";
-        dim = false;
+      } else if (mode === "effect") {
+        color = fx ? fx.color : "#666";
+        bg = fx ? fx.bg : "rgba(0,0,0,0.08)";
+      } else if (mode === "dual") {
+        // 下划线=手法色；底色=效果色
+        color = tech ? tech.color : "#666";
+        bg = fx ? fx.bg : "rgba(0,0,0,0.08)";
+        dualStyle =
+          "; border-bottom: 3px solid " +
+          color +
+          "; box-shadow: inset 3px 0 0 " +
+          (fx ? fx.color : color);
       } else {
+        // concept
         let c = primaryConcept;
         if (filterConcept) {
           const matchId = r.ann.concepts.find(function (cid) {
@@ -235,8 +259,6 @@
           });
           c = matchId ? conceptById(matchId) : primaryConcept;
           dim = !matchId;
-        } else {
-          dim = false;
         }
         color = c ? c.color : "#666";
         bg = c ? c.bg : "rgba(0,0,0,0.08)";
@@ -244,19 +266,25 @@
 
       const active = state.activeAnn === r.annIndex ? " active" : "";
       const done = state.closeDone[r.annIndex] ? " read-done" : "";
+      const styleCore =
+        mode === "dual"
+          ? "background:" + bg + dualStyle
+          : "background:" + bg + "; box-shadow: inset 0 -2px 0 " + color;
+
       html +=
-        '<mark class="mark' +
+        '<mark class="mark mark-' +
+        mode +
         (dim ? " dim" : "") +
         active +
         done +
-        '" tabindex="0" role="button" style="background:' +
-        bg +
-        "; box-shadow: inset 0 -2px 0 " +
-        color +
+        '" tabindex="0" role="button" style="' +
+        styleCore +
         '" data-ann-index="' +
         r.annIndex +
         '" data-tech="' +
         r.ann.tech +
+        '" data-effect="' +
+        (r.ann.effectType || "") +
         '" data-concepts="' +
         r.ann.concepts.join(",") +
         '" aria-label="查看精读讲解：' +
@@ -420,10 +448,13 @@
     }
     const parseEffect = $("#line-parse-effect");
     if (parseEffect) {
+      const fx = effectById(item.effectType);
+      const fxLabel = fx ? "【" + fx.name + "】" : "";
       parseEffect.textContent =
-        item.effect ||
-        (ann && ann.effect) ||
-        "思考这一手法让读者产生什么感受，又如何服务主题。";
+        fxLabel +
+        (item.effect ||
+          (ann && ann.effect) ||
+          "思考这一手法让读者产生什么感受，又如何服务主题。");
     }
     const parseEffectDetail = $("#line-parse-effect-detail");
     if (parseEffectDetail) {
@@ -439,8 +470,19 @@
           tech.color +
           ";--cbg:" +
           tech.bg +
-          '"><span class="dot"></span>' +
+          '"><span class="dot"></span>手法 · ' +
           escapeHtml(tech.name) +
+          "</span>";
+      }
+      const fx = effectById(item.effectType);
+      if (fx) {
+        html +=
+          '<span class="concept-chip" style="--c:' +
+          fx.color +
+          ";--cbg:" +
+          fx.bg +
+          '"><span class="dot"></span>效果 · ' +
+          escapeHtml(fx.name) +
           "</span>";
       }
       (item.concepts || []).forEach(function (cid) {
@@ -478,6 +520,17 @@
           tech.bg +
           '"><span class="dot"></span>手法 · ' +
           escapeHtml(tech.name) +
+          "</span>";
+      }
+      const fxTag = effectById(item.effectType);
+      if (fxTag) {
+        tagHtml +=
+          '<span class="concept-chip" style="--c:' +
+          fxTag.color +
+          ";--cbg:" +
+          fxTag.bg +
+          '"><span class="dot"></span>效果 · ' +
+          escapeHtml(fxTag.name) +
           "</span>";
       }
       (item.concepts || []).forEach(function (cid) {
@@ -569,9 +622,9 @@
 
   function tourStep(delta) {
     if (state.colorMode === "off") {
-      state.colorMode = "tech";
+      state.colorMode = "dual";
       $all(".seg-btn").forEach(function (b) {
-        b.classList.toggle("active", b.dataset.mode === "tech");
+        b.classList.toggle("active", b.dataset.mode === "dual");
       });
       renderText();
     }

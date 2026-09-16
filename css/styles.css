@@ -371,9 +371,26 @@ body {
 
 .legend-tabs {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 0.35rem;
   margin-bottom: 0.55rem;
+}
+
+.color-key {
+  margin: 0 0 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid var(--line);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.color-key strong { color: var(--ink); }
+
+.mark.mark-dual {
+  padding: 0 0.15em 0.1em;
 }
 
 .legend-tab {

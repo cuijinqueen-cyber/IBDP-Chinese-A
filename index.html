@@ -77,7 +77,8 @@
       <div class="legend-box">
         <p class="legend-title">色标图例</p>
         <div class="legend-tabs">
-          <button type="button" class="legend-tab active" data-legend="tech">文学手法</button>
+          <button type="button" class="legend-tab active" data-legend="tech">手法类型</button>
+          <button type="button" class="legend-tab" data-legend="effect">效果类型</button>
           <button type="button" class="legend-tab" data-legend="concept">七大概念</button>
         </div>
         <ul class="legend-list" id="legend-list"></ul>
@@ -105,8 +106,10 @@
         <div class="reading-toolbar">
           <span class="tool-label">精读带读</span>
           <div class="seg" role="group" aria-label="标注模式">
-            <button type="button" class="seg-btn active" data-mode="tech">按手法着色</button>
-            <button type="button" class="seg-btn" data-mode="concept">按概念着色</button>
+            <button type="button" class="seg-btn active" data-mode="dual">双色同显</button>
+            <button type="button" class="seg-btn" data-mode="tech">按手法</button>
+            <button type="button" class="seg-btn" data-mode="effect">按效果</button>
+            <button type="button" class="seg-btn" data-mode="concept">按概念</button>
             <button type="button" class="seg-btn" data-mode="off">纯文本</button>
           </div>
           <button type="button" class="btn btn-ghost btn-sm" id="clear-concept-filter">清除概念筛选</button>
@@ -117,6 +120,7 @@
             <span class="tour-pos" id="tour-pos">手法精读</span>
           </div>
         </div>
+        <p class="color-key" id="color-key">色标说明：<strong>下划线／左边线＝手法类型色</strong>；<strong>底色＝效果类型色</strong>。可在侧栏切换「手法类型／效果类型」图例。</p>
 
         <div class="reading-grid reading-grid-guided">
           <article class="text-body" id="text-body"></article>
@@ -126,7 +130,7 @@
               <p id="close-progress-text">已精读 0 处手法</p>
             </div>
 
-            <p class="explain-empty" id="explain-empty">点击原文彩色划线句，或按「开始带读」。选中后会先显示<strong>划线部分解析</strong>（手法 + 句段精讲 + 效果），再按四步完成带读。</p>
+            <p class="explain-empty" id="explain-empty">点击原文彩色划线，或按「开始带读」。<strong>双色同显</strong>：下划线＝手法类型色，底色＝效果类型色。选中后显示详细句段解析与表达效果。</p>
 
             <div id="explain-content" hidden>
               <p class="eyebrow" id="explain-step-label">手法精读</p>

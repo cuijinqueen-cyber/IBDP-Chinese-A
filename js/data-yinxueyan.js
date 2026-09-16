@@ -75,6 +75,65 @@ window.CONCEPTS = [
 ];
 
 /* 文学手法色板 */
+window.EFFECT_TYPES = [
+  {
+    "id": "character",
+    "name": "塑造人物",
+    "color": "#1e4d8c",
+    "bg": "rgba(30,77,140,0.2)",
+    "desc": "凸显性格、身份或心理状态"
+  },
+  {
+    "id": "emotion",
+    "name": "引发情感",
+    "color": "#9b2c2c",
+    "bg": "rgba(155,44,44,0.18)",
+    "desc": "调动同情、震撼、不安等读者反应"
+  },
+  {
+    "id": "atmosphere",
+    "name": "营造氛围",
+    "color": "#7a5c2e",
+    "bg": "rgba(122,92,46,0.2)",
+    "desc": "形成时代、空间或情绪气氛"
+  },
+  {
+    "id": "theme",
+    "name": "深化主题",
+    "color": "#0f5c4c",
+    "bg": "rgba(15,92,76,0.2)",
+    "desc": "把局部描写提升到主题层面"
+  },
+  {
+    "id": "irony_fx",
+    "name": "制造反讽",
+    "color": "#c2410c",
+    "bg": "rgba(194,65,12,0.18)",
+    "desc": "造成认知落差与批判张力"
+  },
+  {
+    "id": "echo",
+    "name": "结构呼应",
+    "color": "#475569",
+    "bg": "rgba(71,85,105,0.2)",
+    "desc": "与前后文形成对照或回环"
+  },
+  {
+    "id": "foreshadow",
+    "name": "铺垫暗示",
+    "color": "#a16207",
+    "bg": "rgba(161,98,7,0.2)",
+    "desc": "预示后续命运或转变"
+  },
+  {
+    "id": "survival",
+    "name": "揭示求生",
+    "color": "#6b3f6b",
+    "bg": "rgba(107,63,107,0.18)",
+    "desc": "暴露创伤下的生存策略与伦理"
+  }
+];
+
 window.TECHNIQUES = [
   { id: "metaphor", name: "比喻", color: "#0d7a5f", bg: "rgba(13,122,95,0.28)", desc: "以彼物喻此物，使抽象可感" },
   { id: "symbol", name: "象征意象", color: "#176655", bg: "rgba(23,102,85,0.28)", desc: "意象贯穿并升华主题" },
@@ -685,3 +744,19 @@ window.LAYER3 = {
   ],
   sample: "开篇以“尹雪艳总也不老”“永远是尹雪艳”的反复，将人物从具体舞者提升为对抗时间的身份神话；“蝉翼纱的素白旗袍”等细节再以银白视觉固化这一符号。舞池中“像一球随风飘荡的柳絮”的比喻，既写其从容轻盈，也暗示无根而不沾因果的超然。由此，个人风情被写成可被众人投射的文化偶像，为后文怀旧公馆与“煞星”叙事埋下伏笔。"
 };
+
+
+(function(){
+  if(!window.CLOSE_READINGS) return;
+  var map={repetition:'theme',detail:'character',metaphor:'theme',symbol:'theme',irony:'irony_fx',dialogue:'character',contrast:'echo',sideview:'perspective'};
+  window.CLOSE_READINGS.forEach(function(c){
+    if(!c.effectType){
+      c.effectType = map[c.tech] || 'theme';
+      if(c.effectType==='perspective') c.effectType='character';
+    }
+  });
+  window.ANNOTATIONS = window.CLOSE_READINGS.map(function(c){
+    return {phrase:c.phrase,tech:c.tech,effectType:c.effectType,concepts:c.concepts,effect:c.effect};
+  });
+})();
+
