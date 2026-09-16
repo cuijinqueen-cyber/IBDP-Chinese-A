@@ -143,29 +143,30 @@ add_textbox(slide, Inches(0.8), Inches(3.5), Inches(11), Inches(0.5),
             "精读教学课件  ·  文本细节引证版", size=22, color=MUTED)
 add_paras(slide, Inches(0.8), Inches(4.5), Inches(11), Inches(2), [
     ("目录顺序", {"size": 14, "color": ACCENT, "bold": True, "space_after": 10}),
-    ("一、人物形象  →  二、艺术手法  →  三、故事情节结构  →  四、语言特色  →  五、主题",
-     {"size": 16, "color": TEXT, "space_after": 0}),
+    ("一、人物形象  →  二、艺术手法  →  三、叙事手法  →  四、情节结构  →  五、语言特色  →  六、主题",
+     {"size": 15, "color": TEXT, "space_after": 0}),
 ])
 
 # ==================== 目录 ====================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
-section_header(slide, "导读", "目录", "依教学逻辑展开：人 → 法 → 事 → 语 → 意")
+section_header(slide, "导读", "目录", "依教学逻辑展开：人 → 法 → 叙 → 事 → 语 → 意")
 items = [
     ("01", "人物形象", "朱青的转变 · 郭轸 · 师娘 · 小顾"),
     ("02", "艺术手法", "对比 · 象征 · 反讽 · 比喻 · 细节 · 对话"),
-    ("03", "故事情节结构", "上下篇对照 · 仁爱东村 · 死亡轮回"),
-    ("04", "语言特色", "服饰编码 · 声口 · 歌谣母题 · 拟声"),
-    ("05", "主题", "创伤 · 求生 · 流亡 · 及时行乐"),
+    ("03", "叙事手法", "第一人称见证 · 双城对照 · 省略跳跃 · 母题反复"),
+    ("04", "故事情节结构", "上下篇对照 · 仁爱东村 · 死亡轮回"),
+    ("05", "语言特色", "服饰编码 · 声口 · 歌谣母题 · 拟声"),
+    ("06", "主题", "创伤 · 求生 · 流亡 · 及时行乐"),
 ]
 for i, (no, tit, sub) in enumerate(items):
-    y = Inches(2.0) + Inches(i * 0.95)
-    add_card(slide, Inches(0.6), y, Inches(12), Inches(0.85))
-    add_textbox(slide, Inches(0.9), y + Inches(0.15), Inches(1), Inches(0.5),
-                no, size=24, bold=True, color=ACCENT2)
-    add_textbox(slide, Inches(2.2), y + Inches(0.12), Inches(9), Inches(0.35),
-                tit, size=20, bold=True, color=WHITE)
-    add_textbox(slide, Inches(2.2), y + Inches(0.45), Inches(9), Inches(0.3),
-                sub, size=13, color=MUTED)
+    y = Inches(1.9) + Inches(i * 0.85)
+    add_card(slide, Inches(0.6), y, Inches(12), Inches(0.75))
+    add_textbox(slide, Inches(0.9), y + Inches(0.12), Inches(1), Inches(0.5),
+                no, size=22, bold=True, color=ACCENT2)
+    add_textbox(slide, Inches(2.2), y + Inches(0.08), Inches(9), Inches(0.32),
+                tit, size=18, bold=True, color=WHITE)
+    add_textbox(slide, Inches(2.2), y + Inches(0.4), Inches(9), Inches(0.28),
+                sub, size=12, color=MUTED)
 
 # ==================== 一、人物形象 总览 ====================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
@@ -404,9 +405,120 @@ for i, (t, q, n) in enumerate(quotes):
         (n, {"size": 13, "color": MUTED, "space_after": 0}),
     ])
 
-# ==================== 三、情节结构 ====================
+# ==================== 三、叙事手法 总览 ====================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
-section_header(slide, "三 / 故事情节结构", "上下篇双城对照结构",
+section_header(slide, "三 / 叙事手法", "叙事手法总览",
+               "第一人称见证＋上下对照结构；靠衣、声、歌、物推动转变，少直抒胸臆")
+narr = [
+    ("第一人称见证", "师娘「我」讲述\n过来人＋旁观者\n非全知上帝视角"),
+    ("双城对照结构", "南京／台北\n同名仁爱东村\n名字可复制，人生不可复原"),
+    ("时间省略跳跃", "热恋坠机写细\n南迁来台压缩\n重逢猛然接上"),
+    ("细节器物叙事", "服饰／喜匾／蔻丹\n少心理独白\n以物推进弧线"),
+    ("母题反复", "《东山一把青》\n成亲→采花趁早\n歌词变奏＝哲学变奏"),
+    ("死亡轮回", "郭轸→伟成→小顾\n重复修辞\n悲剧写成常态"),
+    ("对话侧面叙事", "狠起心肠\n童子鸡／风话\n社群声口补全人物"),
+]
+# 7 cards in 2 rows: 4 + 3
+for i, (t, b) in enumerate(narr):
+    if i < 4:
+        x = Inches(0.4) + Inches(i * 3.2)
+        y = Inches(2.0)
+        w = Inches(3.05)
+    else:
+        x = Inches(1.0) + Inches((i - 4) * 3.7)
+        y = Inches(4.55)
+        w = Inches(3.5)
+    add_card(slide, x, y, w, Inches(2.3) if i < 4 else Inches(2.35))
+    add_textbox(slide, x + Inches(0.15), y + Inches(0.2), w - Inches(0.3), Inches(0.4),
+                t, size=15, bold=True, color=ACCENT2)
+    add_paras(slide, x + Inches(0.15), y + Inches(0.7), w - Inches(0.3), Inches(1.5), [
+        (line, {"size": 12, "color": MUTED, "space_after": 3})
+        for line in b.split("\n")
+    ])
+
+# ==================== 叙事：第一人称 + 双城 ====================
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+section_header(slide, "三 / 叙事手法", "① 第一人称见证  ② 上下篇双城对照",
+               "叙述者功能与结构叙事——结构本身在讲流亡断裂")
+quote_block(slide, Inches(0.5), Inches(2.0), Inches(6.0), Inches(2.5),
+            "我觉得虽然我比朱青还大了一大把年纪，可是我已经找不出什么话来可以开导她的了。",
+            "引证 · 第一人称：转变靠「我看见／我听见」；下部叙述者失语＝旧伦理失效")
+quote_block(slide, Inches(6.8), Inches(2.0), Inches(6.0), Inches(2.5),
+            "我们这个眷属区碰巧又叫做仁爱东村，可是和我在南京住的那个却毫不相干。",
+            "引证 · 结构叙事：同名反复、「碰巧」拆穿连续性幻觉")
+add_card(slide, Inches(0.5), Inches(4.75), Inches(12.3), Inches(2.15))
+add_paras(slide, Inches(0.8), Inches(4.95), Inches(11.8), Inches(1.8), [
+    ("精读要点", {"size": 15, "bold": True, "color": ACCENT, "space_after": 8}),
+    ("• 师娘不是全知上帝，而是过来人＋旁观者；朱青内心少直接剖白，多由见证场面呈现。",
+     {"size": 13, "color": TEXT, "space_after": 5}),
+    ("• 南京→台北同名村子：结构本身说出主题——迁徙之后，记忆无法原样安置。",
+     {"size": 13, "color": TEXT, "space_after": 0}),
+])
+
+# ==================== 叙事：省略 + 细节器物 ====================
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+section_header(slide, "三 / 叙事手法", "③ 时间省略跳跃  ④ 细节／器物推进叙事",
+               "空白逼读者补全变身；少心理分析，多可感证据")
+add_card(slide, Inches(0.5), Inches(2.0), Inches(6.0), Inches(4.8))
+add_paras(slide, Inches(0.75), Inches(2.2), Inches(5.5), Inches(4.4), [
+    ("时间跨度＋省略", {"size": 17, "bold": True, "color": ACCENT, "space_after": 10}),
+    ("上部：热恋、新婚、坠机——写细", {"size": 14, "color": TEXT, "space_after": 6}),
+    ("中间：南迁、来台多年——压缩", {"size": 14, "color": TEXT, "space_after": 6}),
+    ("下部：新生社重逢——猛然接上", {"size": 14, "color": TEXT, "space_after": 12}),
+    ("效果：中间「空白」逼读者用重逢场面补全朱青如何变成「赛白光」。",
+     {"size": 13, "color": MUTED, "space_after": 12}),
+    ("引证：「师娘，我是朱青。」那个女人笑吟吟地望着我说道。",
+     {"size": 13, "color": QUOTE, "bold": True, "space_after": 0}),
+])
+add_card(slide, Inches(6.8), Inches(2.0), Inches(6.0), Inches(4.8))
+add_paras(slide, Inches(7.05), Inches(2.2), Inches(5.5), Inches(4.4), [
+    ("以细节／器物叙事", {"size": 17, "bold": True, "color": ACCENT2, "space_after": 10}),
+    ("蓝布长衫 → 紫纱旗袍", {"size": 14, "color": TEXT, "space_after": 6}),
+    ("喜匾「白头偕老」／鸳鸯被面", {"size": 14, "color": TEXT, "space_after": 6}),
+    ("涂蔻丹／「嘭」一下抛海", {"size": 14, "color": TEXT, "space_after": 12}),
+    ("效果：几乎不用长篇内心独白；衣、声、歌、物带动情节与人物弧线。",
+     {"size": 13, "color": MUTED, "space_after": 12}),
+    ("答题提示：先引「看得见／听得见」的证据，再上推主题。",
+     {"size": 13, "color": QUOTE, "space_after": 0}),
+])
+
+# ==================== 叙事：母题 + 轮回 + 对话 ====================
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+section_header(slide, "三 / 叙事手法", "⑤ 母题反复  ⑥ 死亡轮回  ⑦ 对话侧面叙事",
+               "歌词变奏、情节重复、社群声口——三者合力完成转变叙事")
+quote_block(slide, Inches(0.5), Inches(2.0), Inches(12.3), Inches(1.55),
+            "东山哪，一把青……咱俩儿好成亲哪——  →  嗳呀嗳嗳呀，郎呀，采花儿要趁早哪——",
+            "母题反复：歌词从求成亲滑到采花趁早＝人物哲学变奏，兼作全篇收束句")
+quote_block(slide, Inches(0.5), Inches(3.75), Inches(6.0), Inches(3.1),
+            "「一个死了托一个，这么轮下来的。」……「不笑难道叫她们哭不成？」"
+            "／郭轸坠机 → 伟成抛海 → 小顾再死",
+            "死亡轮回：情节重复＝命运结构；私人悲剧被写成眷村常态")
+quote_block(slide, Inches(6.8), Inches(3.75), Inches(6.0), Inches(3.1),
+            "「你就得狠起心肠来」／「爱吃童子鸡」／「两个小挨刀的，……还吃起大姊的豆腐来！」",
+            "对话／转述侧面叙事：用社群声口补全朱青，避免单一视角说教")
+
+# ==================== 叙事手法 一句话收束 ====================
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+section_header(slide, "三 / 叙事手法", "叙事手法 · 一句话收束",
+               "答题可用总括句——先点手法，再挂证据")
+add_card(slide, Inches(0.5), Inches(2.1), Inches(12.3), Inches(4.7))
+add_paras(slide, Inches(0.85), Inches(2.4), Inches(11.6), Inches(4.2), [
+    ("总括", {"size": 16, "bold": True, "color": ACCENT, "space_after": 12}),
+    ("第一人称见证＋上下对照结构，靠服饰／歌声／死亡重复推动转变，"
+     "少直抒胸臆，多让读者从「看得见、听得见」的证据里读出创伤与求生。",
+     {"size": 16, "color": TEXT, "space_after": 18}),
+    ("七条叙事手法速记", {"size": 15, "bold": True, "color": ACCENT2, "space_after": 10}),
+    ("1. 第一人称见证　2. 双城对照结构　3. 时间省略跳跃　4. 细节器物叙事",
+     {"size": 14, "color": TEXT, "space_after": 8}),
+    ("5. 《东山一把青》母题反复　6. 死亡轮回的重复修辞　7. 对话／转述侧面叙事",
+     {"size": 14, "color": TEXT, "space_after": 18}),
+    ("与「艺术手法」区分：叙事手法偏视角／结构／推进方式；艺术手法偏修辞与表现手段（对比、象征、反讽、比喻等）。",
+     {"size": 13, "color": MUTED, "space_after": 0}),
+])
+
+# ==================== 四、情节结构 ====================
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+section_header(slide, "四 / 故事情节结构", "上下篇双城对照结构",
                "南京仁爱东村 → 台北「碰巧又叫做」仁爱东村：同名反复，人生不可复原")
 quote_block(slide, Inches(0.5), Inches(2.0), Inches(12.3), Inches(1.5),
             "来到台北这些年……我们这个眷属区碰巧又叫做仁爱东村，"
@@ -431,7 +543,7 @@ add_paras(slide, Inches(7.05), Inches(3.95), Inches(5.5), Inches(2.7), [
 
 # ==================== 情节节点 ====================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
-section_header(slide, "三 / 故事情节结构", "关键情节节点与结构功能",
+section_header(slide, "四 / 故事情节结构", "关键情节节点与结构功能",
                "每一步都在推进「转变」与「求生」")
 nodes = [
     ("① 亮相", "郭轸「英气勃勃」；朱青蓝布长衫初见——建立对照基线"),
@@ -455,7 +567,7 @@ for i, (t, b) in enumerate(nodes):
 
 # ==================== 死亡轮回结构 ====================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
-section_header(slide, "三 / 故事情节结构", "死亡轮回：结构即主题",
+section_header(slide, "四 / 故事情节结构", "死亡轮回：结构即主题",
                "私人悲剧被写成社区常态；情节重复＝命运结构")
 quote_block(slide, Inches(0.5), Inches(2.0), Inches(12.3), Inches(1.6),
             "「像你后头那个周太太吧，她已经嫁了四次了。一个死了托一个，这么轮下来的。」"
@@ -474,7 +586,7 @@ add_paras(slide, Inches(0.8), Inches(4.15), Inches(11.8), Inches(2.5), [
 
 # ==================== 四、语言特色 ====================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
-section_header(slide, "四 / 语言特色", "语言如何「做事」",
+section_header(slide, "五 / 语言特色", "语言如何「做事」",
                "服饰语汇、声口对话、歌谣穿插、拟声压缩——皆为人物与主题服务")
 langs = [
     ("服饰编码语言", "衣着词汇密集、可档案化",
@@ -498,7 +610,7 @@ for i, (t, s, b) in enumerate(langs):
 
 # ==================== 语言 拟声与节奏 ====================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
-section_header(slide, "四 / 语言特色", "拟声、节奏与「瞬间消失」",
+section_header(slide, "五 / 语言特色", "拟声、节奏与「瞬间消失」",
                "复杂人生被收成单音节——语言本身再现流亡中的潦草与无助")
 quote_block(slide, Inches(0.5), Inches(2.0), Inches(6.0), Inches(2.4),
             "他一断气，船上水手便把他用麻包袋套起来……"
@@ -518,7 +630,7 @@ add_paras(slide, Inches(0.8), Inches(4.9), Inches(11.8), Inches(1.8), [
 
 # ==================== 五、主题 ====================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
-section_header(slide, "五 / 主题", "主题总览",
+section_header(slide, "六 / 主题", "主题总览",
                "战争年代军眷女性的创伤、求生与伦理改写")
 themes = [
     ("创伤与知觉", "「我也死了，可是我却还有知觉呢」\n未亡人比死者更残酷：活着即持续受刑。"),
@@ -541,7 +653,7 @@ for i, (t, b) in enumerate(themes):
 
 # ==================== 主题深化 ====================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
-section_header(slide, "五 / 主题", "主题深化：勿止步于「堕落」评判",
+section_header(slide, "六 / 主题", "主题深化：勿止步于「堕落」评判",
                "若只谴责朱青「变坏」，则未完成精读——应看见制度性死亡逼出的伦理")
 add_card(slide, Inches(0.5), Inches(2.0), Inches(12.3), Inches(4.8))
 add_paras(slide, Inches(0.85), Inches(2.25), Inches(11.6), Inches(4.3), [
@@ -562,7 +674,7 @@ add_paras(slide, Inches(0.85), Inches(2.25), Inches(11.6), Inches(4.3), [
 
 # ==================== 主题 一把青 ====================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
-section_header(slide, "五 / 主题", "何以题为「一把青」？",
+section_header(slide, "六 / 主题", "何以题为「一把青」？",
                "歌名即篇名：青春、欲望、时限——三者叠合")
 quote_block(slide, Inches(0.5), Inches(2.0), Inches(12.3), Inches(1.8),
             "东山哪，一把青。……嗳呀嗳嗳呀，郎呀，采花儿要趁早哪——",
@@ -606,7 +718,7 @@ add_bar(slide, Inches(0), Inches(0), W, Inches(0.12), ACCENT2)
 add_textbox(slide, Inches(0.8), Inches(2.5), Inches(11.5), Inches(0.8),
             "《一把青》", size=40, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
 add_textbox(slide, Inches(0.8), Inches(3.4), Inches(11.5), Inches(0.5),
-            "人物 · 手法 · 结构 · 语言 · 主题", size=20, color=ACCENT2, align=PP_ALIGN.CENTER)
+            "人物 · 手法 · 叙事 · 结构 · 语言 · 主题", size=20, color=ACCENT2, align=PP_ALIGN.CENTER)
 add_textbox(slide, Inches(0.8), Inches(4.3), Inches(11.5), Inches(0.4),
             "精读须有文本细节引证 —— 看得见的衣，听得见的歌，抓不住的铁鸟儿",
             size=15, color=MUTED, align=PP_ALIGN.CENTER)
