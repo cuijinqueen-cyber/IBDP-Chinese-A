@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>《台北人》ManageBac 单元计划｜IBDP 中文 A</title>
+  <style>
+    :root {
+      --ink: #1c2430;
+      --muted: #5a6570;
+      --line: #d9e0e8;
+      --paper: #f7f4ef;
+      --card: #ffffff;
+      --accent: #0f5c5c;
+      --accent-soft: #e6f2f1;
+      --warn: #8a4b1f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", "Noto Serif SC", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 0%, #e8f0ef 0%, transparent 40%),
+        radial-gradient(circle at 90% 10%, #f3ebe2 0%, transparent 35%),
+        var(--paper);
+      line-height: 1.65;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    header.hero {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .eyebrow {
+      font-family: "Gill Sans", "PingFang SC", "Noto Sans SC", sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin: 0 0 0.6rem;
+    }
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      line-height: 1.2;
+      margin: 0 0 0.75rem;
+      font-weight: 700;
+    }
+    .lead { color: var(--muted); font-size: 1.05rem; margin: 0; max-width: 40rem; }
+    nav.toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.5rem 0 0;
+      font-family: "Gill Sans", "PingFang SC", "Noto Sans SC", sans-serif;
+      font-size: 0.9rem;
+    }
+    nav.toc a {
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      background: var(--card);
+      padding: 0.35rem 0.7rem;
+      border-radius: 4px;
+    }
+    nav.toc a:hover { background: var(--accent-soft); }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 1.25rem 1.35rem;
+      margin: 1.1rem 0;
+    }
+    h2 {
+      font-size: 1.25rem;
+      margin: 0 0 0.9rem;
+      color: var(--accent);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 0.45rem;
+    }
+    h3 { font-size: 1.05rem; margin: 1.1rem 0 0.5rem; }
+    p, li { font-size: 0.98rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin: 0.6rem 0 0.2rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 0.55rem 0.65rem;
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: var(--accent-soft); font-family: "Gill Sans", "PingFang SC", "Noto Sans SC", sans-serif; }
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .meta div {
+      background: var(--accent-soft);
+      border-radius: 6px;
+      padding: 0.75rem;
+      font-family: "Gill Sans", "PingFang SC", "Noto Sans SC", sans-serif;
+      font-size: 0.88rem;
+    }
+    .meta strong { display: block; color: var(--accent); margin-bottom: 0.2rem; }
+    .note {
+      border-left: 3px solid var(--warn);
+      padding: 0.4rem 0 0.4rem 0.8rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    ul { padding-left: 1.2rem; }
+    footer {
+      margin-top: 2rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-family: "Gill Sans", "PingFang SC", "Noto Sans SC", sans-serif;
+    }
+    @media print {
+      body { background: white; }
+      section { break-inside: avoid; box-shadow: none; }
+      nav.toc { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <p class="eyebrow">IBDP Chinese A · ManageBac Unit Planner</p>
+      <h1>台北人：流散记忆中的文化身份与时代空间</h1>
+      <p class="lead">白先勇短篇小说集《台北人》单元计划。按 ManageBac DP 分区编排，可直接复制到 Tasks &amp; Units。</p>
+      <div class="meta">
+        <div><strong>学科</strong>中文 A：文学（亦适语言与文学）</div>
+        <div><strong>级别</strong>SL / HL</div>
+        <div><strong>时长</strong>6–8 周 · 32–40 学时</div>
+        <div><strong>主探索领域</strong>时间与空间</div>
+      </div>
+      <nav class="toc" aria-label="目录">
+        <a href="#inquiry">探究与目的</a>
+        <a href="#curriculum">课程</a>
+        <a href="#atl">ATL / LP</a>
+        <a href="#design">设计与实施</a>
+        <a href="#assessment">评估</a>
+        <a href="#reflect">反思</a>
+      </nav>
+    </header>
+
+    <section>
+      <h2>Summary｜单元概要</h2>
+      <p>本单元研读白先勇《台北人》，探究迁徙、记忆与文化身份如何在台北的时空中被书写，并训练细读、比较写作与全球性问题论述，对接 Paper 2、Individual Oral 与 HL Essay 铺垫。</p>
+      <h3>建议精读篇目</h3>
+      <ul>
+        <li>《永远的尹雪艳》——传奇形象与时间凝固</li>
+        <li>《一把青》——战争创伤与情感结构</li>
+        <li>《花桥荣记》——乡愁、失落与叙事声音</li>
+        <li>《金大班的最后一夜》——身体、欲望与社会阶层</li>
+        <li>《游园惊梦》——互文、戏曲与记忆崩解</li>
+        <li>《国葬》或《梁父吟》（拓展）——历史、权力与世代</li>
+      </ul>
+      <p class="note">完整字段版、周课表与评估任务详见同目录 Markdown 文件。</p>
+    </section>
+
+    <section id="inquiry">
+      <h2>Inquiry &amp; Purpose｜探究与目的</h2>
+      <h3>Transfer Goals｜迁移目标</h3>
+      <ul>
+        <li>将细读方法迁移到未见文本：手法 → 效果 → 意义</li>
+        <li>用文化 / 身份认同 / 视角 / 呈现解释流散与归属议题</li>
+        <li>迁移到 Paper 1/2、IO、HL Essay 的论证结构</li>
+        <li>区分主题概括与有证据的文学阐释</li>
+      </ul>
+      <h3>Essential Understandings｜本质理解</h3>
+      <ul>
+        <li>文学通过特定时空与叙事选择，呈现文化身份的建构与改写。</li>
+        <li>「台北」是权力、阶级、性别与乡愁交汇的象征空间。</li>
+        <li>传奇化人物、戏曲互文与感官书写，使个人命运呈现集体流散经验。</li>
+        <li>阐释需同时回应文本证据与读者的文化位置。</li>
+      </ul>
+      <h3>Inquiry Questions｜探究问题</h3>
+      <table>
+        <tr><th>类型</th><th>问题</th></tr>
+        <tr><td>事实性</td><td>《台北人》的历史迁徙背景、场景与叙事人称是什么？</td></tr>
+        <tr><td>概念性</td><td>文化如何通过语言、仪式与空间被呈现？身份在流散中如何巩固或瓦解？</td></tr>
+        <tr><td>辩论性</td><td>作品是追悼还是批判失落的世界？乡愁是抵抗遗忘，还是阻碍新生？</td></tr>
+      </table>
+    </section>
+
+    <section id="curriculum">
+      <h2>Curriculum｜课程</h2>
+      <table>
+        <tr><th>探索领域</th><th>落实方式</th></tr>
+        <tr><td>时间与空间（主）</td><td>1949 迁徙、台北流散空间、过去/现在并置、世代差异</td></tr>
+        <tr><td>读者、作者与文本</td><td>创作与接受语境；叙事声音如何引导阐释</td></tr>
+        <tr><td>互文性</td><td>《游园惊梦》与《牡丹亭》；跨文本比较；文学—非文学配对</td></tr>
+      </table>
+      <h3>Concepts｜概念焦点</h3>
+      <p><strong>文化 · 身份认同 · 视角 · 呈现</strong>（可拓展：转化、交流、创意）</p>
+      <h3>Global Issue｜全球性问题方向</h3>
+      <ul>
+        <li>流散社群中的文化固守与归属</li>
+        <li>性别化身体与社会结构中的生存选择</li>
+        <li>集体记忆的美化书写与历史断裂</li>
+      </ul>
+    </section>
+
+    <section id="atl">
+      <h2>ATL &amp; Learner Profile</h2>
+      <table>
+        <tr><th>ATL</th><th>课堂显性教学</th></tr>
+        <tr><td>Thinking</td><td>证据墙；概念迁移卡</td></tr>
+        <tr><td>Communication</td><td>论点框架；IO 计时演练</td></tr>
+        <tr><td>Research</td><td>限时限源微型语境研究</td></tr>
+        <tr><td>Self-management</td><td>档案检查点；周反思</td></tr>
+      </table>
+      <p><strong>Learner Profile：</strong>探究者、思考者、交流者、胸襟开阔、反思者</p>
+      <h3>TOK</h3>
+      <ul>
+        <li>文学能否成为认识过去的正当方式？</li>
+        <li>记忆作为知识来源可靠吗？</li>
+        <li>艺术美化是否扭曲历史真相？</li>
+      </ul>
+    </section>
+
+    <section id="design">
+      <h2>Design &amp; Implement｜设计与实施</h2>
+      <table>
+        <tr><th>周</th><th>焦点</th><th>文本</th></tr>
+        <tr><td>1</td><td>启动：语境、概念、GI</td><td>总览 + 《永远的尹雪艳》</td></tr>
+        <tr><td>2</td><td>传奇与时间</td><td>《永远的尹雪艳》</td></tr>
+        <tr><td>3</td><td>创伤与结构</td><td>《一把青》</td></tr>
+        <tr><td>4</td><td>乡愁与声音</td><td>《花桥荣记》</td></tr>
+        <tr><td>5</td><td>性别、身体与阶层</td><td>《金大班的最后一夜》</td></tr>
+        <tr><td>6</td><td>互文与记忆</td><td>《游园惊梦》</td></tr>
+        <tr><td>7</td><td>比较与 GI 整合</td><td>跨篇 + 非文学</td></tr>
+        <tr><td>8</td><td>总结性评估与反思</td><td>—</td></tr>
+      </table>
+      <h3>核心学习体验</h3>
+      <ul>
+        <li>双栏批注 · 人物/空间地图 · 视角改写工作坊</li>
+        <li>互文侦探卡片 · GI 手术台 · 比较矩阵</li>
+        <li>迷你 IO · Paper 2 限时写作 · 档案策展</li>
+      </ul>
+    </section>
+
+    <section id="assessment">
+      <h2>Assessment｜评估</h2>
+      <h3>形成性</h3>
+      <ul>
+        <li>批注日志、概念迁移卡、300–500 字短写、研讨、迷你 IO</li>
+      </ul>
+      <h3>总结性（选一或组合）</h3>
+      <ul>
+        <li><strong>B1 比较论文</strong>（Paper 2）：两篇比较，SL 800–1000 / HL 1000–1200 字</li>
+        <li><strong>B2 Individual Oral 演练</strong>：文学摘录 + 非文学，围绕 GI</li>
+        <li><strong>B3 HL Essay 方法草稿</strong>（HL）：探究线 + 分析草稿</li>
+      </ul>
+    </section>
+
+    <section id="reflect">
+      <h2>Reflect｜反思提示</h2>
+      <ul>
+        <li>教学前：历史前备知识？敏感主题预警？SL/HL 差异？</li>
+        <li>教学中：GI 是否仍空泛？哪篇讨论最深？</li>
+        <li>教学后：评估缺口？下学年篇目增减？与 IO/Paper 2 作品群如何衔接？</li>
+      </ul>
+    </section>
+
+    <footer>
+      完整可粘贴版本：<code>managebac-unit-plan.md</code> ·
+      周课表：<code>weekly-sequence.md</code> ·
+      评估包：<code>assessment-tasks.md</code>
+    </footer>
+  </div>
+</body>
+</html>
