@@ -6,7 +6,8 @@
 
 | 文件 | 用途 |
 |------|------|
-| `managebac-unit-plan.md` | 按 ManageBac DP Unit Planner 字段填写的完整单元计划（可直接复制粘贴） |
+| **`managebac-fields-200.md`** | **校模板 11 项字段，每条约 200 字（优先使用）** |
+| `managebac-unit-plan.md` | 按 ManageBac DP 全分区展开的详细版 |
 | `weekly-sequence.md` | 6–8 周教学序列与课时建议 |
 | `assessment-tasks.md` | 形成性 / 总结性评估任务说明（对接 Paper 2、IO、HL Essay） |
 | `index.html` | 网页版预览，便于浏览与打印 |
