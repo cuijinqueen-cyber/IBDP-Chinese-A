@@ -10,6 +10,7 @@ python3 -m http.server 8080
 
 - 《一把青》：http://localhost:8080/?work=yibaqing  
 - 《永远的尹雪艳》：http://localhost:8080/?work=yinxueyan  
+- 《金大班的最后一夜》：http://localhost:8080/?work=jindaban  
 
 ## 精读设计
 
@@ -25,6 +26,6 @@ python3 -m http.server 8080
 身份 · 文化 · 创造力 · 沟通 · 视角 · 转变 · 再现
 
 ## 文件
-- `js/data-yibaqing.js` / `js/data-yinxueyan.js` — 各篇文本与练习
+- `js/data-yibaqing.js` / `js/data-yinxueyan.js` / `js/data-jindaban.js` — 各篇文本与练习
 - `js/app.js` — 交互
 - `css/styles.css` — 样式

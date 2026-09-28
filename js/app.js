@@ -1352,7 +1352,8 @@
     if (workSelect) {
       const params = new URLSearchParams(window.location.search);
       const current = params.get("work") || (window.APP && window.APP.workId) || "yibaqing";
-      workSelect.value = current === "yinxueyan" ? "yinxueyan" : "yibaqing";
+      const allowed = { yibaqing: 1, yinxueyan: 1, jindaban: 1 };
+      workSelect.value = allowed[current] ? current : "yibaqing";
       workSelect.addEventListener("change", function () {
         const url = new URL(window.location.href);
         url.searchParams.set("work", workSelect.value);

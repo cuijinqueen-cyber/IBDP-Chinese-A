@@ -19,7 +19,7 @@
     <div class="hero-inner">
       <p class="hero-kicker">IBDP 中文 A · 文学</p>
       <h1 class="hero-brand">文脉</h1>
-      <p class="hero-lead">《一把青》《永远的尹雪艳》精读带读：识别手法，拆解划线，看见效果，完成诠释。</p>
+      <p class="hero-lead">《一把青》《永远的尹雪艳》《金大班的最后一夜》精读带读：识别手法，拆解划线，看见效果，完成诠释。</p>
       <div class="hero-cta">
         <button class="btn btn-primary" id="enter-workshop" type="button">进入精读工坊</button>
         <button class="btn btn-ghost-light" id="scroll-concepts" type="button">七大概念</button>
@@ -51,6 +51,7 @@
         <select id="work-select" aria-label="选择精读文本">
           <option value="yibaqing">一把青 · 白先勇</option>
           <option value="yinxueyan">永远的尹雪艳 · 白先勇</option>
+          <option value="jindaban">金大班的最后一夜 · 白先勇</option>
         </select>
       </div>
 
@@ -325,7 +326,8 @@
     (function () {
       var params = new URLSearchParams(window.location.search);
       var work = params.get("work") || "yibaqing";
-      if (work !== "yibaqing" && work !== "yinxueyan") work = "yibaqing";
+      var allowed = { yibaqing: 1, yinxueyan: 1, jindaban: 1 };
+      if (!allowed[work]) work = "yibaqing";
       document.write('<script src="js/data-' + work + '.js"><\/script>');
     })();
   </script>
