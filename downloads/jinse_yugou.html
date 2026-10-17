@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>金色的鱼钩 · 小说精读</title>
+  <style>
+    :root {
+      --ink: #1c222e;
+      --soft: #5a6570;
+      --deep: #2c3e50;
+      --gold: #b88a2e;
+      --mist: #edf1f4;
+      --paper: #f7f8f6;
+      --line: rgba(28,34,46,.12);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", sans-serif;
+      color: var(--ink);
+      background: #d9e0e6;
+      overflow: hidden;
+    }
+    .deck {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: env(safe-area-inset-top) 12px env(safe-area-inset-bottom);
+    }
+    .slide {
+      display: none;
+      width: min(960px, 100%);
+      min-height: min(88vh, 640px);
+      background:
+        radial-gradient(ellipse 80% 50% at 100% 0%, rgba(184,138,46,.12), transparent 50%),
+        linear-gradient(180deg, #f3f6f4, var(--paper));
+      border-radius: 18px;
+      padding: clamp(1.4rem, 4vw, 2.6rem);
+      box-shadow: 0 16px 48px rgba(28,34,46,.14);
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .slide.on { display: block; animation: in .28s ease; }
+    @keyframes in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
+    }
+    .eyebrow {
+      margin: 0 0 .5rem;
+      color: var(--gold);
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0 0 .8rem;
+      font-size: clamp(2rem, 7vw, 3.4rem);
+      line-height: 1.15;
+      color: var(--deep);
+      letter-spacing: .04em;
+    }
+    h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.4rem, 4.5vw, 2rem);
+      color: var(--deep);
+      line-height: 1.3;
+    }
+    p, li { line-height: 1.7; font-size: clamp(1rem, 2.8vw, 1.15rem); }
+    .lead { color: var(--soft); max-width: 34em; }
+    .quote {
+      margin: 1.2rem 0;
+      padding: 1rem 1.1rem;
+      border-left: 4px solid var(--gold);
+      background: rgba(184,138,46,.08);
+      font-size: clamp(1.05rem, 3vw, 1.25rem);
+      font-weight: 600;
+      color: var(--deep);
+    }
+    .grid2, .grid3, .grid4 {
+      display: grid;
+      gap: .8rem;
+      margin-top: 1rem;
+    }
+    .grid2 { grid-template-columns: 1fr 1fr; }
+    .grid3 { grid-template-columns: repeat(3, 1fr); }
+    .grid4 { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 720px) {
+      .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: .9rem 1rem;
+    }
+    .card strong { display: block; color: var(--deep); margin-bottom: .35rem; }
+    .card span { color: var(--soft); font-size: .95rem; }
+    .stage {
+      display: flex; flex-direction: column; gap: .35rem;
+      padding: .9rem 1rem; border-radius: 12px; color: #fff;
+    }
+    .stage b { font-size: .85rem; opacity: .85; }
+    .c1 { background: #b88a2e; }
+    .c2 { background: #3d6b4f; }
+    .c3 { background: #8b4a2b; }
+    .c4 { background: #2c3e50; }
+    table {
+      width: 100%; border-collapse: collapse; margin-top: .8rem;
+      font-size: clamp(.92rem, 2.5vw, 1.05rem);
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      text-align: left; padding: .65rem .4rem; vertical-align: top;
+    }
+    th { color: var(--deep); }
+    ul { margin: .4rem 0 0; padding-left: 1.2rem; }
+    .bar {
+      position: fixed; left: 0; right: 0; bottom: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: .5rem; padding: .65rem 1rem calc(.65rem + env(safe-area-inset-bottom));
+      background: rgba(247,248,246,.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid var(--line);
+      z-index: 10;
+    }
+    .bar button {
+      appearance: none; border: 0; border-radius: 999px;
+      padding: .7rem 1.1rem; font: inherit; font-weight: 600;
+      background: var(--deep); color: #fff; cursor: pointer;
+    }
+    .bar button.ghost { background: #e8eef2; color: var(--deep); }
+    .bar button:disabled { opacity: .4; }
+    #page { color: var(--soft); font-variant-numeric: tabular-nums; min-width: 4.5rem; text-align: center; }
+    .hint { margin-top: 1.2rem; color: var(--soft); font-size: .92rem; }
+    .cover-extra { margin-top: 2rem; color: var(--soft); }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <!-- 1 -->
+    <section class="slide on">
+      <p class="eyebrow">统编六上 · 革命题材小说</p>
+      <h1>金色的鱼钩</h1>
+      <p class="lead">小说精读：情节 · 人物 · 象征 · 主题</p>
+      <div class="quote">在这个长满了红锈的鱼钩上，闪烁着灿烂的金色的光芒！</div>
+      <p class="cover-extra">线索：鱼钩　　核心人物：老班长　　滑动/点按钮翻页</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="slide">
+      <p class="eyebrow">01 · 读前定向</p>
+      <h2>基本信息与体裁特点</h2>
+      <div class="grid2">
+        <div class="card"><strong>体裁</strong><span>革命传统题材小说（真实长征故事）</span></div>
+        <div class="card"><strong>视角</strong><span>第一人称“我”（小梁），侧面烘托老班长</span></div>
+        <div class="card"><strong>背景</strong><span>红军长征过草地，粮食极度短缺</span></div>
+        <div class="card"><strong>读法</strong><span>抓情节冲突 · 人物言行 · 环境压迫 · 象征意义</span></div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="slide">
+      <p class="eyebrow">02 · 情节</p>
+      <h2>四段式鱼骨图</h2>
+      <div class="grid4">
+        <div class="stage c1"><b>开端</b><strong>接受任务</strong><span>照顾三个病号过草地</span></div>
+        <div class="stage c2"><b>发展</b><strong>照顾病号</strong><span>做鱼钩、钓鱼、熬汤、鼓励</span></div>
+        <div class="stage c3"><b>高潮</b><strong>壮烈牺牲</strong><span>把生的希望留给战友</span></div>
+        <div class="stage c4"><b>结局</b><strong>永远怀念</strong><span>保存鱼钩，金色光芒永存</span></div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="slide">
+      <p class="eyebrow">03 · 冲突</p>
+      <h2>核心矛盾：他把生留给别人</h2>
+      <ul>
+        <li><strong>环境矛盾：</strong>草地茫茫 × 粮食将尽 × 病号体弱</li>
+        <li><strong>人物矛盾：</strong>老班长越来越瘦 × 仍坚持照顾三人</li>
+        <li><strong>行为矛盾：</strong>鱼汤给病号 × 自己只嚼草根鱼骨</li>
+        <li><strong>情感矛盾：</strong>“我”想说破秘密 × 老班长坚持隐瞒</li>
+      </ul>
+      <p class="hint">小说抓矛盾：矛盾越尖锐，人物越高大。</p>
+    </section>
+
+    <!-- 5 -->
+    <section class="slide">
+      <p class="eyebrow">04 · 人物</p>
+      <h2>老班长：金子般的心</h2>
+      <div class="grid3">
+        <div class="card">
+          <strong>外貌</strong>
+          <span>四十岁却两鬓斑白；后来皮包骨头，眼睛深陷</span>
+        </div>
+        <div class="card">
+          <strong>品质</strong>
+          <span>忠于革命 · 舍己为人 · 关爱战友 · 坚韧担当</span>
+        </div>
+        <div class="card">
+          <strong>写法</strong>
+          <span>外貌/语言/动作/神态 + 三次“说谎” + 侧面烘托</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="slide">
+      <p class="eyebrow">05 · 细节</p>
+      <h2>三次“说谎”：爱的方式</h2>
+      <ol>
+        <li>说自己“吃过了”“一起锅就吃”→ 把食物留给别人</li>
+        <li>被发现后仍劝大家吃，自己硬撑 → 责任压过饥饿</li>
+        <li>临终仍说“别浪费”“一定要走出草地”→ 惦记任务与战友</li>
+      </ol>
+      <p class="hint">这里的“说谎”不是品行问题，而是善意的隐瞒与更大的担当。</p>
+    </section>
+
+    <!-- 7 -->
+    <section class="slide">
+      <p class="eyebrow">06 · 外貌变化线</p>
+      <h2>看见他怎样把自己“耗尽”</h2>
+      <ul>
+        <li><strong>出场：</strong>皱纹、两鬓斑白——苍老操劳</li>
+        <li><strong>照顾中：</strong>比病号还瘦——把吃的让出去</li>
+        <li><strong>病号吃下：</strong>皱纹舒展，露出笑意——为别人高兴</li>
+        <li><strong>草地边：</strong>皮包骨头，却仍饱满鼓励——意志不垮</li>
+        <li><strong>牺牲时：</strong>手垂下去，眼睛慢慢闭上——生命燃尽</li>
+      </ul>
+    </section>
+
+    <!-- 8 -->
+    <section class="slide">
+      <p class="eyebrow">07 · 写法</p>
+      <h2>语言 · 动作 · 神态</h2>
+      <div class="grid2">
+        <div class="card"><strong>动作</strong><span>做鱼钩、钓鱼、熬汤、嚼草根鱼骨、抚摸“我”的头</span></div>
+        <div class="card"><strong>神态对比</strong><span>病号不吃→皱眉；吃了→笑意</span></div>
+        <div class="card"><strong>语言</strong><span>“一定要走出草地去”“我没完成党交给我的任务……”</span></div>
+        <div class="card"><strong>侧面</strong><span>“我”的发现、哭泣、呼喊、珍藏鱼钩</span></div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="slide">
+      <p class="eyebrow">08 · 环境</p>
+      <h2>环境不是风景，是压力</h2>
+      <p class="lead">草地、野菜、草根、夜色、重重叠叠的山峰……</p>
+      <ul>
+        <li>交代长征艰险，说明“钓鱼救命”为何必要</li>
+        <li>反衬老班长的坚韧——环境越恶，人物越亮</li>
+        <li>推动情节——没有绝境，就没有牺牲的悲壮</li>
+      </ul>
+      <div class="quote">环境写苦，是为了人物写光。</div>
+    </section>
+
+    <!-- 10 -->
+    <section class="slide">
+      <p class="eyebrow">09 · 象征</p>
+      <h2>为什么鱼钩是“金色”的？</h2>
+      <div class="quote">长满了红锈的鱼钩上，闪烁着灿烂的金色的光芒！</div>
+      <table>
+        <tr><th>层面</th><th>含义</th></tr>
+        <tr><td>表层</td><td>鱼钩已锈，物已陈旧</td></tr>
+        <tr><td>深层</td><td>金子般的精神永不褪色</td></tr>
+        <tr><td>功能</td><td>线索物 + 遗物 + 精神丰碑</td></tr>
+      </table>
+    </section>
+
+    <!-- 11 -->
+    <section class="slide">
+      <p class="eyebrow">10 · 主题</p>
+      <h2>一句话概括</h2>
+      <p>通过老班长照顾病号过草地并牺牲自己的故事，赞颂红军战士<strong>忠于革命、舍己为人</strong>的崇高品质。</p>
+      <div class="grid3" style="margin-top:1.2rem">
+        <div class="card"><strong>忠诚</strong><span>完成党交给的任务</span></div>
+        <div class="card"><strong>担当</strong><span>把病号带出草地</span></div>
+        <div class="card"><strong>牺牲</strong><span>把生的希望让给别人</span></div>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section class="slide">
+      <p class="eyebrow">11 · 手法速查</p>
+      <h2>考试/写作可用</h2>
+      <table>
+        <tr><th>手法</th><th>作用</th></tr>
+        <tr><td>第一人称</td><td>真实亲切，侧面烘托</td></tr>
+        <tr><td>细节描写</td><td>让品质看得见</td></tr>
+        <tr><td>对比</td><td>突出舍己与深情</td></tr>
+        <tr><td>线索（鱼钩）</td><td>串情节、升主题</td></tr>
+        <tr><td>象征（金色）</td><td>精神永存</td></tr>
+        <tr><td>环境烘托</td><td>加大绝境中的牺牲分量</td></tr>
+      </table>
+    </section>
+
+    <!-- 13 -->
+    <section class="slide">
+      <p class="eyebrow">12 · 课堂路径</p>
+      <h2>五步精读</h2>
+      <ol>
+        <li>速读：用四字概括情节四段</li>
+        <li>圈画：找出外貌变化句</li>
+        <li>讨论：他为什么“说谎”？</li>
+        <li>突破：解释“金色的光芒”</li>
+        <li>迁移：写一个“把方便留给别人”的小片段</li>
+      </ol>
+      <p class="hint">成功标准：人物品质 + 2处细节证据 + 说清鱼钩象征</p>
+    </section>
+
+    <!-- 14 -->
+    <section class="slide">
+      <p class="eyebrow">13 · 读写迁移</p>
+      <h2>偷师人物描写四招</h2>
+      <ul>
+        <li>外貌要会“变”——开始怎样，后来怎样</li>
+        <li>神态要会“对比”——忧与喜指向他所爱的人</li>
+        <li>语言要短而重——关键时刻说最在乎的话</li>
+        <li>物件可升格——一根鱼钩也能成为精神象征</li>
+      </ul>
+      <div class="quote">起初，他……；后来，他……。直到……，我才明白，他真正在意的是……。</div>
+    </section>
+
+    <!-- 15 -->
+    <section class="slide">
+      <p class="eyebrow">14 · 收束</p>
+      <h2>一句话记住这篇课文</h2>
+      <div class="quote">锈迹斑斑的是鱼钩，永不生锈的是老班长金子般的心。</div>
+      <p class="lead">读英雄，不是只流泪；是学会在日常里，把责任与关爱做成具体行动。</p>
+      <p class="hint">左右滑动或点下方按钮翻页 · 共 15 页</p>
+    </section>
+  </div>
+
+  <div class="bar">
+    <button class="ghost" id="prev" type="button">上一页</button>
+    <div id="page">1 / 15</div>
+    <button id="next" type="button">下一页</button>
+  </div>
+
+  <script>
+    (function () {
+      var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+      var i = 0;
+      var prev = document.getElementById("prev");
+      var next = document.getElementById("next");
+      var page = document.getElementById("page");
+      var startX = 0;
+
+      function show(n) {
+        i = Math.max(0, Math.min(slides.length - 1, n));
+        slides.forEach(function (s, idx) { s.classList.toggle("on", idx === i); });
+        page.textContent = (i + 1) + " / " + slides.length;
+        prev.disabled = i === 0;
+        next.disabled = i === slides.length - 1;
+        try { history.replaceState(null, "", "#p" + (i + 1)); } catch (e) {}
+      }
+
+      prev.addEventListener("click", function () { show(i - 1); });
+      next.addEventListener("click", function () { show(i + 1); });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); show(i + 1); }
+        if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(i - 1); }
+      });
+
+      document.addEventListener("touchstart", function (e) {
+        startX = e.changedTouches[0].clientX;
+      }, { passive: true });
+      document.addEventListener("touchend", function (e) {
+        var dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) < 40) return;
+        if (dx < 0) show(i + 1); else show(i - 1);
+      }, { passive: true });
+
+      var m = location.hash.match(/p(\d+)/);
+      show(m ? parseInt(m[1], 10) - 1 : 0);
+    })();
+  </script>
+</body>
+</html>
